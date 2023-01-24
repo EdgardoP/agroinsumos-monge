@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "watch": "nodemon --exec electron ."
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,7 @@
   "dependencies": {
     "electron": "^22.0.3",
     "electron-reload": "^2.0.0-alpha.1",
+    "nodemon": "^2.0.20",
     "promise-mysql": "^5.2.0"
   }
 }
