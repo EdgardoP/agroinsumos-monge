@@ -2,6 +2,15 @@
   --colorPrimario: #364152;
   --colorPrimarioOscuro: #313c48;
   --colorSecundario: #3d8533;
+  --colorInput:#E0E0E0
+}
+
+.colorSecundario{
+  background-color: var(--colorSecundario);
+}
+
+.colorPrimario{
+  background-color: var(--colorPrimario);
 }
 
 body {
@@ -33,13 +42,72 @@ body {
 .ladoDerechoLogin {
   width: 65%;
   height: 100%;
-  padding: 40px;
+  padding-left: 50px;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   color: var(--colorPrimario);
+}
+
+.ladoDerechoLogin h1, .ladoDerechoLogin h4 {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+.cajaInput{
+  margin: 20px 0px 20px 0px;
+}
+
+.cajaInput input{
+  font-family: "Roboto-Regular.ttf";
+  font-weight: bolder;
+  background-color: var(--colorInput);
+}
+.cajaInput input:focus{
+  outline: none;
+}
+
+.estiloInputLogin{
+  border: 0px;
+  margin-left: 10px;
+  padding: 5px;
+  font-size: 15px;
+  width: 250px;
+}
+
+.imagenInput{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--colorInput);
+  width: max-content;
+  padding: 7px;
+  border-radius: 5px;
+}
+
+.imagenInput img{
+  width: 20px;
 }
 
 .imgLogin {
   width: 100%;
   height: 100%;
+}
+
+.cajaBotonesInput{
+  display: flex;
+  flex-direction: column;
+}
+
+.boton{
+  width: 250px;
+  padding: 10px;
+  margin: 5px 0px 5px 0px;
+  border-radius: 5px;
+  border: 0px;
+  font-family: "Roboto-Regular.ttf";
+  font-size: 13px;
+  font-weight: bolder;
+  color: #fff;
 }

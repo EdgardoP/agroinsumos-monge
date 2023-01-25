@@ -16,35 +16,45 @@
         <div>
           <div>
             <h1>Sistema de Inventario</h1>
-            <h3>Ingrese sus datos para acceder</h3>
-          </div>
-          <div>
-            <a href="">X</a>
+            <h4>Ingrese sus datos para acceder</h4>
           </div>
         </div>
         <div>
-          <div>
+          <div class="cajaInput">
             <label for="usuario_nombre">Usuario</label>
-            <div>
-              <input type="text" name="usuario_nombre" id="usuario_nombre" />
+            <div class="imagenInput">
+              <img src="icons/user.png" alt="" />
+              <input
+                class="estiloInputLogin"
+                type="text"
+                name="usuario_nombre"
+                id="usuario_nombre"
+                placeholder="Ingrese su usuario aqui"
+              />
             </div>
           </div>
-          <div>
+          <div class="cajaInput">
             <label for="usuario_contraseña">Contraseña</label>
-            <div>
+            <div class="imagenInput">
+              <img src="icons/padlock.png" alt="" />
               <input
                 type="text"
                 name="usuario_contraseña"
                 id="usuario_contraseña"
+                class="estiloInputLogin"
+                placeholder="Ingrese su contraseña aqui"
               />
             </div>
           </div>
         </div>
-        <div>
-          <button>INICIAR</button>
-          <button>OLVIDE MI CONTRASEÑA</button>
+        <div class="cajaBotonesInput">
+          <button id="btnLogin" class="boton colorSecundario">INICIAR</button>
+          <button id="btnOlvideContraseña" class="boton colorPrimario">
+            OLVIDE MI CONTRASEÑA
+          </button>
         </div>
       </div>
     </div>
   </body>
+  <script src="scripts/login.js"></script>
 </html>
