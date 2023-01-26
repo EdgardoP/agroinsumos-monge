@@ -21,12 +21,13 @@ function crearPrincipal() {
   ventanaPrincipal = new BrowserWindow({
     width: 1280,
     height: 720,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
     },
   });
-  ventanaLogin.loadFile("src/ui/login.html");
+  ventanaPrincipal.loadFile("src/ui/index.html");
 }
 
 app.on("window-all-closed", () => {

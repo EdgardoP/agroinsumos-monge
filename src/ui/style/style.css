@@ -2,7 +2,8 @@
   --colorPrimario: #364152;
   --colorPrimarioOscuro: #313c48;
   --colorSecundario: #3d8533;
-  --colorInput:#E0E0E0
+	--colorInput:#E0E0E0;
+	--colorSecundarioOscuro:#3d8533;
 }
 
 .colorSecundario{
@@ -111,3 +112,4 @@ body {
   font-weight: bolder;
   color: #fff;
 }
+
