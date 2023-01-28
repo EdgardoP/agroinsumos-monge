@@ -1,4 +1,5 @@
 const { BrowserWindow, app, ipcMain, Notification } = require("electron");
+const ejse = require("ejs-electron");
 const db = require("./database");
 let ventanaLogin;
 let ventanaPrincipal;
@@ -21,13 +22,16 @@ function crearPrincipal() {
   ventanaPrincipal = new BrowserWindow({
     width: 1280,
     height: 720,
+    minHeight: 940,
+    minWidth: 560,
+    frame: false,
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
     },
   });
-  ventanaPrincipal.loadFile("src/ui/index.html");
+  ventanaPrincipal.loadFile("src/ui/index.ejs");
 }
 
 app.on("window-all-closed", () => {

@@ -28,31 +28,81 @@
 
 #accordian {
 		font-family: "Roboto-Regular.ttf";
-		background: var(--colorSecundarioOscuro);
-		width: 270px;
-		height: 100%;
+		width: 300px;
+		height: 101vh;
 		margin: 0px;
 		color: white;
-		box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.6), 0 0 200px 1px rgba(255, 255, 255, 0.5);
-		position: fixed;
+		position: absolute;
+		background: var(--colorSecundario);
+		box-shadow: rgba(0, 0, 0, 0.352) 5px 5px 5px;
 }
 
-#accordian h3 {
-		background:var(--colorSecundario);
-		border: #3d853346 1px solid;
+
+.iconoMenu{
+	width: 10px;
 }
+
+
+
+#accordian h3{
+	background: var(--colorSecundarioOscuro);
+	transition: background-color .5s;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+#accordian h3:hover{
+	background: var(--colorSecundarioOscuro);
+}
+
+.frameVentana{
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: right;
+	background-color: var(--colorPrimario);
+	-webkit-app-region:drag;
+  }
+  
+  .botonesFrame{
+	display: flex;
+	flex-direction: row;
+	padding: 12px;
+  }
+
+
+
 
 #accordian h3 a {
-		padding: 5px 10px;
-		font-size: 15px;
-		line-height: 34px;
-		display: block;
-		color: white;
-		text-decoration: none;
+	padding: 10px;
+	font-size: 15px;
+	display: block;
+	color: rgb(255, 255, 255);
+	text-decoration: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
 }
 
+#accordian h3 a img {
+	width: 35px;
+	margin-right: 10px;
+}
+
+.arrow img{
+	width: 20px;
+}
+/* 
+.iconoEmpresa a img {
+	width:100px;
+} */
+
 #accordian h3:hover {
-		text-shadow: 0 0 1px rgba(255, 255, 255, 0.7);
+		text-shadow: #fff;
 }
 
 i {
@@ -63,16 +113,18 @@ i {
 		list-style-type: none;
 }
 
+
 #accordian ul ul li a,
 #accordian h4 {
 		color: white;
 		text-decoration: none;
-		font-size: 11px;
+		font-size: 15px;
 		line-height: 27px;
 		display: block;
-		padding: 0 15px;
+		padding: 10px 15px;
 		transition: all 0.15s;
 		position: relative;
+		text-align: center;
 }
 
 #accordian ul ul li a:hover {
@@ -102,3 +154,4 @@ i {
 #accordian .active>a:not(:only-child):after {
 		content: "\f107";
 }
+

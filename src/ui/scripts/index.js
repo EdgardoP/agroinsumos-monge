@@ -19,3 +19,6 @@ $(document).ready(function () {
     }
   });
 });
+
+let height = $(window).height();
+$("#cajaDashboard").height(height);

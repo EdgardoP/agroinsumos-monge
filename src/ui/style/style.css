@@ -3,7 +3,7 @@
   --colorPrimarioOscuro: #313c48;
   --colorSecundario: #3d8533;
 	--colorInput:#E0E0E0;
-	--colorSecundarioOscuro:#3d8533;
+	--colorSecundarioOscuro:#2b6024;
 }
 
 .colorSecundario{
@@ -113,3 +113,22 @@ body {
   color: #fff;
 }
 
+.cajaMenu{
+  background-color: #798378;
+}
+
+.cajaDashboard{
+  margin-left: 270px;
+  width: 100%;
+}
+
+.cuerpoPantalla{
+ display: flex;
+ flex-direction: row;
+ overflow: hidden;
+}
+
+.imagenDashboard{
+  height: 101vh;
+  width: 100%;
+}
