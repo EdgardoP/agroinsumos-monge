@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style/sliderMenu.css" />
     <title>Agroinsumos Monge</title>
   </head>
-  <body class="cuerpoPantalla">
+  <body class="cuerpoPantalla colorFondoDashboard">
     <div class="frameVentana">
       <div class="botonesFrame">
         <div>
@@ -26,16 +26,18 @@
       <ul>
         <li>
           <h3 style="background-color: #313c48">
-            <a href="#"
-              ><div> <img src="icons/empresaIconBlanco.png" alt="icono" />Agroinsumos
-              Monge</div>
+            <a tabindex="-1" href="#"
+              ><div>
+                <img src="icons/empresaIconBlanco.png" alt="icono" />Agroinsumos
+                Monge
+              </div>
               <div></div
             ></a>
           </h3>
         </li>
         <li>
           <h3 class="iconBoton">
-            <a href="#"
+            <a tabindex="-1" href="#"
               ><div
                 style="align-items: center; display: flex; flex-direction: row"
               >
@@ -45,15 +47,27 @@
             </a>
           </h3>
           <ul>
-            <li><a href="#">Entradas</a></li>
-            <li><a href="#">Salidas</a></li>
-            <li><a href="#">Productos</a></li>
-            <li><a href="#">Settings</a></li>
+            <li>
+              <h4>
+                <a href="#">Entradas</a>
+              </h4>
+              <ul>
+                <li><a href="inventario_entradas.ejs">Nueva Entrada</a></li>
+                <li><a href="#">Registro de Entradas</a></li>
+              </ul>
+            </li>
+            <li><h4>
+              <a href="#">Productos</a>
+            </h4>
+            <ul>
+              <li><a href="inventario_entradas.ejs">Nuevo Producto</a></li>
+              <li><a href="#">Historial de Productos</a></li>
+            </ul></li>
           </ul>
         </li>
         <li class="active">
           <h3>
-            <a href="#"
+            <a tabindex="-1" href="#"
               ><div
                 style="align-items: center; display: flex; flex-direction: row"
               >
@@ -79,7 +93,7 @@
         </li>
         <li>
           <h3>
-            <a href="#"
+            <a tabindex="-1" href="#"
               ><div
                 style="align-items: center; display: flex; flex-direction: row"
               >
@@ -102,7 +116,7 @@
         </li>
         <li>
           <h3>
-            <a href="#"
+            <a tabindex="-1" href="#"
               ><div
                 style="align-items: center; display: flex; flex-direction: row"
               >

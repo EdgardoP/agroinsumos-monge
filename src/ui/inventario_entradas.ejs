@@ -1,0 +1,299 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Inventario / Entradas de Productos al Inventario</h3>
+</div>
+<div class="contenedorDashboard">
+  <form action="" class="flexRow">
+    <div class="flexColumn">
+      <div class="flexRow">
+        <div class="cajaInput">
+          <label for="entrada_id">ID Documento</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="entrada_id"
+              id="entrada_id"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="entrada_fecha">Fecha</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="entrada_fecha"
+              id="entrada_fecha"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="cajaInput">
+          <label for="lote_producto_fk">ID Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 4.3vh"
+              type="text"
+              name="lote_producto_fk"
+              id="lote_producto_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="entrada_lote_fk">ID Lote</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 4.3vh"
+              type="text"
+              name="entrada_lote_fk"
+              id="entrada_lote_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="producto_nombre">Nombre del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="producto_nombre"
+              id="producto_nombre"
+              class="estiloInputLogin"
+              tabindex="1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="producto_descripcion">Descripcion del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="producto_descripcion"
+              id="producto_descripcion"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="lote_presentacion">Presentacion del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 14vh"
+              type="text"
+              name="lote_presentacion"
+              id="lote_presentacion"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="cajaInput">
+          <label for="entrada_cantidad">Stock Actual</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="entrada_cantidad"
+              id="entrada_cantidad"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="lote_valor_unitario_compra">Valor Unitario Compra</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="lote_valor_unitario_compra"
+              id="lote_valor_unitario_compra"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="lote_valor_unitario_venta">Valor Unitario de Venta</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="lote_valor_unitario_venta"
+              id="lote_valor_unitario_venta"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="cajaInput">
+          <label for="entrada_cantidad">Cantidad a Ingresar</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="entrada_cantidad"
+              id="entrada_cantidad"
+              class="estiloInputLogin"
+              tabindex="2"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="entrada_otros_gastos">Otros Gastos</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="entrada_otros_gastos"
+              id="entrada_otros_gastos"
+              class="estiloInputLogin"
+              tabindex="3"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="entrada_tipo_pago">Tipo de Pago</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="entrada_tipo_pago"
+              id="entrada_tipo_pago"
+              style="width: 13vh"
+              tabindex="4"
+            >
+              <option value="">Seleccione</option>
+              <option value="">Efectivo</option>
+              <option value="">Credito</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="botonesDashboard">
+      <div class="flexColumn space-around">
+        <div class="flexColumn">
+          <button
+            tabindex="-1"
+            id="btnNuevoDerivado"
+            class="boton colorSecundario"
+          >
+            NUEVO PRODUCTO
+          </button>
+          <button
+            tabindex="-1"
+            id="btnNuevoDerivado"
+            class="boton colorSecundario"
+          >
+            NUEVO DERIVADO
+          </button>
+          <button tabindex="-1" id="btnNuevoLote" class="boton colorPrimario">
+            NUEVO LOTE
+          </button>
+        </div>
+        <div class="flexColumn">
+          <button tabindex="5" id="btnAceptar" class="boton colorSecundario">
+            ACEPTAR
+          </button>
+          <button tabindex="6" id="btnLimpiar" class="boton colorAmarillo">
+            LIMPIAR
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="width: 3vh; max-width: 3vh; min-width: 3vh">Nº</th>
+        <th style="width: 7vh; max-width: 7vh; min-width: 7vh">ID Producto</th>
+        <th style="width: 5vh; max-width: 5vh; min-width: 5vh">ID Lote</th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">Producto</th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">Descripcion</th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">Presentacion</th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">
+          V.Unit Compra
+        </th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">V.Unit Venta</th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">
+          Stock Antiguo
+        </th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">
+          Cant Ingresada
+        </th>
+        <th style="width: 10vh; max-width: 10vh; min-width: 10vh">
+          Stock Acualizado
+        </th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">Otros Gastos</th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">Tipo de Pago</th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">Sub-Total</th>
+        <th style="width: 8vh; max-width: 8vh; min-width: 8vh">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="width: 3vh; max-width: 3vh; min-width: 3vh">1120</td>
+        <td style="width: 7vh; max-width: 7vh; min-width: 7vh">7342342</td>
+        <td style="width: 5vh; max-width: 5vh; min-width: 5vh">3242</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">
+          Per master adulto
+        </td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">
+          Esta es una descripcion excesivamente grande
+        </td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">Unidad</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">50 L.</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">50 L.</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">3435</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">30</td>
+        <td style="width: 10vh; max-width: 10vh; min-width: 10vh">3478</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">43535</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">Efectivo</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">123123 L.</td>
+        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">
+          <div>
+            <button class="accionesBoton colorSecundario">
+              <img src="icons/edit-button.png" alt="" />
+            </button>
+            <button class="accionesBoton colorRojo">
+              <img src="icons/cancel.png" alt="" />
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<%- include('./partials/footer.ejs') %>

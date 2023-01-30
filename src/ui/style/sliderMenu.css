@@ -73,8 +73,6 @@
   }
 
 
-
-
 #accordian h3 a {
 	padding: 10px;
 	font-size: 15px;
@@ -118,13 +116,14 @@ i {
 #accordian h4 {
 		color: white;
 		text-decoration: none;
-		font-size: 15px;
+		font-size: 14px;
 		line-height: 27px;
 		display: block;
-		padding: 10px 15px;
+		padding: 5px 15px;
 		transition: all 0.15s;
 		position: relative;
-		text-align: center;
+		text-align: left;
+		background-color: #214a1c;
 }
 
 #accordian ul ul li a:hover {

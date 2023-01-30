@@ -4,8 +4,16 @@
   --colorSecundario: #3d8533;
 	--colorInput:#E0E0E0;
 	--colorSecundarioOscuro:#2b6024;
+  --colorFondoDashboard:#EEF2F4;
+  --colorBlanco:#F9FAFB;
+  --colorTexto:#3a3f46;
+  --colorAmarillo:#E79410;
+  --colorRojo:#E21C1C;
 }
 
+.colorFondoDashboard{
+  background-color: var(--colorFondoDashboard);
+}
 .colorSecundario{
   background-color: var(--colorSecundario);
 }
@@ -14,6 +22,13 @@
   background-color: var(--colorPrimario);
 }
 
+.colorAmarillo{
+  background-color: var(--colorAmarillo);
+}
+
+.colorRojo{
+  background-color: var(--colorRojo);
+}
 body {
   margin: 0px;
   padding: 0px;
@@ -57,7 +72,7 @@ body {
 }
 
 .cajaInput{
-  margin: 20px 0px 20px 0px;
+  margin: 0px 10px 20px 0px;
 }
 
 .cajaInput input{
@@ -65,6 +80,7 @@ body {
   font-weight: bolder;
   background-color: var(--colorInput);
 }
+
 .cajaInput input:focus{
   outline: none;
 }
@@ -72,8 +88,8 @@ body {
 .estiloInputLogin{
   border: 0px;
   margin-left: 10px;
-  padding: 5px;
-  font-size: 15px;
+  padding: 2px;
+  font-size: 14px;
   width: 250px;
 }
 
@@ -85,6 +101,7 @@ body {
   width: max-content;
   padding: 7px;
   border-radius: 5px;
+  margin-top: 7px;
 }
 
 .imagenInput img{
@@ -118,17 +135,103 @@ body {
 }
 
 .cajaDashboard{
-  margin-left: 270px;
-  width: 100%;
+  margin-left: 300px;
+  margin-top: 40px;
+  width: 85%;
 }
 
 .cuerpoPantalla{
  display: flex;
  flex-direction: row;
  overflow: hidden;
+
 }
 
 .imagenDashboard{
   height: 101vh;
   width: 100%;
+}
+
+.contenedorDashboard{
+  background-color: var(--colorBlanco);
+  margin: 25px;
+  padding: 20px;
+  color: #000;
+  box-shadow: rgba(0, 0, 0, 0.212) 5px 5px 10px;
+  width: 94%;
+}
+
+.contenedorDashboard h2{
+  font-weight: bold;
+}
+
+.flexRow{
+  display: flex;
+  flex-direction: row;
+}
+
+.flexColumn{
+ display: flex; 
+ flex-direction: column;
+}
+
+.space-around{
+  justify-content: space-around;
+}
+
+.botonesDashboard{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.estiloTabla{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.estiloTabla thead{
+  display: table;
+  width:  calc(100% - 17px);
+}
+
+.estiloTabla tbody{
+  display: block;
+  max-height: 350px;
+  overflow-y: scroll;
+}
+
+.estiloTabla td, th{
+  text-align:left;
+  padding: 4px;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.estiloTabla tr{
+  display: table;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.estiloTabla th{
+  border-bottom: rgb(193, 193, 193) 2px solid;
+}
+
+
+.accionesBoton img{
+  width: 100%;
+}
+
+.accionesBoton {
+  width: 35px;
+  height: 35px;
+  border-radius: 999px;
+  padding: 6px;
+  border: none;
 }
