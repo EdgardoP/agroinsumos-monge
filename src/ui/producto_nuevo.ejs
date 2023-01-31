@@ -1,0 +1,221 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Productos / Ingresar Nuevos Productos</h3>
+</div>
+<div class="contenedorDashboard">
+  <form action="" class="flexRow">
+    <div class="flexColumn">
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput">
+          <label for="lote_producto_fk">Nombre del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="lote_producto_fk"
+              id="lote_producto_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="lote_producto_fk">Descripcion del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="lote_producto_fk"
+              id="lote_producto_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="entrada_tipo_pago">Color</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="entrada_tipo_pago"
+              id="entrada_tipo_pago"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="">Amarillo</option>
+              <option value="">Azul</option>
+              <option value="">Rosa</option>
+              <option value="">Beige</option>
+              <option value="">Verde</option>
+            </select>
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="entrada_tipo_pago">Proveedor</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="entrada_tipo_pago"
+              id="entrada_tipo_pago"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="">Seleccione</option>
+              <option value="">Efectivo</option>
+              <option value="">Credito</option>
+            </select>
+          </div>
+        </div>
+        <button class="accionesBoton colorSecundario">
+          <img src="icons/plus.png" alt="" />
+        </button>
+      </div>
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput">
+          <label for="lote_valor_unitario_compra">Fecha de Vencimiento</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="lote_valor_unitario_compra"
+              id="lote_valor_unitario_compra"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="entrada_tipo_pago">Categoria</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="entrada_tipo_pago"
+              id="entrada_tipo_pago"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="">Seleccione</option>
+              <option value="">Efectivo</option>
+              <option value="">Credito</option>
+            </select>
+          </div>
+        </div>
+        <button class="accionesBoton colorSecundario">
+          <img src="icons/plus.png" alt="" />
+        </button>
+      </div>
+    </div>
+    <div class="botonesDashboard">
+      <div class="flexColumn space-around">
+        <div class="flexColumn">
+          <button tabindex="5" id="btnAceptar" class="boton colorSecundario">
+            SIGUIENTE
+          </button>
+        </div>
+        <div class="flexColumn">
+          <button tabindex="5" id="btnAceptar" class="boton colorAmarillo">
+            LIMPIAR
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="contenedorDashboard">
+  <div class="flexRow">
+    <div class="cajaInput">
+      <label for="entrada_otros_gastos">ID Producto</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 15vh"
+          type="text"
+          name="entrada_otros_gastos"
+          id="entrada_otros_gastos"
+          class="estiloInputLogin"
+          tabindex="3"
+        />
+      </div>
+    </div>
+    <div class="cajaInput">
+      <label for="entrada_otros_gastos">Cantidad</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 15vh"
+          type="text"
+          name="entrada_otros_gastos"
+          id="entrada_otros_gastos"
+          class="estiloInputLogin"
+          tabindex="3"
+        />
+      </div>
+    </div>
+    <div class="cajaInput">
+      <label for="entrada_otros_gastos">V. Unit Compra</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 15vh"
+          type="text"
+          name="entrada_otros_gastos"
+          id="entrada_otros_gastos"
+          class="estiloInputLogin"
+          tabindex="3"
+        />
+      </div>
+    </div>
+    <div class="cajaInput">
+      <label for="entrada_otros_gastos">V. Unit Venta</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 15vh"
+          type="text"
+          name="entrada_otros_gastos"
+          id="entrada_otros_gastos"
+          class="estiloInputLogin"
+          tabindex="3"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="flexRow">
+    <div class="cajaInput">
+      <label for="entrada_otros_gastos">Presentacion</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 15vh"
+          type="text"
+          name="entrada_otros_gastos"
+          id="entrada_otros_gastos"
+          class="estiloInputLogin"
+          tabindex="3"
+        />
+      </div>
+    </div>
+    <div class="cajaInput">
+      <label for="entrada_otros_gastos">Fecha de Vencimiento</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 15vh"
+          type="date"
+          name="entrada_otros_gastos"
+          id="entrada_otros_gastos"
+          class="estiloInputLogin"
+          tabindex="3"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('./partials/footer.ejs') %>

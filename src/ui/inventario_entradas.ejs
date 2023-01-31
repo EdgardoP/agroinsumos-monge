@@ -27,7 +27,7 @@
             <img src="icons/pencil.png" alt="" />
             <input
               style="width: 13vh"
-              type="text"
+              type="date"
               name="entrada_fecha"
               id="entrada_fecha"
               class="estiloInputLogin"
@@ -42,7 +42,7 @@
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
-              style="width: 4.3vh"
+              style="width: 4vh"
               type="text"
               name="lote_producto_fk"
               id="lote_producto_fk"
@@ -56,7 +56,7 @@
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
-              style="width: 4.3vh"
+              style="width: 4vh"
               type="text"
               name="entrada_lote_fk"
               id="entrada_lote_fk"
@@ -204,6 +204,7 @@
       <div class="flexColumn space-around">
         <div class="flexColumn">
           <button
+            onclick="location.href='#modal_nuevo_producto'; event.preventDefault()"
             tabindex="-1"
             id="btnNuevoDerivado"
             class="boton colorSecundario"
@@ -295,5 +296,293 @@
       </tr>
     </tbody>
   </table>
+</div>
+<div id="modal_nuevo_producto" class="modal">
+  <div class="modal__content">
+    <div class="contenedorDashboard">
+      <div class="contenedorDashboard">
+        <h2>Ingresar Nuevo Producto</h2>
+      </div>
+      <div class="contenedorDashboard">
+        <form action="" class="flexRow">
+          <div class="flexColumn">
+            <div class="flexRow">
+              <div class="cajaInput">
+                <label for="lote">Nombre del Producto</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="entrada_id"
+                    id="entrada_id"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="entrada_fecha">Descripcion del Producto</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="date"
+                    name="entrada_fecha"
+                    id="entrada_fecha"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="entrada_tipo_pago">Proveedor</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <select
+                    class="estiloInputLogin"
+                    name="entrada_tipo_pago"
+                    id="entrada_tipo_pago"
+                    style="width: 15vh"
+                    tabindex="4"
+                  >
+                    <option value="">Seleccione</option>
+                    <option value="">Efectivo</option>
+                    <option value="">Credito</option>
+                  </select>
+                </div>
+              </div>
+              <button
+                onclick="location.href='#modal_nuevo_proveedor'; event.preventDefault()"
+                class="accionesBoton colorSecundario"
+              >
+                <img src="icons/plus.png" alt="" />
+              </button>
+            </div>
+            <div class="flexRow">
+              <div class="cajaInput">
+                <label for="lote_valor_unitario_compra"
+                  >Valor Unitario Compra</label
+                >
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="lote_valor_unitario_compra"
+                    id="lote_valor_unitario_compra"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="entrada_fecha">Color</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="entrada_fecha"
+                    id="entrada_fecha"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="entrada_tipo_pago">Categoria</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <select
+                    class="estiloInputLogin"
+                    name="entrada_tipo_pago"
+                    id="entrada_tipo_pago"
+                    style="width: 15vh"
+                    tabindex="4"
+                  >
+                    <option value="">Seleccione</option>
+                    <option value="">Efectivo</option>
+                    <option value="">Credito</option>
+                  </select>
+                </div>
+              </div>
+              <button
+                onclick="location.href='#modal_nueva_categoria'; event.preventDefault()"
+                class="accionesBoton colorSecundario"
+              >
+                <img src="icons/plus.png" alt="" />
+              </button>
+            </div>
+          </div>
+          <div class="botonesDashboard">
+            <div class="flexColumn space-around">
+              <div class="flexColumn">
+                <button
+                  tabindex="-1"
+                  id="btnNuevoLote"
+                  class="boton colorSecundario modal__close"
+                  onclick="location.href= '#';event.preventDefault()"
+                >
+                  REGISTRAR NUEVO PRODUCTO
+                </button>
+                <button
+                  tabindex="-1"
+                  id="btnNuevoLote"
+                  class="boton colorSecundario modal__close"
+                  onclick="location.href= '#';event.preventDefault()"
+                >
+                  REGISTRAR Y AÑADIR UNIDADES
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="contenedorDashboard">
+        <button
+          tabindex="6"
+          id="btnLimpiar"
+          class="boton colorRojo modal__close"
+          onclick="location.href= '#';event.preventDefault()"
+        >
+          CANCELAR
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal_nuevo_proveedor" class="modal">
+  <div class="modal__content">
+    <div class="contenedorDashboard">
+      <div class="contenedorDashboard">
+        <h2>Ingresar Nuevo Proveedor</h2>
+      </div>
+      <div class="contenedorDashboard">
+        <form action="" class="flexRow">
+          <div class="flexColumn">
+            <div class="flexRow">
+              <div class="cajaInput">
+                <label for="lote">Nombre del Proveedor</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 15vh"
+                    type="text"
+                    name="entrada_id"
+                    id="entrada_id"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="entrada_fecha">Numero del Proveedor</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 15vh"
+                    type="text"
+                    name="entrada_fecha"
+                    id="entrada_fecha"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="botonesDashboard">
+            <div class="flexColumn space-around">
+              <div class="flexColumn">
+                <button
+                  tabindex="-1"
+                  id="btnNuevoLote"
+                  class="boton colorSecundario"
+                  onclick="location.href= '#modal_nuevo_producto';event.preventDefault()"
+                >
+                  REGISTRAR NUEVO PROVEEDOR
+                </button>
+                <button
+                  tabindex="6"
+                  id="btnLimpiar"
+                  class="boton colorRojo modal__close"
+                  onclick="location.href= '#modal_nuevo_producto';event.preventDefault()"
+                >
+                  CANCELAR
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal_nueva_categoria" class="modal">
+  <div class="modal__content">
+    <div class="contenedorDashboard">
+      <div class="contenedorDashboard">
+        <h2>Ingresar Nueva Categoria</h2>
+      </div>
+      <div class="contenedorDashboard">
+        <form action="" class="flexRow">
+          <div class="flexColumn">
+            <div class="flexRow">
+              <div class="cajaInput">
+                <label for="lote">Nombre de la Categoria</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 15vh"
+                    type="text"
+                    name="entrada_id"
+                    id="entrada_id"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="entrada_fecha">Descripcion de la Categoria</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 15vh"
+                    type="text"
+                    name="entrada_fecha"
+                    id="entrada_fecha"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="botonesDashboard">
+            <div class="flexColumn space-around">
+              <div class="flexColumn">
+                <button
+                  tabindex="-1"
+                  id="btnNuevoLote"
+                  class="boton colorSecundario"
+                >
+                  REGISTRAR NUEVA CATEGORIA
+                </button>
+                <button
+                  tabindex="6"
+                  id="btnLimpiar"
+                  class="boton colorRojo modal__close"
+                  onclick="location.href= '#modal_nuevo_producto';event.preventDefault()"
+                >
+                  CANCELAR
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <%- include('./partials/footer.ejs') %>

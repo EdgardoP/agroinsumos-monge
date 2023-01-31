@@ -31,8 +31,9 @@
 		width: 300px;
 		height: 101vh;
 		margin: 0px;
+		margin-top: 40px;
 		color: white;
-		position: absolute;
+		position: inherit;
 		background: var(--colorSecundario);
 		box-shadow: rgba(0, 0, 0, 0.352) 5px 5px 5px;
 }
@@ -137,8 +138,9 @@ i {
 
 
 #accordian ul ul ul {
-		margin-left: 15px;
-		border-left: 1px dotted rgba(0, 0, 0, 0.5);
+		/* margin-left: 15px; */
+		/* border-left: 1px dotted rgba(0, 0, 0, 0.5); */
+		background-color: #73b8cb;
 }
 
 #accordian a:not(:only-child):after {

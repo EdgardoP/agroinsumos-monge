@@ -72,7 +72,7 @@ body {
 }
 
 .cajaInput{
-  margin: 0px 10px 20px 0px;
+  margin: 0px 10px 10px 0px;
 }
 
 .cajaInput input{
@@ -135,16 +135,16 @@ body {
 }
 
 .cajaDashboard{
-  margin-left: 300px;
+  /* margin-left: 300px; */
   margin-top: 40px;
-  width: 85%;
+  width: 100%;
+  /* overflow-y: scroll; */
 }
 
 .cuerpoPantalla{
  display: flex;
  flex-direction: row;
  overflow: hidden;
-
 }
 
 .imagenDashboard{
@@ -184,6 +184,7 @@ body {
   flex-direction: row;
   width: 100%;
   justify-content: center;
+  /* align-items: center; */
 }
 
 .estiloTabla{
@@ -234,4 +235,35 @@ body {
   border-radius: 999px;
   padding: 6px;
   border: none;
+  margin-right: 10px;
+}
+
+/* Modal */
+.modal {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(77, 77, 77, 0.7);
+  transition: all 0.4s;
+  padding: 1%;
+  padding-bottom: 5%;
+}
+
+.modal:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal__content {
+  border-radius: 4px;
+  width: 70%;
+  border-radius: 8px;
+  overflow: hidden;
 }
