@@ -22,8 +22,6 @@ function crearPrincipal() {
   ventanaPrincipal = new BrowserWindow({
     width: 1280,
     height: 720,
-    minHeight: 940,
-    minWidth: 560,
     frame: false,
     autoHideMenuBar: true,
     webPreferences: {
@@ -64,6 +62,8 @@ ipcMain.handle("iniciarSesion", (event, obj) => {
   iniciarSesion(obj);
 });
 
+// Login
+
 const iniciarSesion = (obj) => {
   const { usuario_nombre, usuario_contraseña } = obj;
   const query =
@@ -85,6 +85,36 @@ const iniciarSesion = (obj) => {
       }
     }
   );
+};
+
+// Productos
+ipcMain.handle("obtenerNombreProductos", (event) => {
+  listaProductos();
+});
+
+const listaProductos = (obj) => {
+  db.query("call lista_de_productos()", (error, results, productos) => {
+    if (error) {
+      console.log("No se cargaron los productos");
+    } else {
+      ventanaPrincipal.webContents.send("lista_de_productos", results);
+    }
+  });
+};
+
+//Proveedores
+ipcMain.handle("obtenerProveedores", (event) => {
+  obtenerProveedores();
+});
+
+const obtenerProveedores = () => {
+  db.query("call obtener_proveedores()", (error, results, proveedores) => {
+    if (error) {
+      console.log("No se cargaron los proveedores");
+    } else {
+      ventanaPrincipal.webContents.send("lista_de_proveedores", results);
+    }
+  });
 };
 
 module.exports = {
