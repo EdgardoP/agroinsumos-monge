@@ -102,6 +102,73 @@ const listaProductos = (obj) => {
   });
 };
 
+ipcMain.handle("nuevoProducto", (event, obj, objLote) => {
+  nuevoProducto(obj, objLote);
+});
+
+const nuevoProducto = (obj, objLote) => {
+  const query = "INSERT INTO productos SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+      notificacion("Error", "No se ha podido realizar la accion");
+      ventanaPrincipal.webContents.send("producto_id", -1);
+    } else {
+      let lote_producto_fk = {
+        lote_cantidad: 0,
+        lote_producto_fk: results.insertId,
+      };
+      let datosLote = Object.assign(objLote, lote_producto_fk);
+      nuevoLote(datosLote);
+      notificacion("Transaccion exitosa", "Se ha ingresado un nuevo producto");
+      ventanaPrincipal.webContents.send("producto_id", results.insertId);
+    }
+  });
+};
+
+//Lotes
+
+ipcMain.handle("nuevoLote", (event, obj) => {
+  nuevoLote(obj);
+});
+
+const nuevoLote = (obj) => {
+  console.log(obj);
+  const query = "INSERT INTO lotes SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Lote");
+      ventanaPrincipal.webContents.send("lote_id", results.insertId);
+    }
+  });
+};
+
+ipcMain.handle("modificarMultiplesLotes", (event, obj) => {
+  modificarMultiplesLotes(obj);
+});
+
+const modificarMultiplesLotes = () => {
+  const query = "UPDATE TABLE lotes SET lote_id = (case when ? )";
+};
+
+ipcMain.handle("modificarLote", (event, obj) => {
+  modificarLote(obj);
+});
+
+const modificarLote = (obj) => {
+  const { lote_id } = obj;
+  const { lote_cantidad } = obj;
+  const query = "UPDATE lotes SET lote_cantidad = ? where lote_id = ?";
+  db.query(query, lote_cantidad, lote_id, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion("Transaccion exitosa", "Se ha modificado el lote");
+    }
+  });
+};
 //Proveedores
 ipcMain.handle("obtenerProveedores", (event) => {
   obtenerProveedores();
@@ -113,6 +180,21 @@ const obtenerProveedores = () => {
       console.log("No se cargaron los proveedores");
     } else {
       ventanaPrincipal.webContents.send("lista_de_proveedores", results);
+    }
+  });
+};
+
+//Categorias
+ipcMain.handle("obtenerCategorias", (event) => {
+  obtenerCategorias();
+});
+
+const obtenerCategorias = () => {
+  db.query("call lista_de_categorias", (error, results, categorias) => {
+    if (error) {
+      console.log("No se cargaron las categorias");
+    } else {
+      ventanaPrincipal.webContents.send("lista_de_categorias", results);
     }
   });
 };
