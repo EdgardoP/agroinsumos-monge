@@ -1,32 +1,59 @@
 const { ipcRenderer } = require("electron");
 
-let productoNombre = document.getElementById("producto_nombre");
-let productoDescripcion = document.getElementById("producto_descripcion");
-let productoProveedorId = document.getElementById("producto_proveedor_fk");
-let producto_proveedor_fk = document.getElementById("producto_proveedor_fk");
-let productoColor = document.getElementById("producto_color");
-let productoCategoriaFk = document.getElementById("producto_categoria_fk");
-let lotePresentacion = document.getElementById("lote_presentacion");
-let valorUnitarioCompra = document.getElementById("lote_valor_unitario_compra");
-let valorUnitarioVenta = document.getElementById("lote_valor_unitario_venta");
+//Inputs del dashboard entradas
+let entradaProductoNombre = document.getElementById("entrada_producto_nombre");
+let entradaProductoDescripcion = document.getElementById(
+  "entrada_producto_descripcion"
+);
+let entradaLotePresentacion = document.getElementById(
+  "entrada_lote_presentacion"
+);
 let entradaId = document.getElementById("entrada_id");
 let entradaFecha = document.getElementById("entrada_fecha");
 let entradaLoteFk = document.getElementById("entrada_lote_fk");
-let loteProductoFk = document.getElementById("lote_producto_fk");
-let stockActual = document.getElementById("stock_actual");
+let entradaLoteProductoFk = document.getElementById("entrada_lote_producto_fk");
+let entradaStockActual = document.getElementById("entrada_stock_actual");
 let entradaCantidadIngresar = document.getElementById(
   "entrada_cantidad_ingresar"
 );
 let entradaOtrosGastos = document.getElementById("entrada_otros_gastos");
 let entradaTipoPago = document.getElementById("entrada_tipo_pago");
+let entradaValorUnitarioCompra = document.getElementById(
+  "entrada_valor_unitario_compra"
+);
+let entradaValorUnitarioVenta = document.getElementById(
+  "entrada_valor_unitario_venta"
+);
+
+//Inputs del Modal ingresar Nuevo Producto
+let productoNombre = document.getElementById("producto_nombre");
+let productoDescripcion = document.getElementById("producto_descripcion");
+let productoProveedorFk = document.getElementById("producto_proveedor_fk");
+let productoCategoriaFk = document.getElementById("producto_categoria_fk");
+let productoColor = document.getElementById("producto_color");
+let productoPresentacion = document.getElementById("producto_presentacion");
+let producto_valor_unitario_compra = document.getElementById(
+  "producto_valor_unitario_compra"
+);
+let producto_valor_unitario_venta = document.getElementById(
+  "producto_valor_unitario_venta"
+);
+let productoFechaVencimiento = document.getElementById(
+  "producto_fecha_vencimiento"
+);
+
+let tablaEntradas = document.getElementById("tablaEntradas");
+//Inputs para el modal de agregar Nuevo Proveedor
+//Inputs para el modal de agregar Nueva Categoria
 
 document.addEventListener("DOMContentLoaded", function () {
   obtenerNombreProductos();
   obtenerProveedores();
+  obtenerCategorias();
   entradaFecha.value = obtenerFecha("YYYY/MM/DD");
-  autocomplete(productoNombre, listaDeProductosNombre);
-  autocomplete(loteProductoFk, listaDeProductosId);
-  productoNombre.focus();
+  autocomplete(entradaProductoNombre, listaDeProductosNombre);
+  autocomplete(entradaLoteProductoFk, listaDeProductosId);
+  entradaProductoNombre.focus();
 });
 
 //Funcion para obtener la fecha del sistema
@@ -50,6 +77,23 @@ const obtenerFecha = (formato) => {
   return formato === "YYYY/MM/DD" ? fechaAnioMesDia : fechaDiaMesAnio;
 };
 
+//Funcion para cargar las categorias de la base de datos
+const obtenerCategorias = async () => {
+  await ipcRenderer.invoke("obtenerCategorias");
+};
+
+let listaDeCategoriasRaw = [];
+ipcRenderer.on("lista_de_categorias", (event, results) => {
+  let plantilla = "";
+  listaDeCategoriasRaw = results[0];
+  listaDeCategoriasRaw.forEach((element) => {
+    plantilla += `<option value = ${element.categoria_id} > ${element.categoria_nombre}</option>`;
+  });
+  let nullOption = `<option value = 0>Seleccione</option>`;
+  productoCategoriaFk.innerHTML = nullOption + plantilla;
+});
+
+//Funcion para obtener los nombres de los productos de la base de datos
 const obtenerNombreProductos = async () => {
   await ipcRenderer.invoke("obtenerNombreProductos");
 };
@@ -57,8 +101,10 @@ const obtenerNombreProductos = async () => {
 let listaDeProductosRaw = [];
 let listaDeProductosNombre = [];
 let listaDeProductosId = [];
+
 ipcRenderer.on("lista_de_productos", (event, results) => {
   listaDeProductosRaw = results[0];
+  console.log(listaDeProductosRaw);
   listaDeProductosRaw.forEach((element, index) => {
     listaDeProductosId.push(
       element.producto_id +
@@ -95,9 +141,121 @@ ipcRenderer.on("lista_de_proveedores", (event, results) => {
     plantilla += `<option value = ${element.proveedor_id} > ${element.proveedor_nombre}</option>`;
   });
   let nullOption = `<option value = 0>Seleccione</option>`;
-  producto_proveedor_fk.innerHTML = nullOption + plantilla;
+  productoProveedorFk.innerHTML = nullOption + plantilla;
   console.log(listaDeProveedoresRaw);
 });
+
+//Funcion para agregar un nuevo producto
+const nuevoProducto = async () => {
+  location.href = "#";
+  const obj = {
+    producto_nombre: productoNombre.value,
+    producto_descripcion: productoDescripcion.value,
+    producto_proveedor_fk: productoProveedorFk.value,
+    producto_categoria_fk: productoCategoriaFk.value,
+    producto_color: productoColor.value,
+  };
+  const objLote = {
+    lote_presentacion: productoPresentacion.value,
+    lote_valor_unitario_compra: producto_valor_unitario_compra.value,
+    lote_valor_unitario_venta: producto_valor_unitario_venta.value,
+    lote_ultima_actualizacion: entradaFecha.value,
+    lote_fecha_vencimiento: entradaFecha.value,
+  };
+  await ipcRenderer.invoke("nuevoProducto", obj, objLote);
+  ipcRenderer.on("producto_id", (event, id) => {
+    entradaLoteProductoFk.value = `${id}`;
+  });
+  ipcRenderer.on("lote_id", (event, id) => {
+    entradaLoteFk.value = `${id}`;
+    if (id != -1) {
+      entradaProductoNombre.value = `${productoNombre.value}`;
+      entradaLoteProductoFk.value = `${id}`;
+      entradaProductoDescripcion.value = `${productoDescripcion.value}`;
+      entradaLotePresentacion.value = `${productoPresentacion.value}`;
+      entradaStockActual.value = `${0}`;
+      entradaValorUnitarioCompra.value = `${producto_valor_unitario_compra.value}`;
+      entradaValorUnitarioVenta.value = `${producto_valor_unitario_venta.value}`;
+    }
+    entradaCantidadIngresar.focus();
+    console.log("ReseteoProductos");
+    listaDeProductosRaw = [];
+    listaDeProductosNombre = [];
+    listaDeProductosId = [];
+    obtenerNombreProductos();
+    autocomplete(entradaProductoNombre, listaDeProductosNombre);
+    autocomplete(entradaLoteProductoFk, listaDeProductosId);
+    console.log("ReseteoProductosTerminado");
+  });
+};
+
+const confirmarEntradas = async () => {
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  let valoresModificar = [];
+  let loteModificar = {};
+  let entradas = [];
+
+  for (let index = 0; index < filasElementos.length; index++) {
+    let datosEntradas = [];
+    datosEntradas.push(entradaFecha.value);
+    datosEntradas.push(filasElementos[index].children[2].innerHTML);
+    datosEntradas.push(filasElementos[index].children[7].innerHTML);
+    datosEntradas.push(filasElementos[index].children[6].innerHTML);
+    datosEntradas.push(filasElementos[index].children[10].innerHTML);
+    datosEntradas.push(filasElementos[index].children[9].innerHTML);
+    datosEntradas.push(1);
+    entradas.push([datosEntradas]);
+    loteModificar = {
+      lote_id: filasElementos[index].children[2].innerHTML,
+      lote_cantidad: filasElementos[index].children[8].innerHTML,
+    };
+    valoresModificar.push(loteModificar);
+  }
+  console.log(entradas);
+  console.log(valoresModificar);
+};
+
+let cantidad_filas_ingresadas = 0;
+const agregarEntradaLista = () => {
+  cantidad_filas_ingresadas++;
+  let plantilla = "";
+  let elementoTabla = listaDeProductosRaw.find(
+    (element) => element.lote_id == entradaLoteFk.value
+  );
+  let stockAntiguo = parseInt(entradaStockActual.value);
+  let nuevoIngreso = parseFloat(entradaCantidadIngresar.value);
+  let nuevoStock = stockAntiguo + nuevoIngreso;
+  let otrosGastos = parseInt(entradaOtrosGastos.value);
+  let valorUnitCompra = parseInt(entradaValorUnitarioCompra.value);
+  let subtotal = nuevoIngreso * valorUnitCompra + otrosGastos;
+  console.log(elementoTabla);
+  plantilla += `
+  <tr class = "filasElementos">
+    <td style="min-width: 20px; max-width: 20px; width: 20px">${cantidad_filas_ingresadas}</td>
+    <td style="min-width: 80px; max-width: 80px; width: 80px">${elementoTabla.producto_id}</td>
+    <td style="min-width: 60px; max-width: 60px; width: 60px">${elementoTabla.lote_id}</td>
+    <td style="min-width: 200px; max-width: 200px; width: 200px">${elementoTabla.producto_nombre}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${elementoTabla.lote_presentacion}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${elementoTabla.lote_valor_unitario_compra}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${nuevoIngreso}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${stockAntiguo}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${nuevoStock}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${otrosGastos}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${entradaTipoPago.value}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${subtotal}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">
+          <div>
+            <button class="accionesBoton colorSecundario">
+              <img src="icons/edit-button.png" alt="" />
+            </button>
+            <button class="accionesBoton colorRojo">
+              <img src="icons/cancel.png" alt="" />
+            </button>
+          </div>
+        </td>
+  </tr>`;
+  tablaEntradas.innerHTML += plantilla;
+};
 
 //Funcion de autompletado
 function autocomplete(inp, arr) {
@@ -128,18 +286,19 @@ function autocomplete(inp, arr) {
         items.addEventListener("click", function (e) {
           //capturo el indice con la variable e, mediante target.id
           let indice = e.target.id;
-          loteProductoFk.value = listaDeProductosRaw[indice].producto_id;
+          entradaLoteProductoFk.value = listaDeProductosRaw[indice].producto_id;
           entradaLoteFk.value = listaDeProductosRaw[indice].lote_id;
-          productoDescripcion.value =
+          entradaProductoDescripcion.value =
             listaDeProductosRaw[indice].producto_descripcion;
-          lotePresentacion.value =
+          entradaLotePresentacion.value =
             listaDeProductosRaw[indice].lote_presentacion;
-          stockActual.value = listaDeProductosRaw[indice].lote_cantidad;
-          valorUnitarioCompra.value =
+          entradaStockActual.value = listaDeProductosRaw[indice].lote_cantidad;
+          entradaValorUnitarioCompra.value =
             listaDeProductosRaw[indice].lote_valor_unitario_compra;
-          valorUnitarioVenta.value =
+          entradaValorUnitarioVenta.value =
             listaDeProductosRaw[indice].lote_valor_unitario_venta;
-          productoNombre.value = listaDeProductosRaw[indice].producto_nombre;
+          entradaProductoNombre.value =
+            listaDeProductosRaw[indice].producto_nombre;
           entradaCantidadIngresar.focus();
           closeAllLists();
         });
@@ -187,3 +346,18 @@ function autocomplete(inp, arr) {
     closeAllLists(e.target);
   });
 }
+
+const limpiarTextos = () => {
+  entradaLoteProductoFk.value = "";
+  entradaLoteFk.value = "";
+  entradaProductoNombre.value = "";
+  entradaProductoDescripcion.value = "";
+  entradaLotePresentacion.value = "";
+  entradaStockActual.value = "";
+  entradaValorUnitarioCompra.value = "";
+  entradaValorUnitarioVenta.value = "";
+  entradaCantidadIngresar.value = "";
+  entradaOtrosGastos.value = "";
+  entradaTipoPago.value = "-1";
+  event.preventDefault();
+};

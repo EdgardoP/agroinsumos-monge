@@ -7,7 +7,7 @@
       <div class="contenedorDashboard">
         <form action="" class="flexRow">
           <div class="flexColumn">
-            <div class="flexRow">
+            <div class="flexRow" style="align-items: center">
               <div class="cajaInput">
                 <label for="producto_nombre">Nombre del Producto</label>
                 <div class="imagenInput">
@@ -46,7 +46,7 @@
                     class="estiloInputLogin"
                     name="producto_proveedor_fk"
                     id="producto_proveedor_fk"
-                    style="width: 15vh"
+                    style="width: 13vh"
                     tabindex="-1"
                   ></select>
                 </div>
@@ -58,7 +58,7 @@
                 <img src="icons/plus.png" alt="" />
               </button>
             </div>
-            <div class="flexRow">
+            <div class="flexRow" style="align-items: center">
               <div class="cajaInput">
                 <label for="producto_color">Color</label>
                 <div class="imagenInput">
@@ -67,10 +67,41 @@
                     class="estiloInputLogin"
                     name="producto_color"
                     id="producto_color"
-                    style="width: 15vh"
+                    style="width: 13vh"
                     tabindex="-1"
                   >
                     <option value="-1">Seleccione</option>
+                    <option value="NN">Sin Color</option>
+                    <option value="Azul">Azul</option>
+                    <option value="Verde">Verde</option>
+                    <option value="Rosa">Rosa</option>
+                    <option value="Morado">Morado</option>
+                    <option value="Amarillo">Amarillo</option>
+                    <option value="Blanco">Blanco</option>
+                    <option value="Negro">Negro</option>
+                    <option value="Gris">Gris</option>
+                    <option value="Celeste">Celeste</option>
+                    <option value="Cafe">Cafe</option>
+                  </select>
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="producto_presentacion">Presentacion</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <select
+                    class="estiloInputLogin"
+                    name="producto_presentacion"
+                    id="producto_presentacion"
+                    style="width: 13vh"
+                    tabindex="-1"
+                  >
+                    <option value="-1">Seleccione</option>
+                    <option value="Caja">Caja</option>
+                    <option value="Botella">Botella</option>
+                    <option value="Saco">Saco</option>
+                    <option value="Libra">Libra</option>
+                    <option value="Otro">Otro</option>
                   </select>
                 </div>
               </div>
@@ -82,7 +113,7 @@
                     class="estiloInputLogin"
                     name="producto_categoria_fk"
                     id="producto_categoria_fk"
-                    style="width: 15vh"
+                    style="width: 13vh"
                     tabindex="-1"
                   >
                     <option value="">Seleccione</option>
@@ -96,6 +127,56 @@
                 <img src="icons/plus.png" alt="" />
               </button>
             </div>
+            <div class="flexRow" style="align-items: center">
+              <div class="cajaInput">
+                <label for="producto_valor_unitario_compra"
+                  >Valor Unitario Compra</label
+                >
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="producto_valor_unitario_compra"
+                    id="producto_valor_unitario_compra"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="producto_valor_unitario_venta"
+                  >Valor Unitario Venta</label
+                >
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="producto_valor_unitario_venta"
+                    id="producto_valor_unitario_venta"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="producto_fecha_vencimiento"
+                  >Fecha de Vencimiento</label
+                >
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="producto_fecha_vencimiento"
+                    id="producto_fecha_vencimiento"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div class="botonesDashboard">
             <div class="flexColumn space-around">
@@ -104,7 +185,7 @@
                   tabindex="-1"
                   id="btnNuevoLote"
                   class="boton colorSecundario modal__close"
-                  onclick="location.href= '#';event.preventDefault()"
+                  onclick="nuevoProducto(),event.preventDefault()"
                 >
                   REGISTRAR Y AÑADIR UNIDADES
                 </button>

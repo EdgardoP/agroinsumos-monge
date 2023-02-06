@@ -9,6 +9,8 @@
   --colorTexto:#3a3f46;
   --colorAmarillo:#E79410;
   --colorRojo:#E21C1C;
+  --inputBloqueo:#9D9D9D;
+  --ayudaVisual:#C1D997;
 }
 
 .colorFondoDashboard{
@@ -28,6 +30,10 @@
 
 .colorRojo{
   background-color: var(--colorRojo);
+}
+
+.colorAyudaVisual{
+  background-color: var(--ayudaVisual);
 }
 body {
   margin: 0px;
@@ -83,6 +89,11 @@ body {
   font-family: "Roboto-Regular.ttf";
   font-weight: bolder;
   background-color: var(--colorInput);
+  
+}
+
+.inputBloqueado{
+  background-color: var(--inputBloqueo);
 }
 
 .cajaInput input:focus{
@@ -96,8 +107,6 @@ body {
   font-size: 14px;
   width: 250px;
 }
-
-
 
 .imagenInput{
   display: flex;
@@ -210,20 +219,31 @@ body {
   overflow-y: scroll;
 }
 
+/* .estiloTabla thead{
+  margin-bottom: 10px;
+} */
+
 .estiloTabla td, th{
+  /* border: #000 1px solid; */
   text-align:left;
-  padding: 4px;
+  padding: 3px;
   word-break: break-all;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
 
+}
 
 .estiloTabla tr{
   display: table;
-  width: 100%;
+  /* width: 100%; */
   box-sizing: border-box;
+}
+
+.estiloTabla tr td{
+  border-bottom: #cccccc 1px solid;
+  /* border-right: #cccccc 1px solid; */
+  /* width: 100px; */
 }
 
 .estiloTabla th{
