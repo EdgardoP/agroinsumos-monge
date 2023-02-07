@@ -208,8 +208,8 @@
               tabindex="4"
             >
               <option value="-1">Seleccione</option>
-              <option value="Efectivo">Efectivo</option>
-              <option value="Credito">Credito</option>
+              <option value="1">Efectivo</option>
+              <option value="2">Credito</option>
             </select>
           </div>
         </div>
@@ -250,7 +250,7 @@
             tabindex="6"
             id="btnLimpiar"
             class="boton colorAmarillo"
-            onclick="limpiarTextos()"
+            onclick="limpiarTextos();event.preventDefault();"
           >
             LIMPIAR
           </button>
@@ -300,41 +300,10 @@
         </th>
       </tr>
     </thead>
-    <tbody id="tablaEntradas">
-      <!-- <tr>
-        <td style="width: 3vh; max-width: 3vh; min-width: 3vh">1120</td>
-        <td style="width: 7vh; max-width: 7vh; min-width: 7vh">7342342</td>
-        <td style="width: 5vh; max-width: 5vh; min-width: 5vh">3242</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">
-          Per master adulto
-        </td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">
-          Esta es una descripcion excesivamente grande
-        </td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">Unidad</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">50 L.</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">50 L.</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">3435</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">30</td>
-        <td style="width: 10vh; max-width: 10vh; min-width: 10vh">3478</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">43535</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">Efectivo</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">123123 L.</td>
-        <td style="width: 8vh; max-width: 8vh; min-width: 8vh">
-          <div>
-            <button class="accionesBoton colorSecundario">
-              <img src="icons/edit-button.png" alt="" />
-            </button>
-            <button class="accionesBoton colorRojo">
-              <img src="icons/cancel.png" alt="" />
-            </button>
-          </div>
-        </td>
-      </tr> -->
-    </tbody>
+    <tbody id="tablaEntradas"></tbody>
   </table>
 </div>
-<div class="contenedorDashboard">
+<div>
   <div class="flexRow" style="justify-content: space-evenly">
     <div class="flexRow">
       <button

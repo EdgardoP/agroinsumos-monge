@@ -102,6 +102,28 @@ const listaProductos = (obj) => {
   });
 };
 
+ipcMain.handle("obtenerHistorialProductos", (event, obj) => {
+  obtenerHistorialProductos(obj);
+});
+
+const obtenerHistorialProductos = (obj) => {
+  console.log(obj);
+  const { proveedor } = obj;
+  const { color } = obj;
+  const { presentacion } = obj;
+  const { categoria } = obj;
+  db.query(
+    `call historial_de_productos('${proveedor}','${presentacion}','${color}','${categoria}')`,
+    (error, results, productos) => {
+      if (error) {
+        console.log(error);
+      } else {
+        ventanaPrincipal.webContents.send("historial_de_productos", results);
+      }
+    }
+  );
+};
+
 ipcMain.handle("nuevoProducto", (event, obj, objLote) => {
   nuevoProducto(obj, objLote);
 });
@@ -149,8 +171,20 @@ ipcMain.handle("modificarMultiplesLotes", (event, obj) => {
   modificarMultiplesLotes(obj);
 });
 
-const modificarMultiplesLotes = () => {
-  const query = "UPDATE TABLE lotes SET lote_id = (case when ? )";
+const modificarMultiplesLotes = (obj) => {
+  console.log(obj);
+  let querys = "";
+  obj.forEach((element) => {
+    querys += `UPDATE lotes SET lote_cantidad = ${element.lote_cantidad} WHERE lote_id = ${element.lote_id} ; `;
+  });
+  console.log(querys);
+  db.query(querys, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
+    }
+  });
 };
 
 ipcMain.handle("modificarLote", (event, obj) => {
@@ -195,6 +229,29 @@ const obtenerCategorias = () => {
       console.log("No se cargaron las categorias");
     } else {
       ventanaPrincipal.webContents.send("lista_de_categorias", results);
+    }
+  });
+};
+
+//entradas
+
+ipcMain.handle("insertarMultiplesEntradas", (event, obj) => {
+  insertarMultiplesEntradas(obj);
+});
+
+const insertarMultiplesEntradas = (obj) => {
+  console.log(obj);
+  const query =
+    "INSERT INTO entradas (entradas_fecha, entradas_lote_fk, entrada_stock_antiguo, entrada_cantidad_ingresar, entrada_tipo_pago, entrada_otros_gastos, entrada_usuario_fk) VALUES ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion(
+        "Transaccion Exitosa",
+        "Se han ingresado los productos correctamente"
+      );
+      console.log(results);
     }
   });
 };

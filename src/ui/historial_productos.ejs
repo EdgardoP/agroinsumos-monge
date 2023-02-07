@@ -1,0 +1,155 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Inventario / Historial de Productos</h3>
+</div>
+<div class="contenedorDashboard">
+  <div class="flexRow">
+    <div class="flexRow" style="align-items: center">
+      <div class="cajaInput">
+        <label for="buscarProducto">Buscar Producto</label>
+        <div class="autocomplete imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <input
+            style="width: 40vh"
+            type="text"
+            name="buscarProducto"
+            id="buscarProducto"
+            class="estiloInputLogin"
+            tabindex="2"
+          />
+        </div>
+      </div>
+      <button
+        onclick="location.href='#modal_nueva_categoria'; event.preventDefault()"
+        class="accionesBoton colorSecundario"
+      >
+        <img src="icons/lupa.png" alt="" />
+      </button>
+    </div>
+    <div class="flexRow" style="margin-left: 100px">
+      <div class="cajaInput">
+        <label for="proveedor_nombre">Proveedor</label>
+        <div class="imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <select
+            onchange="filtroProductos('proveedor',this.value)"
+            class="estiloInputLogin"
+            name="proveedor_nombre"
+            id="proveedor_nombre"
+            style="width: 13vh"
+            tabindex="4"
+          >
+            <option value="%">Seleccione</option>
+          </select>
+        </div>
+      </div>
+      <div class="cajaInput">
+        <label for="producto_color">Color</label>
+        <div class="imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <select
+            onchange="filtroProductos('color',this.value)"
+            class="estiloInputLogin"
+            name="producto_color"
+            id="producto_color"
+            style="width: 13vh"
+            tabindex="-1"
+          >
+            <option value="%">Seleccione</option>
+            <option value="NN">Sin Color</option>
+            <option value="Azul">Azul</option>
+            <option value="Verde">Verde</option>
+            <option value="Rosa">Rosa</option>
+            <option value="Morado">Morado</option>
+            <option value="Amarillo">Amarillo</option>
+            <option value="Blanco">Blanco</option>
+            <option value="Negro">Negro</option>
+            <option value="Gris">Gris</option>
+            <option value="Celeste">Celeste</option>
+            <option value="Cafe">Cafe</option>
+          </select>
+        </div>
+      </div>
+      <div class="cajaInput">
+        <label for="producto_presentacion">Presentacion</label>
+        <div class="imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <select
+            onchange="filtroProductos('presentacion',this.value)"
+            class="estiloInputLogin"
+            name="producto_presentacion"
+            id="producto_presentacion"
+            style="width: 13vh"
+            tabindex="-1"
+          >
+            <option value="%">Seleccione</option>
+            <option value="Caja">Caja</option>
+            <option value="Botella">Botella</option>
+            <option value="Saco">Saco</option>
+            <option value="Libra">Libra</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="cajaInput">
+        <label for="categoria_nombre">Categoria</label>
+        <div class="imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <select
+            onchange="filtroProductos('categoria',this.value)"
+            class="estiloInputLogin"
+            name="categoria_nombre"
+            id="categoria_nombre"
+            style="width: 13vh"
+            tabindex="4"
+          >
+            <option value="%">Seleccione</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="min-width: 60px; max-width: 60px; width: 60px">ID</th>
+        <th style="min-width: 60px; max-width: 60px; width: 60px">Nº Lote</th>
+        <th style="min-width: 250px; max-width: 250px; width: 250px">
+          Producto
+        </th>
+        <th style="min-width: 150px; max-width: 150px; width: 150px">
+          Descripcion
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">Color</th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Presentacion
+        </th>
+        <th style="min-width: 60px; max-width: 60px; width: 60px">Stock</th>
+        <th style="min-width: 90px; max-width: 90px; width: 90px">
+          V.U/Compra
+        </th>
+        <th style="min-width: 90px; max-width: 90px; width: 90px">V.U/Venta</th>
+        <th style="min-width: 180px; max-width: 180px; width: 180px">
+          Categoria
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Proveedor
+        </th>
+        <th style="min-width: 150px; max-width: 150px; width: 150px">
+          Fecha Vencimiento
+        </th>
+      </tr>
+    </thead>
+    <tbody id="tablaEntradas" style="max-height: 60vh; height: 60vh"></tbody>
+  </table>
+</div>
+<div class="contenedorDashboard">
+  <div class="flexRow space-around">
+    <h4>Total Inversion: L.234342</h4>
+  </div>
+</div>
+<script src="scripts/historial_productos.js"></script>
+<%-include('./partials/footer.ejs') %>

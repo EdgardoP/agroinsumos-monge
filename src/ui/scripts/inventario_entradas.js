@@ -77,6 +77,37 @@ const obtenerFecha = (formato) => {
   return formato === "YYYY/MM/DD" ? fechaAnioMesDia : fechaDiaMesAnio;
 };
 
+//Funcion para eliminar las filas
+const eliminarFila = () => {
+  let index = event.target.parentNode.parentNode.parentNode.parentNode;
+  index.remove();
+};
+
+const modificarFila = () => {
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  let index = event.target.parentNode.parentNode.parentNode.parentNode;
+  let busqueda = index.children[2].innerHTML;
+  let cantidadIngresar = index.children[6].innerHTML;
+  let otrosGastos = index.children[9].innerHTML;
+  let tipoPago = index.children[10].innerHTML;
+  // console.log(busqueda);
+  let elementoTabla = listaDeProductosRaw.find(
+    (element) => element.lote_id == busqueda
+  );
+  console.log(elementoTabla);
+  entradaLoteFk.value = elementoTabla.lote_id;
+  entradaLoteProductoFk.value = elementoTabla.producto_id;
+  entradaProductoNombre.value = elementoTabla.producto_nombre;
+  entradaProductoDescripcion.value = elementoTabla.producto_descripcion;
+  entradaLotePresentacion.value = elementoTabla.lote_presentacion;
+  entradaStockActual.value = elementoTabla.lote_cantidad;
+  entradaValorUnitarioCompra.value = elementoTabla.lote_valor_unitario_compra;
+  entradaValorUnitarioVenta.value = elementoTabla.lote_valor_unitario_venta;
+  entradaCantidadIngresar.value = cantidadIngresar;
+  entradaOtrosGastos.value = otrosGastos;
+  entradaTipoPago.value = tipoPago;
+  index.remove();
+};
 //Funcion para cargar las categorias de la base de datos
 const obtenerCategorias = async () => {
   await ipcRenderer.invoke("obtenerCategorias");
@@ -206,13 +237,15 @@ const confirmarEntradas = async () => {
     datosEntradas.push(1);
     entradas.push([datosEntradas]);
     loteModificar = {
-      lote_id: filasElementos[index].children[2].innerHTML,
       lote_cantidad: filasElementos[index].children[8].innerHTML,
+      lote_id: filasElementos[index].children[2].innerHTML,
     };
     valoresModificar.push(loteModificar);
   }
   console.log(entradas);
   console.log(valoresModificar);
+  await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
+  await ipcRenderer.invoke("insertarMultiplesEntradas", entradas);
 };
 
 let cantidad_filas_ingresadas = 0;
@@ -231,7 +264,7 @@ const agregarEntradaLista = () => {
   console.log(elementoTabla);
   plantilla += `
   <tr class = "filasElementos">
-    <td style="min-width: 20px; max-width: 20px; width: 20px">${cantidad_filas_ingresadas}</td>
+    <td style="min-width: 20px; max-width: 20px; width: 20px;">${cantidad_filas_ingresadas}</td>
     <td style="min-width: 80px; max-width: 80px; width: 80px">${elementoTabla.producto_id}</td>
     <td style="min-width: 60px; max-width: 60px; width: 60px">${elementoTabla.lote_id}</td>
     <td style="min-width: 200px; max-width: 200px; width: 200px">${elementoTabla.producto_nombre}</td>
@@ -245,16 +278,24 @@ const agregarEntradaLista = () => {
     <td style="min-width: 120px; max-width: 120px; width: 120px">${subtotal}</td>
     <td style="min-width: 120px; max-width: 120px; width: 120px">
           <div>
-            <button class="accionesBoton colorSecundario">
-              <img src="icons/edit-button.png" alt="" />
+            <button id = ${cantidad_filas_ingresadas} 
+            onclick="modificarFila();event.preventDefault()"
+            class="accionesBoton colorSecundario">
+              <img id = ${cantidad_filas_ingresadas}
+              src="icons/edit-button.png" alt="" />
+              
             </button>
-            <button class="accionesBoton colorRojo">
-              <img src="icons/cancel.png" alt="" />
+            <button 
+              id = ${cantidad_filas_ingresadas} 
+              onclick="eliminarFila();event.preventDefault()"
+              class="btnEliminarFila accionesBoton colorRojo">
+              <img id = ${cantidad_filas_ingresadas} src="icons/cancel.png" alt="" />
             </button>
           </div>
         </td>
   </tr>`;
   tablaEntradas.innerHTML += plantilla;
+  limpiarTextos();
 };
 
 //Funcion de autompletado
@@ -348,6 +389,7 @@ function autocomplete(inp, arr) {
 }
 
 const limpiarTextos = () => {
+  entradaProductoNombre.focus();
   entradaLoteProductoFk.value = "";
   entradaLoteFk.value = "";
   entradaProductoNombre.value = "";
@@ -359,5 +401,4 @@ const limpiarTextos = () => {
   entradaCantidadIngresar.value = "";
   entradaOtrosGastos.value = "";
   entradaTipoPago.value = "-1";
-  event.preventDefault();
 };
