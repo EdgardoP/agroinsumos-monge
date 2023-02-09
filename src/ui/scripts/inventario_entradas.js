@@ -24,7 +24,26 @@ let entradaValorUnitarioCompra = document.getElementById(
 let entradaValorUnitarioVenta = document.getElementById(
   "entrada_valor_unitario_venta"
 );
+let entradaFechaVencimiento = document.getElementById(
+  "entrada_lote_fecha_vencimiento"
+);
 
+let productoDerivarNombre = document.getElementById("producto_derivar_nombre");
+let productoDerivarPresentacion = document.getElementById(
+  "producto_derivar_presentacion"
+);
+let productoDerivarStock = document.getElementById("producto_derivar_stock");
+let productoDerivarCantidad = document.getElementById(
+  "producto_derivar_cantidad"
+);
+
+let productoDerivadoPresentacion = document.getElementById(
+  "producto_derivado_presentacion"
+);
+let productoDerivadoStock = document.getElementById("producto_derivado_stock");
+let productoDerivadoValorVenta = document.getElementById(
+  "producto_derivado_valor_venta"
+);
 //Inputs del Modal ingresar Nuevo Producto
 let productoNombre = document.getElementById("producto_nombre");
 let productoDescripcion = document.getElementById("producto_descripcion");
@@ -42,11 +61,46 @@ let productoFechaVencimiento = document.getElementById(
   "producto_fecha_vencimiento"
 );
 
+let nuevoLoteProductoActualNombre = document.getElementById(
+  "nuevo_lote_producto_actual_nombre"
+);
+
+let nuevoLoteProductoActualPresentacion = document.getElementById(
+  "nuevo_lote_producto_actual_presentacion"
+);
+let nuevoLoteProductoActualValorCompra = document.getElementById(
+  "nuevo_lote_producto_actual_valor_compra"
+);
+
+let nuevoLoteProductoActualValorVenta = document.getElementById(
+  "nuevo_lote_producto_actual_valor_venta"
+);
+let nuevoLoteProductoNuevoValorCompra = document.getElementById(
+  "nuevo_lote_producto_nuevo_valor_compra"
+);
+
+let nuevoLoteProductoNuevoValorVenta = document.getElementById(
+  "nuevo_lote_producto_nuevo_valor_venta"
+);
+
+let nuevoLoteProductoNuevoFechaVencimiento = document.getElementById(
+  "nuevo_lote_producto_nuevo_fecha_vencimiento"
+);
+
 let tablaEntradas = document.getElementById("tablaEntradas");
+let nuevoProveedorNombre = document.getElementById("nuevo_proveedor_nombre");
+let nuevoProveedorNumero = document.getElementById("nuevo_proveedor_numero");
+let nuevaCategoriaNombre = document.getElementById("nueva_categoria_nombre");
+let nuevaCategoriaDescripcion = document.getElementById(
+  "nueva_categoria_descripcion"
+);
+
 //Inputs para el modal de agregar Nuevo Proveedor
 //Inputs para el modal de agregar Nueva Categoria
 
+let idDocumento;
 document.addEventListener("DOMContentLoaded", function () {
+  idDocumento = Math.random() * (9999 - 1) + 1;
   obtenerNombreProductos();
   obtenerProveedores();
   obtenerCategorias();
@@ -75,6 +129,19 @@ const obtenerFecha = (formato) => {
     fechaParse.getFullYear(),
   ].join("-"));
   return formato === "YYYY/MM/DD" ? fechaAnioMesDia : fechaDiaMesAnio;
+};
+
+const convertirFecha = (fecha) => {
+  let fechaParse = new Date(fecha),
+    mes = ("0" + (fechaParse.getMonth() + 1)).slice(-2),
+    dia = ("0" + fechaParse.getDate()).slice(-2);
+  let fechaAnioMesDia = (fechaOrdenada = [
+    fechaParse.getFullYear(),
+    mes,
+    dia,
+  ].join("-"));
+  console.log(fechaAnioMesDia);
+  return fechaAnioMesDia;
 };
 
 //Funcion para eliminar las filas
@@ -136,6 +203,11 @@ let listaDeProductosId = [];
 ipcRenderer.on("lista_de_productos", (event, results) => {
   listaDeProductosRaw = results[0];
   console.log(listaDeProductosRaw);
+  console.log(listaDeProductosRaw);
+  console.log(listaDeProductosRaw);
+  console.log(listaDeProductosRaw);
+  console.log(listaDeProductosRaw);
+  console.log(listaDeProductosRaw);
   listaDeProductosRaw.forEach((element, index) => {
     listaDeProductosId.push(
       element.producto_id +
@@ -191,7 +263,7 @@ const nuevoProducto = async () => {
     lote_valor_unitario_compra: producto_valor_unitario_compra.value,
     lote_valor_unitario_venta: producto_valor_unitario_venta.value,
     lote_ultima_actualizacion: entradaFecha.value,
-    lote_fecha_vencimiento: entradaFecha.value,
+    lote_fecha_vencimiento: productoFechaVencimiento.value,
   };
   await ipcRenderer.invoke("nuevoProducto", obj, objLote);
   ipcRenderer.on("producto_id", (event, id) => {
@@ -207,6 +279,7 @@ const nuevoProducto = async () => {
       entradaStockActual.value = `${0}`;
       entradaValorUnitarioCompra.value = `${producto_valor_unitario_compra.value}`;
       entradaValorUnitarioVenta.value = `${producto_valor_unitario_venta.value}`;
+      entradaFechaVencimiento.value = `${productoFechaVencimiento.value}`;
     }
     entradaCantidadIngresar.focus();
     console.log("ReseteoProductos");
@@ -235,7 +308,8 @@ const confirmarEntradas = async () => {
     datosEntradas.push(filasElementos[index].children[10].innerHTML);
     datosEntradas.push(filasElementos[index].children[9].innerHTML);
     datosEntradas.push(1);
-    entradas.push([datosEntradas]);
+    datosEntradas.push(idDocumento);
+    entradas.push(datosEntradas);
     loteModificar = {
       lote_cantidad: filasElementos[index].children[8].innerHTML,
       lote_id: filasElementos[index].children[2].innerHTML,
@@ -246,6 +320,13 @@ const confirmarEntradas = async () => {
   console.log(valoresModificar);
   await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
   await ipcRenderer.invoke("insertarMultiplesEntradas", entradas);
+  listaDeProductosRaw = [];
+  listaDeProductosNombre = [];
+  listaDeProductosId = [];
+  obtenerNombreProductos();
+  autocomplete(entradaProductoNombre, listaDeProductosNombre);
+  autocomplete(entradaLoteProductoFk, listaDeProductosId);
+  console.log("ReseteoProductosTerminado");
 };
 
 let cantidad_filas_ingresadas = 0;
@@ -327,6 +408,10 @@ function autocomplete(inp, arr) {
         items.addEventListener("click", function (e) {
           //capturo el indice con la variable e, mediante target.id
           let indice = e.target.id;
+          nuevoLoteProductoActualNombre.value =
+            listaDeProductosRaw[indice].producto_nombre;
+          nuevoLoteProductoActualPresentacion.value =
+            listaDeProductosRaw[indice].lote_presentacion;
           entradaLoteProductoFk.value = listaDeProductosRaw[indice].producto_id;
           entradaLoteFk.value = listaDeProductosRaw[indice].lote_id;
           entradaProductoDescripcion.value =
@@ -334,13 +419,27 @@ function autocomplete(inp, arr) {
           entradaLotePresentacion.value =
             listaDeProductosRaw[indice].lote_presentacion;
           entradaStockActual.value = listaDeProductosRaw[indice].lote_cantidad;
+          productoDerivarStock.value =
+            listaDeProductosRaw[indice].lote_cantidad;
+          entradaFechaVencimiento.value = `${convertirFecha(
+            listaDeProductosRaw[indice].lote_fecha_vencimiento
+          )}`;
           entradaValorUnitarioCompra.value =
+            listaDeProductosRaw[indice].lote_valor_unitario_compra;
+          nuevoLoteProductoActualValorVenta.value =
+            listaDeProductosRaw[indice].lote_valor_unitario_venta;
+          nuevoLoteProductoActualValorCompra.value =
             listaDeProductosRaw[indice].lote_valor_unitario_compra;
           entradaValorUnitarioVenta.value =
             listaDeProductosRaw[indice].lote_valor_unitario_venta;
           entradaProductoNombre.value =
             listaDeProductosRaw[indice].producto_nombre;
+          productoDerivarNombre.value =
+            listaDeProductosRaw[indice].producto_nombre;
+          productoDerivarPresentacion.value =
+            listaDeProductosRaw[indice].lote_presentacion;
           entradaCantidadIngresar.focus();
+
           closeAllLists();
         });
         contenedorItems.appendChild(items);
@@ -401,4 +500,93 @@ const limpiarTextos = () => {
   entradaCantidadIngresar.value = "";
   entradaOtrosGastos.value = "";
   entradaTipoPago.value = "-1";
+};
+
+const restarStock = (param) => {
+  if (param === "") {
+    productoDerivarStock.value = entradaStockActual.value;
+  } else {
+    let stock = parseInt(entradaStockActual.value);
+    let stockRestar = parseInt(param);
+    let resta = stock - stockRestar;
+    productoDerivarStock.value = resta;
+  }
+};
+
+const nuevoDerivado = async () => {
+  obj = {
+    lote_producto_fk: entradaLoteProductoFk.value,
+    lote_cantidad: productoDerivadoStock.value,
+    lote_valor_unitario_compra: "0",
+    lote_valor_unitario_venta: productoDerivadoValorVenta.value,
+    lote_presentacion: productoDerivadoPresentacion.value,
+    lote_ultima_actualizacion: entradaFecha.value,
+    lote_fecha_vencimiento: entradaFechaVencimiento.value,
+  };
+  objModificar = {
+    lote_id: entradaLoteFk.value,
+    lote_cantidad: productoDerivarStock.value,
+  };
+  await ipcRenderer.invoke("modificarLote", objModificar);
+  await ipcRenderer.invoke("nuevoLote", obj);
+  listaDeProductosRaw = [];
+  listaDeProductosNombre = [];
+  listaDeProductosId = [];
+  obtenerNombreProductos();
+  autocomplete(entradaProductoNombre, listaDeProductosNombre);
+  autocomplete(entradaLoteProductoFk, listaDeProductosId);
+  console.log("ReseteoProductosTerminado");
+  limpiarTextos();
+};
+
+const nuevoProveedor = async () => {
+  const obj = {
+    proveedor_nombre: nuevoProveedorNombre.value,
+    proveedor_numero: nuevoProveedorNumero.value,
+  };
+  await ipcRenderer.invoke("nuevoProveedor", obj);
+  // listaDeProveedoresRaw = [];
+  obtenerProveedores();
+};
+
+const nuevaCategoria = async () => {
+  const obj = {
+    categoria_nombre: nuevaCategoriaNombre.value,
+    categoria_descripcion: nuevaCategoriaDescripcion.value,
+  };
+  await ipcRenderer.invoke("nuevaCategoria", obj);
+  // listaDeCategoriasRaw = [];
+  obtenerCategorias();
+};
+
+const nuevoLote = async () => {
+  location.href = "#";
+  const objLote = {
+    lote_producto_fk: entradaLoteProductoFk.value,
+    lote_presentacion: entradaLotePresentacion.value,
+    lote_valor_unitario_compra: nuevoLoteProductoNuevoValorCompra.value,
+    lote_valor_unitario_venta: nuevoLoteProductoNuevoValorVenta.value,
+    lote_ultima_actualizacion: entradaFecha.value,
+    lote_fecha_vencimiento: nuevoLoteProductoNuevoFechaVencimiento.value,
+    lote_cantidad: "0",
+  };
+  await ipcRenderer.invoke("nuevoLote", objLote);
+  ipcRenderer.on("lote_id", (event, id) => {
+    entradaLoteFk.value = `${id}`;
+    if (id != -1) {
+      entradaStockActual.value = `${0}`;
+      entradaValorUnitarioCompra.value = `${nuevoLoteProductoNuevoValorCompra.value}`;
+      entradaValorUnitarioVenta.value = `${nuevoLoteProductoNuevoValorVenta.value}`;
+      entradaFechaVencimiento.value = `${nuevoLoteProductoNuevoFechaVencimiento.value}`;
+    }
+    entradaCantidadIngresar.focus();
+    console.log("ReseteoProductos");
+    listaDeProductosRaw = [];
+    listaDeProductosNombre = [];
+    listaDeProductosId = [];
+    obtenerNombreProductos();
+    autocomplete(entradaProductoNombre, listaDeProductosNombre);
+    autocomplete(entradaLoteProductoFk, listaDeProductosId);
+    console.log("ReseteoProductosTerminado");
+  });
 };

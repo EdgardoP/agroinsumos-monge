@@ -155,7 +155,7 @@ ipcMain.handle("nuevoLote", (event, obj) => {
 });
 
 const nuevoLote = (obj) => {
-  console.log(obj);
+  // console.log(obj);
   const query = "INSERT INTO lotes SET ?";
   db.query(query, obj, (error, results, fields) => {
     if (error) {
@@ -194,8 +194,9 @@ ipcMain.handle("modificarLote", (event, obj) => {
 const modificarLote = (obj) => {
   const { lote_id } = obj;
   const { lote_cantidad } = obj;
+  console.log(obj);
   const query = "UPDATE lotes SET lote_cantidad = ? where lote_id = ?";
-  db.query(query, lote_cantidad, lote_id, (error, results, fields) => {
+  db.query(query, [lote_cantidad, lote_id], (error, results, fields) => {
     if (error) {
       console.log(error);
     } else {
@@ -218,6 +219,21 @@ const obtenerProveedores = () => {
   });
 };
 
+ipcMain.handle("nuevoProveedor", (event, obj) => {
+  nuevoProveedor(obj);
+});
+
+const nuevoProveedor = (obj) => {
+  const query = "INSERT INTO proveedores SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Proveedor");
+    }
+  });
+};
+
 //Categorias
 ipcMain.handle("obtenerCategorias", (event) => {
   obtenerCategorias();
@@ -233,6 +249,21 @@ const obtenerCategorias = () => {
   });
 };
 
+ipcMain.handle("nuevaCategoria", (event, obj) => {
+  nuevaCategoria(obj);
+});
+
+const nuevaCategoria = (obj) => {
+  const query = "INSERT INTO categorias SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion("Transaccion exitosa", "Se ha ingresado un nueva Categoria");
+    }
+  });
+};
+
 //entradas
 
 ipcMain.handle("insertarMultiplesEntradas", (event, obj) => {
@@ -242,8 +273,8 @@ ipcMain.handle("insertarMultiplesEntradas", (event, obj) => {
 const insertarMultiplesEntradas = (obj) => {
   console.log(obj);
   const query =
-    "INSERT INTO entradas (entradas_fecha, entradas_lote_fk, entrada_stock_antiguo, entrada_cantidad_ingresar, entrada_tipo_pago, entrada_otros_gastos, entrada_usuario_fk) VALUES ?";
-  db.query(query, obj, (error, results, fields) => {
+    "INSERT INTO entradas (entradas_fecha, entradas_lote_fk, entrada_stock_antiguo, entrada_cantidad_ingresar, entrada_tipo_pago, entrada_otros_gastos, entrada_usuario_fk, entrada_num_serie) VALUES ?";
+  db.query(query, [obj], (error, results, fields) => {
     if (error) {
       console.log(error);
     } else {

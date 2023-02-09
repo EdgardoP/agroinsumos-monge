@@ -171,7 +171,7 @@ body {
 .contenedorDashboard{
   background-color: var(--colorBlanco);
   margin: 15px;
-  padding: 15px;
+  padding: 10px;
   color: #000;
   box-shadow: rgba(0, 0, 0, 0.212) 5px 5px 10px;
   width: 95%;

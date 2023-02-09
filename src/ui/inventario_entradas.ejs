@@ -166,6 +166,22 @@
             />
           </div>
         </div>
+        <div class="cajaInput">
+          <label for="entrada_lote_fecha_vencimiento"
+            >Fecha de Vencimiento</label
+          >
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 14vh"
+              type="date"
+              name="entrada_lote_fecha_vencimiento"
+              id="entrada_lote_fecha_vencimiento"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
       </div>
       <div class="flexRow">
         <div class="cajaInput">
@@ -227,13 +243,19 @@
             NUEVO PRODUCTO
           </button>
           <button
+            onclick="location.href='#modal_nuevo_derivado'; event.preventDefault()"
             tabindex="-1"
             id="btnNuevoDerivado"
             class="boton colorSecundario"
           >
             NUEVO DERIVADO
           </button>
-          <button tabindex="-1" id="btnNuevoLote" class="boton colorPrimario">
+          <button
+            onclick=" location.href='#modal_nuevo_lote'; event.preventDefault()"
+            tabindex="-1"
+            id="btnNuevoLote"
+            class="boton colorPrimario"
+          >
             NUEVO LOTE
           </button>
         </div>
