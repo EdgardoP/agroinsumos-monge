@@ -101,6 +101,7 @@ let nuevaCategoriaDescripcion = document.getElementById(
 let idDocumento;
 document.addEventListener("DOMContentLoaded", function () {
   idDocumento = Math.random() * (9999 - 1) + 1;
+  entradaId.value = idDocumento;
   obtenerNombreProductos();
   obtenerProveedores();
   obtenerCategorias();
@@ -140,7 +141,6 @@ const convertirFecha = (fecha) => {
     mes,
     dia,
   ].join("-"));
-  console.log(fechaAnioMesDia);
   return fechaAnioMesDia;
 };
 
@@ -203,11 +203,6 @@ let listaDeProductosId = [];
 ipcRenderer.on("lista_de_productos", (event, results) => {
   listaDeProductosRaw = results[0];
   console.log(listaDeProductosRaw);
-  console.log(listaDeProductosRaw);
-  console.log(listaDeProductosRaw);
-  console.log(listaDeProductosRaw);
-  console.log(listaDeProductosRaw);
-  console.log(listaDeProductosRaw);
   listaDeProductosRaw.forEach((element, index) => {
     listaDeProductosId.push(
       element.producto_id +
@@ -238,6 +233,7 @@ const obtenerProveedores = async () => {
 
 let listaDeProveedoresRaw = [];
 ipcRenderer.on("lista_de_proveedores", (event, results) => {
+  console.log(results);
   let plantilla = "";
   listaDeProveedoresRaw = results[0];
   listaDeProveedoresRaw.forEach((element) => {
@@ -298,9 +294,25 @@ const confirmarEntradas = async () => {
   let valoresModificar = [];
   let loteModificar = {};
   let entradas = [];
+  let nuevoHistorialProveedor = [];
 
   for (let index = 0; index < filasElementos.length; index++) {
     let datosEntradas = [];
+    let datosHistorialProveedor = [];
+    datosHistorialProveedor.push(filasElementos[index].id);
+    datosHistorialProveedor.push(entradaFecha.value);
+    datosHistorialProveedor.push(
+      `${filasElementos[index].children[3].innerHTML} ${filasElementos[index].children[4].innerHTML} ${filasElementos[index].children[5].innerHTML} x ${filasElementos[index].children[6].innerHTML}`
+    );
+    let cantidadProducto = parseInt(
+      filasElementos[index].children[6].innerHTML
+    );
+    let cantidadPrecioVenta = parseInt(
+      filasElementos[index].children[5].innerHTML
+    );
+    let totalInversion = cantidadProducto * cantidadPrecioVenta;
+    datosHistorialProveedor.push(totalInversion);
+    datosHistorialProveedor.push(filasElementos[index].children[10].innerHTML);
     datosEntradas.push(entradaFecha.value);
     datosEntradas.push(filasElementos[index].children[2].innerHTML);
     datosEntradas.push(filasElementos[index].children[7].innerHTML);
@@ -310,16 +322,22 @@ const confirmarEntradas = async () => {
     datosEntradas.push(1);
     datosEntradas.push(idDocumento);
     entradas.push(datosEntradas);
+    nuevoHistorialProveedor.push(datosHistorialProveedor);
     loteModificar = {
       lote_cantidad: filasElementos[index].children[8].innerHTML,
       lote_id: filasElementos[index].children[2].innerHTML,
     };
     valoresModificar.push(loteModificar);
+    console.log(nuevoHistorialProveedor);
   }
   console.log(entradas);
   console.log(valoresModificar);
   await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
   await ipcRenderer.invoke("insertarMultiplesEntradas", entradas);
+  await ipcRenderer.invoke(
+    "insertarHistorialProveedor",
+    nuevoHistorialProveedor
+  );
   listaDeProductosRaw = [];
   listaDeProductosNombre = [];
   listaDeProductosId = [];
@@ -336,15 +354,16 @@ const agregarEntradaLista = () => {
   let elementoTabla = listaDeProductosRaw.find(
     (element) => element.lote_id == entradaLoteFk.value
   );
+  let idProveedor = elementoTabla.proveedor_id;
   let stockAntiguo = parseInt(entradaStockActual.value);
   let nuevoIngreso = parseFloat(entradaCantidadIngresar.value);
   let nuevoStock = stockAntiguo + nuevoIngreso;
   let otrosGastos = parseInt(entradaOtrosGastos.value);
   let valorUnitCompra = parseInt(entradaValorUnitarioCompra.value);
   let subtotal = nuevoIngreso * valorUnitCompra + otrosGastos;
-  console.log(elementoTabla);
+  // console.log(elementoTabla);
   plantilla += `
-  <tr class = "filasElementos">
+  <tr id = "${idProveedor}" class = "filasElementos">
     <td style="min-width: 20px; max-width: 20px; width: 20px;">${cantidad_filas_ingresadas}</td>
     <td style="min-width: 80px; max-width: 80px; width: 80px">${elementoTabla.producto_id}</td>
     <td style="min-width: 60px; max-width: 60px; width: 60px">${elementoTabla.lote_id}</td>
@@ -360,8 +379,8 @@ const agregarEntradaLista = () => {
     <td style="min-width: 120px; max-width: 120px; width: 120px">
           <div>
             <button id = ${cantidad_filas_ingresadas} 
-            onclick="modificarFila();event.preventDefault()"
-            class="accionesBoton colorSecundario">
+              onclick="modificarFila();event.preventDefault()"
+              class="accionesBoton colorSecundario">
               <img id = ${cantidad_filas_ingresadas}
               src="icons/edit-button.png" alt="" />
               
@@ -373,7 +392,7 @@ const agregarEntradaLista = () => {
               <img id = ${cantidad_filas_ingresadas} src="icons/cancel.png" alt="" />
             </button>
           </div>
-        </td>
+    </td>
   </tr>`;
   tablaEntradas.innerHTML += plantilla;
   limpiarTextos();
@@ -439,7 +458,7 @@ function autocomplete(inp, arr) {
           productoDerivarPresentacion.value =
             listaDeProductosRaw[indice].lote_presentacion;
           entradaCantidadIngresar.focus();
-
+          console.log(listaDeProductosRaw[indice].proveedor_id);
           closeAllLists();
         });
         contenedorItems.appendChild(items);
@@ -543,6 +562,7 @@ const nuevoProveedor = async () => {
   const obj = {
     proveedor_nombre: nuevoProveedorNombre.value,
     proveedor_numero: nuevoProveedorNumero.value,
+    proveedor_estado: "Activo",
   };
   await ipcRenderer.invoke("nuevoProveedor", obj);
   // listaDeProveedoresRaw = [];

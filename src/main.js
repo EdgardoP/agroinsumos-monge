@@ -107,7 +107,7 @@ ipcMain.handle("obtenerHistorialProductos", (event, obj) => {
 });
 
 const obtenerHistorialProductos = (obj) => {
-  console.log(obj);
+  // console.log(obj);
   const { proveedor } = obj;
   const { color } = obj;
   const { presentacion } = obj;
@@ -172,17 +172,17 @@ ipcMain.handle("modificarMultiplesLotes", (event, obj) => {
 });
 
 const modificarMultiplesLotes = (obj) => {
-  console.log(obj);
+  // console.log(obj);
   let querys = "";
   obj.forEach((element) => {
     querys += `UPDATE lotes SET lote_cantidad = ${element.lote_cantidad} WHERE lote_id = ${element.lote_id} ; `;
   });
-  console.log(querys);
+  // console.log(querys);
   db.query(querys, (error, results, fields) => {
     if (error) {
       console.log(error);
     } else {
-      console.log(results);
+      // console.log(results);
     }
   });
 };
@@ -194,7 +194,7 @@ ipcMain.handle("modificarLote", (event, obj) => {
 const modificarLote = (obj) => {
   const { lote_id } = obj;
   const { lote_cantidad } = obj;
-  console.log(obj);
+  // console.log(obj);
   const query = "UPDATE lotes SET lote_cantidad = ? where lote_id = ?";
   db.query(query, [lote_cantidad, lote_id], (error, results, fields) => {
     if (error) {
@@ -215,6 +215,37 @@ const obtenerProveedores = () => {
       console.log("No se cargaron los proveedores");
     } else {
       ventanaPrincipal.webContents.send("lista_de_proveedores", results);
+      // console.log(results);
+    }
+  });
+};
+
+ipcMain.handle("documentosHistorialProveedores", (event, obj) => {
+  documentosHistorialProveedores();
+});
+
+const documentosHistorialProveedores = () => {
+  db.query("SELECT * FROM proveedores", (error, results, historial) => {
+    if (error) {
+      console.log(error);
+    } else {
+      results.forEach((element) => {
+        db.query(
+          `call documentos_historial_proveedores(${element.proveedor_id})`,
+          (err, res, hist) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(res);
+              ventanaPrincipal.webContents.send(
+                "documentos_historial_proveedores",
+                res
+              );
+            }
+          }
+        );
+      });
+      console.log(results);
     }
   });
 };
@@ -234,6 +265,70 @@ const nuevoProveedor = (obj) => {
   });
 };
 
+ipcMain.handle("insertarAportacionProveedor", (event, obj) => {
+  insertarAportacionProveedor(obj);
+});
+
+const insertarAportacionProveedor = (obj) => {
+  // console.log(obj);
+  const query = "INSERT INTO historial_proveedores SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion(
+        "Transaccion exitosa",
+        "Se ha ingresado una nueva aportacion"
+      );
+    }
+  });
+};
+
+ipcMain.handle("insertarHistorialProveedor", (event, obj) => {
+  insertarHistorialProveedor(obj);
+});
+
+const insertarHistorialProveedor = (obj) => {
+  // console.log(obj);
+  let objInicializarHistorial = {};
+  obj.forEach((element) => {
+    const buscarFilaAnterior = `SELECT historial_proveedor_saldo_nuevo FROM historial_proveedores where historial_proveedor_fk = ${element[0]} ORDER  BY historial_proveedor_id DESC LIMIT 1`;
+    db.query(buscarFilaAnterior, (error, results, fields) => {
+      if (error) {
+        console.log(error);
+      } else {
+        if (results.length === 0) {
+          objInicializarHistorial = {
+            historial_proveedor_fk: element[0],
+            historial_proveedor_fecha: element[1],
+            historial_proveedor_detalle: element[2],
+            historial_proveedor_saldo_anterior: 0,
+            historial_proveedor_aportacion: element[3],
+            historial_proveedor_saldo_nuevo: element[3],
+            historial_proveedor_tipo_aportacion: "Credito",
+          };
+          insertarAportacionProveedor(objInicializarHistorial);
+        } else {
+          let saldoAnterior = parseInt(
+            results[0].historial_proveedor_saldo_nuevo
+          );
+          let aportacion = parseInt(element[3]);
+          let saldoNuevo = saldoAnterior + aportacion;
+          objInicializarHistorial = {
+            historial_proveedor_fk: element[0],
+            historial_proveedor_fecha: element[1],
+            historial_proveedor_detalle: element[2],
+            historial_proveedor_saldo_anterior: saldoAnterior,
+            historial_proveedor_aportacion: element[3],
+            historial_proveedor_saldo_nuevo: saldoNuevo,
+            historial_proveedor_tipo_aportacion: "Credito",
+          };
+          insertarAportacionProveedor(objInicializarHistorial);
+        }
+      }
+    });
+  });
+};
 //Categorias
 ipcMain.handle("obtenerCategorias", (event) => {
   obtenerCategorias();
@@ -282,7 +377,7 @@ const insertarMultiplesEntradas = (obj) => {
         "Transaccion Exitosa",
         "Se han ingresado los productos correctamente"
       );
-      console.log(results);
+      // console.log(results);
     }
   });
 };
