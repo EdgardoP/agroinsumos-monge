@@ -1,0 +1,84 @@
+<div id="modal_nueva_aportacion" class="modal">
+  <div class="modal__content">
+    <div class="contenedorDashboard">
+      <div class="contenedorDashboard">
+        <h2>Ingresar Nueva Aportacion</h2>
+      </div>
+      <div class="contenedorDashboard">
+        <form action="" class="flexRow">
+          <div class="flexColumn">
+            <div class="flexRow">
+              <div class="cajaInput">
+                <label for="detalles_aportacion"
+                  >Detalles de la Aportacion</label
+                >
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 15vh"
+                    type="text"
+                    name="detalles_aportacion"
+                    id="detalles_aportacion"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="forma_pago">Forma de Pago</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <select
+                    class="estiloInputLogin"
+                    name="forma_pago"
+                    id="forma_pago"
+                  >
+                    <option value="-1">Seleccione</option>
+                    <option value="Contado">Contado</option>
+                    <option value="Deposito">Deposito</option>
+                  </select>
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="cantidad_aportacion">Cantidad a Aportar</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 15vh"
+                    type="text"
+                    name="cantidad_aportacion"
+                    id="cantidad_aportacion"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="botonesDashboard">
+            <div class="flexColumn space-around">
+              <div class="flexColumn">
+                <button
+                  tabindex="-1"
+                  id="btnNuevoLote"
+                  class="boton colorSecundario modal__close"
+                  onclick="nuevaAportacion();location.href= '#modal_nuevo_producto';event.preventDefault()"
+                >
+                  REGISTRAR NUEVO APORTE
+                </button>
+                <button
+                  tabindex="-1"
+                  id="btnLimpiar"
+                  class="boton colorRojo modal__close"
+                  onclick="location.href= '#modal_nuevo_producto';event.preventDefault()"
+                >
+                  CANCELAR
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,6 +27,11 @@ const convertirFecha = (fecha) => {
   return fechaDiaMesAnio;
 };
 
+const visualizarDocumento = async (id) => {
+  await ipcRenderer.invoke("historial_proveedor", id);
+  window.location = "proveedores_historial_documento.ejs";
+};
+
 let i = 0;
 ipcRenderer.on("documentos_historial_proveedores", (event, results) => {
   let documentos = results[0];
@@ -55,7 +60,7 @@ ipcRenderer.on("documentos_historial_proveedores", (event, results) => {
         <div class="flexRow">
           <button
             id = ${element.proveedor_id}
-            onclick="event.preventDefault()"
+            onclick="visualizarDocumento(this.id)"
             class="botonListado colorSecundario"
             style="margin-right: 20px"
           >

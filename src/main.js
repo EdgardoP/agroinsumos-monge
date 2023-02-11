@@ -250,6 +250,24 @@ const documentosHistorialProveedores = () => {
   });
 };
 
+ipcMain.handle("historial_proveedor", (event, id) => {
+  historialProveedor(id);
+});
+
+const historialProveedor = (id) => {
+  let query = `call historial_proveedor(?)`;
+  db.query(query, id, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaPrincipal.webContents.once("did-finish-load", function () {
+        ventanaPrincipal.webContents.send("historial_cuentas", results, id);
+      });
+      console.log(results);
+    }
+  });
+};
+
 ipcMain.handle("nuevoProveedor", (event, obj) => {
   nuevoProveedor(obj);
 });

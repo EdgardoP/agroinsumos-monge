@@ -1,0 +1,64 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard flexRow">
+  <div class="flexColumn">
+    <h2>Estado de Cuenta</h2>
+    <div
+      class="flexRow"
+      style="width: 1000px; justify-content: space-between; margin: 20px 0px"
+    >
+      <p id="nombreProveedor">
+        <!-- <strong> Nombre del Proveedor: </strong> Distribuidora Fernandez -->
+      </p>
+      <p id="ultimaActualizacion">
+        <!-- <strong> Ultima Actualizacion: </strong> 12/02/02 -->
+      </p>
+    </div>
+    <div class="flexRow" style="width: 1000px; justify-content: space-between">
+      <p id="numeroProveedor">
+        <!-- <strong> Numero del Proveedor: </strong> 9876-7823 -->
+      </p>
+      <p id="saldoActual"></p>
+    </div>
+  </div>
+  <div
+    class="flexRow"
+    style="justify-content: right; width: 500px; align-items: center"
+  >
+    <button
+      onclick="location.href='#modal_nueva_aportacion'; event.preventDefault()"
+      tabindex="-1"
+      id="btnNuevoProducto"
+      class="boton colorSecundario"
+    >
+      NUEVA APORTACION
+    </button>
+  </div>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="max-width: 5vh; min-width: 5vh; width: 5vh">Nº</th>
+        <th style="max-width: 10vh; min-width: 10vh; width: 10vh">Fecha</th>
+        <th style="max-width: 35vh; min-width: 35vh; width: 35vh">Detalle</th>
+        <th style="max-width: 20vh; min-width: 20vh; width: 20vh">
+          Saldo Anterior
+        </th>
+        <th style="max-width: 20vh; min-width: 20vh; width: 20vh">
+          Aportacion
+        </th>
+        <th style="max-width: 20vh; min-width: 20vh; width: 20vh">
+          Saldo Nuevo
+        </th>
+        <th style="max-width: 20vh; min-width: 20vh; width: 20vh">
+          Tipo de Aportacion
+        </th>
+      </tr>
+    </thead>
+    <tbody id="tablaEntradas" style="max-height: 65vh; height: 65vh"></tbody>
+  </table>
+</div>
+<%- include('./partials/modal_nueva_aportacion.ejs') %>
+<script src="scripts/proveedores_historial_documento.js"></script>
+<%-include('./partials/footer.ejs') %>
