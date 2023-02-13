@@ -40,7 +40,7 @@ app.on("window-all-closed", () => {
 
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    console.log(BrowserWindow.getFocusedWindow());
+    // console.log(BrowserWindow.getFocusedWindow());
     createWindow();
   }
 });
@@ -73,7 +73,7 @@ const iniciarSesion = (obj) => {
     [usuario_nombre, usuario_contraseña],
     (error, results, fields) => {
       if (error) {
-        console.log(error);
+        // console.log(error);
       }
       if (results.length > 0) {
         crearPrincipal();
@@ -95,7 +95,7 @@ ipcMain.handle("obtenerNombreProductos", (event) => {
 const listaProductos = (obj) => {
   db.query("call lista_de_productos()", (error, results, productos) => {
     if (error) {
-      console.log("No se cargaron los productos");
+      // console.log("No se cargaron los productos");
     } else {
       ventanaPrincipal.webContents.send("lista_de_productos", results);
     }
@@ -107,7 +107,7 @@ ipcMain.handle("obtenerHistorialProductos", (event, obj) => {
 });
 
 const obtenerHistorialProductos = (obj) => {
-  // console.log(obj);
+  console.log(obj);
   const { proveedor } = obj;
   const { color } = obj;
   const { presentacion } = obj;
@@ -116,7 +116,7 @@ const obtenerHistorialProductos = (obj) => {
     `call historial_de_productos('${proveedor}','${presentacion}','${color}','${categoria}')`,
     (error, results, productos) => {
       if (error) {
-        console.log(error);
+        // console.log(error);
       } else {
         ventanaPrincipal.webContents.send("historial_de_productos", results);
       }
@@ -132,7 +132,7 @@ const nuevoProducto = (obj, objLote) => {
   const query = "INSERT INTO productos SET ?";
   db.query(query, obj, (error, results, fields) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
       notificacion("Error", "No se ha podido realizar la accion");
       ventanaPrincipal.webContents.send("producto_id", -1);
     } else {
@@ -159,7 +159,7 @@ const nuevoLote = (obj) => {
   const query = "INSERT INTO lotes SET ?";
   db.query(query, obj, (error, results, fields) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
       notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Lote");
       ventanaPrincipal.webContents.send("lote_id", results.insertId);
@@ -174,13 +174,14 @@ ipcMain.handle("modificarMultiplesLotes", (event, obj) => {
 const modificarMultiplesLotes = (obj) => {
   // console.log(obj);
   let querys = "";
-  obj.forEach((element) => {
+  obj.forEach((element, index, array) => {
+    // console.log(index);
     querys += `UPDATE lotes SET lote_cantidad = ${element.lote_cantidad} WHERE lote_id = ${element.lote_id} ; `;
   });
   // console.log(querys);
   db.query(querys, (error, results, fields) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
       // console.log(results);
     }
@@ -198,7 +199,7 @@ const modificarLote = (obj) => {
   const query = "UPDATE lotes SET lote_cantidad = ? where lote_id = ?";
   db.query(query, [lote_cantidad, lote_id], (error, results, fields) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
       notificacion("Transaccion exitosa", "Se ha modificado el lote");
     }
@@ -212,7 +213,7 @@ ipcMain.handle("obtenerProveedores", (event) => {
 const obtenerProveedores = () => {
   db.query("call obtener_proveedores()", (error, results, proveedores) => {
     if (error) {
-      console.log("No se cargaron los proveedores");
+      // console.log("No se cargaron los proveedores");
     } else {
       ventanaPrincipal.webContents.send("lista_de_proveedores", results);
       // console.log(results);
@@ -227,16 +228,16 @@ ipcMain.handle("documentosHistorialProveedores", (event, obj) => {
 const documentosHistorialProveedores = () => {
   db.query("SELECT * FROM proveedores", (error, results, historial) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
       results.forEach((element) => {
         db.query(
           `call documentos_historial_proveedores(${element.proveedor_id})`,
           (err, res, hist) => {
             if (err) {
-              console.log(err);
+              // console.log(err);
             } else {
-              console.log(res);
+              // console.log(res);
               ventanaPrincipal.webContents.send(
                 "documentos_historial_proveedores",
                 res
@@ -245,11 +246,11 @@ const documentosHistorialProveedores = () => {
           }
         );
       });
-      console.log(results);
+      // console.log(results);
     }
   });
 };
-
+// console.log();
 ipcMain.handle("historial_proveedor", (event, id) => {
   historialProveedor(id);
 });
@@ -258,26 +259,37 @@ const historialProveedor = (id) => {
   let query = `call historial_proveedor(?)`;
   db.query(query, id, (error, results, fields) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
       ventanaPrincipal.webContents.once("did-finish-load", function () {
         ventanaPrincipal.webContents.send("historial_cuentas", results, id);
       });
-      console.log(results);
+      // console.log(results);
     }
   });
 };
 
-ipcMain.handle("nuevoProveedor", (event, obj) => {
-  nuevoProveedor(obj);
+ipcMain.handle("nuevoProveedor", (event, obj, fecha) => {
+  nuevoProveedor(obj, fecha);
 });
 
-const nuevoProveedor = (obj) => {
+const nuevoProveedor = (obj, fecha) => {
   const query = "INSERT INTO proveedores SET ?";
   db.query(query, obj, (error, results, fields) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
+      let idProveedor = results.insertId;
+      let objInicializar = {
+        historial_proveedor_fk: idProveedor,
+        historial_proveedor_fecha: fecha,
+        historial_proveedor_detalle: "Proveedor Agregado Exitosamente",
+        historial_proveedor_saldo_anterior: 0,
+        historial_proveedor_aportacion: 0,
+        historial_proveedor_saldo_nuevo: 0,
+        historial_proveedor_tipo_aportacion: 0,
+      };
+      insertarAportacionProveedor(objInicializar);
       notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Proveedor");
     }
   });
@@ -307,45 +319,29 @@ ipcMain.handle("insertarHistorialProveedor", (event, obj) => {
 });
 
 const insertarHistorialProveedor = (obj) => {
-  // console.log(obj);
-  let objInicializarHistorial = {};
-  obj.forEach((element) => {
-    const buscarFilaAnterior = `SELECT historial_proveedor_saldo_nuevo FROM historial_proveedores where historial_proveedor_fk = ${element[0]} ORDER  BY historial_proveedor_id DESC LIMIT 1`;
-    db.query(buscarFilaAnterior, (error, results, fields) => {
+  const { historial_proveedor_fk } = obj;
+  const { historial_proveedor_fecha } = obj;
+  const { historial_proveedor_detalle } = obj;
+  const { historial_proveedor_aportacion } = obj;
+  const { historial_proveedor_tipo_pago } = obj;
+  let query = `call insertar_historial_proveedor(?,?,?,?,?)`;
+  db.query(
+    query,
+    [
+      historial_proveedor_fk,
+      historial_proveedor_aportacion,
+      historial_proveedor_fecha,
+      historial_proveedor_detalle,
+      historial_proveedor_tipo_pago,
+    ],
+    (error, results, fields) => {
       if (error) {
         console.log(error);
       } else {
-        if (results.length === 0) {
-          objInicializarHistorial = {
-            historial_proveedor_fk: element[0],
-            historial_proveedor_fecha: element[1],
-            historial_proveedor_detalle: element[2],
-            historial_proveedor_saldo_anterior: 0,
-            historial_proveedor_aportacion: element[3],
-            historial_proveedor_saldo_nuevo: element[3],
-            historial_proveedor_tipo_aportacion: "Credito",
-          };
-          insertarAportacionProveedor(objInicializarHistorial);
-        } else {
-          let saldoAnterior = parseInt(
-            results[0].historial_proveedor_saldo_nuevo
-          );
-          let aportacion = parseInt(element[3]);
-          let saldoNuevo = saldoAnterior + aportacion;
-          objInicializarHistorial = {
-            historial_proveedor_fk: element[0],
-            historial_proveedor_fecha: element[1],
-            historial_proveedor_detalle: element[2],
-            historial_proveedor_saldo_anterior: saldoAnterior,
-            historial_proveedor_aportacion: element[3],
-            historial_proveedor_saldo_nuevo: saldoNuevo,
-            historial_proveedor_tipo_aportacion: "Credito",
-          };
-          insertarAportacionProveedor(objInicializarHistorial);
-        }
+        console.log(results);
       }
-    });
-  });
+    }
+  );
 };
 //Categorias
 ipcMain.handle("obtenerCategorias", (event) => {
@@ -355,7 +351,7 @@ ipcMain.handle("obtenerCategorias", (event) => {
 const obtenerCategorias = () => {
   db.query("call lista_de_categorias", (error, results, categorias) => {
     if (error) {
-      console.log("No se cargaron las categorias");
+      // console.log("No se cargaron las categorias");
     } else {
       ventanaPrincipal.webContents.send("lista_de_categorias", results);
     }
@@ -370,7 +366,7 @@ const nuevaCategoria = (obj) => {
   const query = "INSERT INTO categorias SET ?";
   db.query(query, obj, (error, results, fields) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
       notificacion("Transaccion exitosa", "Se ha ingresado un nueva Categoria");
     }
@@ -384,12 +380,12 @@ ipcMain.handle("insertarMultiplesEntradas", (event, obj) => {
 });
 
 const insertarMultiplesEntradas = (obj) => {
-  console.log(obj);
+  // console.log(obj);
   const query =
     "INSERT INTO entradas (entradas_fecha, entradas_lote_fk, entrada_stock_antiguo, entrada_cantidad_ingresar, entrada_tipo_pago, entrada_otros_gastos, entrada_usuario_fk, entrada_num_serie) VALUES ?";
   db.query(query, [obj], (error, results, fields) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     } else {
       notificacion(
         "Transaccion Exitosa",

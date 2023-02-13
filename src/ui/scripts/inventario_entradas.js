@@ -202,7 +202,7 @@ let listaDeProductosId = [];
 
 ipcRenderer.on("lista_de_productos", (event, results) => {
   listaDeProductosRaw = results[0];
-  console.log(listaDeProductosRaw);
+  // console.log(listaDeProductosRaw);
   listaDeProductosRaw.forEach((element, index) => {
     listaDeProductosId.push(
       element.producto_id +
@@ -293,26 +293,34 @@ const confirmarEntradas = async () => {
   let filasElementos = document.getElementsByClassName("filasElementos");
   let valoresModificar = [];
   let loteModificar = {};
+  let datosHistorialProveedor = {};
   let entradas = [];
   let nuevoHistorialProveedor = [];
 
   for (let index = 0; index < filasElementos.length; index++) {
     let datosEntradas = [];
-    let datosHistorialProveedor = [];
-    datosHistorialProveedor.push(filasElementos[index].id);
-    datosHistorialProveedor.push(entradaFecha.value);
-    datosHistorialProveedor.push(
-      `${filasElementos[index].children[3].innerHTML} ${filasElementos[index].children[4].innerHTML} ${filasElementos[index].children[5].innerHTML} x ${filasElementos[index].children[6].innerHTML}`
-    );
-    let cantidadProducto = parseInt(
-      filasElementos[index].children[6].innerHTML
-    );
-    let cantidadPrecioVenta = parseInt(
-      filasElementos[index].children[5].innerHTML
-    );
-    let totalInversion = cantidadProducto * cantidadPrecioVenta;
-    datosHistorialProveedor.push(totalInversion);
-    datosHistorialProveedor.push(filasElementos[index].children[10].innerHTML);
+    if (filasElementos[index].children[10].innerHTML === "Credito") {
+      let cantidadProducto = parseInt(
+        filasElementos[index].children[6].innerHTML
+      );
+      let cantidadPrecioVenta = parseInt(
+        filasElementos[index].children[5].innerHTML
+      );
+      let totalInversion = cantidadProducto * cantidadPrecioVenta;
+      datosHistorialProveedor = {
+        historial_proveedor_fk: filasElementos[index].id,
+        historial_proveedor_fecha: entradaFecha.value,
+        historial_proveedor_detalle: `${filasElementos[index].children[3].innerHTML} ${filasElementos[index].children[4].innerHTML} ${filasElementos[index].children[5].innerHTML} x ${filasElementos[index].children[6].innerHTML}`,
+        historial_proveedor_aportacion: totalInversion,
+        historial_proveedor_tipo_pago:
+          filasElementos[index].children[10].innerHTML,
+      };
+      // nuevoHistorialProveedor.push(datosHistorialProveedor);
+      await ipcRenderer.invoke(
+        "insertarHistorialProveedor",
+        datosHistorialProveedor
+      );
+    }
     datosEntradas.push(entradaFecha.value);
     datosEntradas.push(filasElementos[index].children[2].innerHTML);
     datosEntradas.push(filasElementos[index].children[7].innerHTML);
@@ -322,29 +330,21 @@ const confirmarEntradas = async () => {
     datosEntradas.push(1);
     datosEntradas.push(idDocumento);
     entradas.push(datosEntradas);
-    nuevoHistorialProveedor.push(datosHistorialProveedor);
     loteModificar = {
       lote_cantidad: filasElementos[index].children[8].innerHTML,
       lote_id: filasElementos[index].children[2].innerHTML,
     };
+
     valoresModificar.push(loteModificar);
-    console.log(nuevoHistorialProveedor);
   }
-  console.log(entradas);
-  console.log(valoresModificar);
   await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
   await ipcRenderer.invoke("insertarMultiplesEntradas", entradas);
-  await ipcRenderer.invoke(
-    "insertarHistorialProveedor",
-    nuevoHistorialProveedor
-  );
   listaDeProductosRaw = [];
   listaDeProductosNombre = [];
   listaDeProductosId = [];
   obtenerNombreProductos();
   autocomplete(entradaProductoNombre, listaDeProductosNombre);
   autocomplete(entradaLoteProductoFk, listaDeProductosId);
-  console.log("ReseteoProductosTerminado");
 };
 
 let cantidad_filas_ingresadas = 0;
@@ -458,7 +458,6 @@ function autocomplete(inp, arr) {
           productoDerivarPresentacion.value =
             listaDeProductosRaw[indice].lote_presentacion;
           entradaCantidadIngresar.focus();
-          console.log(listaDeProductosRaw[indice].proveedor_id);
           closeAllLists();
         });
         contenedorItems.appendChild(items);
@@ -559,12 +558,13 @@ const nuevoDerivado = async () => {
 };
 
 const nuevoProveedor = async () => {
+  let fecha = entradaFecha.value;
   const obj = {
     proveedor_nombre: nuevoProveedorNombre.value,
     proveedor_numero: nuevoProveedorNumero.value,
     proveedor_estado: "Activo",
   };
-  await ipcRenderer.invoke("nuevoProveedor", obj);
+  await ipcRenderer.invoke("nuevoProveedor", obj, fecha);
   // listaDeProveedoresRaw = [];
   obtenerProveedores();
 };
