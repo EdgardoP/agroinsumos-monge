@@ -396,6 +396,42 @@ const insertarMultiplesEntradas = (obj) => {
   });
 };
 
+ipcMain.handle("cargar_historial_entradas", (event) => {
+  cargarHistorialEntradas();
+});
+
+const cargarHistorialEntradas = () => {
+  const query = "call historial_entradas()";
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaPrincipal.webContents.send("historial_entradas", results);
+    }
+  });
+};
+
+ipcMain.handle("historial_entradas", (event, id) => {
+  historialEntradas(id);
+});
+
+const historialEntradas = (id) => {
+  const query = "call documento_entrada_historial(?)";
+  db.query(query, [id], (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaPrincipal.webContents.once("did-finish-load", function () {
+        ventanaPrincipal.webContents.send(
+          "documento_historial_entrada",
+          results,
+          id
+        );
+      });
+    }
+  });
+};
+
 module.exports = {
   crearLogin,
 };

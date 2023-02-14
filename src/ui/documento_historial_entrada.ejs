@@ -1,0 +1,66 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <div
+    class="flexRow"
+    style="align-items: center; justify-content: space-evenly"
+  >
+    <img
+      src="icons/empresaIcono.png"
+      alt=""
+      style="width: 150px; margin-bottom: 30px"
+    />
+    <div class="flexColumn" style="text-align: center">
+      <h3 style="margin-bottom: 10px">
+        AGROINSUMOS MONGE | ENTRADA DE PRODUCTO
+      </h3>
+      <div style="justify-items: center" class="flexRow">
+        <p style="margin-right: 10px"><strong>FECHA DE EMISION: </strong></p>
+        <p id="fechaActual" style="margin-bottom: 10px"></p>
+      </div>
+      <div style="justify-items: center" class="flexRow">
+        <p style="margin-right: 10px"><strong>NUMERO DE SERIE:</strong></p>
+        <p id="numeroSerie" style="margin-bottom: 10px">21323121</p>
+      </div>
+    </div>
+  </div>
+  <table class="estiloTabla">
+    <thead>
+      <tr style="background-color: rgb(138, 138, 138); color: #fff">
+        <th style="min-width: 20px; max-width: 20px; width: 20px">Nº</th>
+        <th style="min-width: 50px; max-width: 50px; width: 50px">ID</th>
+        <th style="min-width: 200px; max-width: 200px; width: 200px">
+          Producto
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Presentacion
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Valor Unit Compra
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Cantidad Ingresada
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Stock Antiguo
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Stock Actualizado
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Tipo de Pago
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Otros Gastos
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Sub-Total
+        </th>
+      </tr>
+    </thead>
+    <tbody id="tablaEntradas" style="max-height: 65vh; height: 65vh"></tbody>
+  </table>
+</div>
+<%- include('./partials/modal_nueva_aportacion.ejs') %>
+<script src="scripts/documento_historial_entrada.js"></script>
+<%-include('./partials/footer.ejs') %>
