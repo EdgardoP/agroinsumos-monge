@@ -40,14 +40,14 @@ body {
   margin: 0px;
   padding: 0px;
   border: 0px;
-  font-family: "Roboto-Regular.ttf";
+  font-family: "Roboto-Light";
   /* font-weight: 500; */
   /* font-style: normal; */
   /* font-weight: bolder; */
 }
 
 @font-face {
-  font-family: "Roboto-Regular.ttf";
+  font-family: "Roboto-Light";
   src: url("../../fonts/Roboto/Roboto-Light.ttf") format("truetype");
 }
 
@@ -89,7 +89,7 @@ body {
 }
 
 .cajaInput input{
-  font-family: "Roboto-Regular.ttf";
+  font-family: "Roboto-Light";
   font-weight: bolder;
   background-color: var(--colorInput);
   
@@ -142,7 +142,7 @@ body {
   margin: 5px 0px 5px 0px;
   border-radius: 5px;
   border: 0px;
-  font-family: "Roboto-Regular.ttf";
+  font-family: "Roboto-Light";
   font-size: 13px;
   font-weight: bolder;
   color: #fff;
@@ -351,5 +351,5 @@ body {
   text-align: center;
   color: var(--colorBlanco);
   font-weight: bold;
-  font-family: "Roboto-Regular.ttf";
+  font-family: "Roboto-Light";
 }

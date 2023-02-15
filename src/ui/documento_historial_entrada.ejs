@@ -1,6 +1,10 @@
 <%- include('./partials/header.ejs') %>
 <link rel="stylesheet" href="style/style.css" />
-<div class="contenedorDashboard">
+<div
+  class="contenedorDashboard"
+  id="elementoImprimir"
+  style="background-color: #fff"
+>
   <div
     class="flexRow"
     style="align-items: center; justify-content: space-evenly"
@@ -58,9 +62,35 @@
         </th>
       </tr>
     </thead>
-    <tbody id="tablaEntradas" style="max-height: 65vh; height: 65vh"></tbody>
+    <tbody id="tablaEntradas"></tbody>
   </table>
 </div>
+<div>
+  <div>
+    <div class="flexRow" style="justify-content: space-evenly">
+      <div class="flexRow">
+        <button
+          style="margin-right: 10px"
+          tabindex="6"
+          id="btnImprimir"
+          class="boton colorPrimario"
+          onclick=""
+        >
+          GUARDAR COMO PDF
+        </button>
+        <button
+          onclick=""
+          tabindex="5"
+          id="btnAceptar"
+          class="boton colorSecundario"
+        >
+          EXPORTAR A EXCEL
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <%- include('./partials/modal_nueva_aportacion.ejs') %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="scripts/documento_historial_entrada.js"></script>
 <%-include('./partials/footer.ejs') %>

@@ -1,5 +1,22 @@
 const { ipcRenderer } = require("electron");
 
+let opt = {
+  margin: 0.2,
+  filename: `Reporte`,
+  image: { type: "jpeg", quality: 0.98 },
+  html2canvas: { scale: 4 },
+  jsPDF: { format: "a3", unit: "in", orientation: "landscape" },
+};
+
+// const crearReporte = () => {
+//   html2pdf().set(opt).from(elementoImprimir).save();
+// };
+let btnImprimir = document.getElementById("btnImprimir");
+btnImprimir.addEventListener("click", () => {
+  let elementoImprimir = document.getElementById("elementoImprimir");
+  html2pdf().set(opt).from(elementoImprimir).save();
+});
+
 let fechaActual = document.getElementById("fechaActual");
 let tablaEntradas = document.getElementById("tablaEntradas");
 let numeroSerie = document.getElementById("numeroSerie");
@@ -43,7 +60,7 @@ function formatDinero(numero) {
   // console.log(numero.toLocaleString());
   return numero.toLocaleString();
 }
-console.log(formatDinero("5"));
+// console.log(formatDinero("5"));
 
 ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
   numeroSerie.innerHTML = id;
@@ -119,7 +136,7 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
+    <td style="min-width: 130px; max-width: 130px; width: 130px">Total:</td>
     <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff">L. ${formatDinero(
       totalOtrosGastos + totalSubTotales
     )}</td>
@@ -127,3 +144,5 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
     `;
   //   tablaEntradas.innerHTML += plantillaTotales;
 });
+
+//Imprimir el Reporte
