@@ -331,14 +331,15 @@ const confirmarEntradas = async () => {
     datosEntradas.push(idDocumento);
     entradas.push(datosEntradas);
     loteModificar = {
-      lote_cantidad: filasElementos[index].children[8].innerHTML,
+      lote_cantidad: filasElementos[index].children[6].innerHTML,
       lote_id: filasElementos[index].children[2].innerHTML,
     };
-
+    // console.log(loteModificar);
     valoresModificar.push(loteModificar);
   }
   await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
   await ipcRenderer.invoke("insertarMultiplesEntradas", entradas);
+
   listaDeProductosRaw = [];
   listaDeProductosNombre = [];
   listaDeProductosId = [];

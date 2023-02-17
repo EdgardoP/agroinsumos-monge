@@ -1,0 +1,315 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Inventario / Salidas de Productos al Inventario</h3>
+</div>
+<div class="contenedorDashboard">
+  <form action="" class="flexRow">
+    <div class="flexColumn">
+      <div class="flexRow">
+        <div class="cajaInput">
+          <label for="salida_id">ID Documento</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="salida_id"
+              id="salida_id"
+              class="estiloInputLogin"
+              tabindex="-1"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_fecha">Fecha</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="date"
+              name="salida_fecha"
+              id="salida_fecha"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="cajaInput">
+          <label for="salida_lote_producto_fk">ID Producto</label>
+          <div class="imagenInput autocomplete">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 4vh"
+              type="text"
+              name="salida_lote_producto_fk"
+              id="salida_lote_producto_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_lote_fk">ID Lote</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 4vh"
+              type="text"
+              name="salida_lote_fk"
+              id="salida_lote_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_producto_nombre">Nombre del Producto</label>
+          <div class="imagenInput autocomplete">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="salida_producto_nombre"
+              id="salida_producto_nombre"
+              class="estiloInputLogin"
+              tabindex="1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_producto_descripcion"
+            >Descripcion del Producto</label
+          >
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="salida_producto_descripcion"
+              id="salida_producto_descripcion"
+              class="estiloInputLogin"
+              tabindex="-1"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_lote_presentacion"
+            >Presentacion del Producto</label
+          >
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 14vh"
+              type="text"
+              name="salida_lote_presentacion"
+              id="salida_lote_presentacion"
+              class="estiloInputLogin"
+              tabindex="-1"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_lote_fecha_vencimiento"
+            >Fecha de Vencimiento</label
+          >
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 14vh"
+              type="date"
+              name="salida_lote_fecha_vencimiento"
+              id="salida_lote_fecha_vencimiento"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flexRow">
+        <div class="cajaInput">
+          <label for="salida_stock_actual">Stock Actual</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13.5vh"
+              type="text"
+              name="salida_stock_actual"
+              id="salida_stock_actual"
+              class="estiloInputLogin"
+              tabindex="-1"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_valor_unitario_venta"
+            >Valor Unitario de Venta</label
+          >
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="salida_valor_unitario_venta"
+              id="salida_valor_unitario_venta"
+              class="estiloInputLogin"
+              tabindex="-1"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_cantidad">Cantidad de Salida</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 13vh"
+              type="text"
+              name="salida_cantidad"
+              id="salida_cantidad"
+              class="estiloInputLogin"
+              tabindex="2"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="salida_tipo_pago">Tipo de Pago</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="salida_tipo_pago"
+              id="salida_tipo_pago"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="-1">Seleccione</option>
+              <option value="Contado">Contado</option>
+              <option value="Deposito">Deposito</option>
+              <option value="Credito">Credito</option>
+            </select>
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="cliente_salida">Cargar venta a:</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="cliente_salida"
+              id="cliente_salida"
+              style="width: 15vh"
+              tabindex="4"
+              disabled
+            >
+              <option value="0">Ninguno</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="botonesDashboard">
+      <div class="flexColumn space-around">
+        <div class="flexColumn">
+          <button
+            onclick="agregarSalidaLista();event.preventDefault()"
+            tabindex="5"
+            id="btnAceptar"
+            class="boton colorSecundario"
+          >
+            ACEPTAR
+          </button>
+          <button
+            tabindex="6"
+            id="btnLimpiar"
+            class="boton colorAmarillo"
+            onclick="limpiarTextos();event.preventDefault();"
+          >
+            LIMPIAR
+          </button>
+        </div>
+        <div class="flexColumn">
+          <button
+            tabindex="6"
+            id="btnLimpiar"
+            class="boton colorPrimario"
+            onclick=" location.href='#modal_asociar_cliente'; event.preventDefault()"
+          >
+            ASOCIAR VENTA A UN CLIENTE
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="min-width: 20px; max-width: 20px; width: 20px">Nº</th>
+        <th style="min-width: 80px; max-width: 80px; width: 80px">
+          ID Producto
+        </th>
+        <th style="min-width: 60px; max-width: 60px; width: 60px">ID Lote</th>
+        <th style="min-width: 200px; max-width: 200px; width: 200px">
+          Producto
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Presentacion
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Valor Unit. Venta
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Cant Salida
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Stock Actual
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Tipo de Pago
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Sub-Total
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Acciones
+        </th>
+      </tr>
+    </thead>
+    <tbody id="tablaSalidas"></tbody>
+  </table>
+</div>
+<div>
+  <div class="flexRow" style="justify-content: space-evenly">
+    <div class="flexRow">
+      <button
+        style="margin-right: 10px"
+        tabindex="6"
+        id="btnLimpiar"
+        class="boton colorAmarillo"
+        onclick="limpiarTextos()"
+      >
+        CANCELAR
+      </button>
+      <button
+        onclick="confirmarEntradas();event.preventDefault()"
+        tabindex="5"
+        id="btnAceptar"
+        class="boton colorSecundario"
+      >
+        ACEPTAR Y GUARDAR
+      </button>
+    </div>
+  </div>
+</div>
+<%- include('./partials/modal_inventario_salida.ejs') %>
+<script src="scripts/inventario_salidas.js"></script>
+<%-include('./partials/footer.ejs') %>

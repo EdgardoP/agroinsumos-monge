@@ -176,14 +176,14 @@ const modificarMultiplesLotes = (obj) => {
   let querys = "";
   obj.forEach((element, index, array) => {
     // console.log(index);
-    querys += `UPDATE lotes SET lote_cantidad = ${element.lote_cantidad} WHERE lote_id = ${element.lote_id} ; `;
+    querys += `call sumar_cantidad_lotes(${element.lote_id},${element.lote_cantidad});`;
   });
-  // console.log(querys);
+  console.log(querys);
   db.query(querys, (error, results, fields) => {
     if (error) {
-      // console.log(error);
+      console.log(error);
     } else {
-      // console.log(results);
+      console.log(results);
     }
   });
 };
@@ -428,6 +428,128 @@ const historialEntradas = (id) => {
           id
         );
       });
+    }
+  });
+};
+
+//////////////Salidas
+
+ipcMain.handle("insertarMultiplesSalidas", (event, obj) => {
+  insertarMultiplesSalidas(obj);
+});
+
+const insertarMultiplesSalidas = (obj) => {
+  console.log(obj);
+  const query =
+    "INSERT INTO salidas (salida_fecha, salida_lote_fk, salida_cantidad, salida_tipo_pago, salida_usuario_fk, salida_num_serie) VALUES ?";
+  db.query(query, [obj], (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion(
+        "Transaccion Exitosa",
+        "Se han ingresado los productos correctamente"
+      );
+      // console.log(results);
+    }
+  });
+};
+
+ipcMain.handle("insertarHistorialCliente", (event, obj) => {
+  insertarHistorialCliente(obj);
+});
+
+const insertarHistorialCliente = (obj) => {
+  const { historial_cliente_fk } = obj;
+  const { historial_cliente_fecha } = obj;
+  const { historial_cliente_detalle } = obj;
+  const { historial_cliente_aportacion } = obj;
+  const { historial_cliente_tipo_pago } = obj;
+  const { historial_cliente_usuario_fk } = obj;
+  let query = `call insertar_historial_cliente(?,?,?,?,?,?)`;
+  db.query(
+    query,
+    [
+      historial_cliente_fk,
+      historial_cliente_aportacion,
+      historial_cliente_fecha,
+      historial_cliente_detalle,
+      historial_cliente_tipo_pago,
+      historial_cliente_usuario_fk,
+    ],
+    (error, results, fields) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(results);
+      }
+    }
+  );
+};
+
+//Clientes
+
+//Cargar Clientes
+ipcMain.handle("obtenerClientes", (event) => {
+  obtenerClientes();
+});
+
+const obtenerClientes = () => {
+  db.query("SELECT * FROM Clientes", (error, results, proveedores) => {
+    if (error) {
+      console.log("No se cargaron los proveedores");
+    } else {
+      ventanaPrincipal.webContents.send("lista_de_clientes", results);
+      console.log(results);
+    }
+  });
+};
+
+//Nuevo Cliente
+
+ipcMain.handle("nuevoCliente", (event, obj, fecha) => {
+  nuevoCliente(obj, fecha);
+});
+
+const nuevoCliente = (obj, fecha) => {
+  const query = "INSERT INTO clientes SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
+      let idCliente = results.insertId;
+      let objInicializar = {
+        historial_cliente_fk: idCliente,
+        historial_cliente_fecha: fecha,
+        historial_cliente_detalle: "Cliente Agregado Exitosamente",
+        historial_cliente_saldo_anterior: 0,
+        historial_cliente_aportacion: 0,
+        historial_cliente_saldo_nuevo: 0,
+        historial_cliente_tipo_aportacion: "0",
+        historial_cliente_usuario_fk: 1,
+      };
+      insertarAportacionCliente(objInicializar);
+      notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Cliente");
+    }
+  });
+};
+
+ipcMain.handle("insertarAportacionCliente", (event, obj) => {
+  insertarAportacionCliente(obj);
+});
+
+const insertarAportacionCliente = (obj) => {
+  // console.log(obj);
+  const query = "INSERT INTO historial_clientes SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion(
+        "Transaccion exitosa",
+        "Se ha ingresado una nueva aportacion a los clientes"
+      );
     }
   });
 };
