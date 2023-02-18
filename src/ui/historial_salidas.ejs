@@ -1,0 +1,78 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Inventario / Historial de Salidas</h3>
+</div>
+<div class="contenedorDashboard">
+  <div class="flexRow">
+    <div class="flexRow" style="align-items: center">
+      <div class="cajaInput">
+        <label for="buscarSalida">Buscar Salida por Codigo</label>
+        <div class="autocomplete imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <input
+            style="width: 40vh"
+            type="text"
+            name="buscarSalida"
+            id="buscarSalida"
+            class="estiloInputLogin"
+            tabindex="2"
+          />
+        </div>
+      </div>
+      <button
+        onclick="location.href='#modal_nueva_categoria'; event.preventDefault()"
+        class="accionesBoton colorSecundario"
+      >
+        <img src="icons/lupa.png" alt="" />
+      </button>
+    </div>
+    <div class="flexRow" style="margin-left: 100px">
+      <div class="cajaInput">
+        <label for="fecha_inicial_salida">Fecha Inicial</label>
+        <div class="imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <input
+            onchange="filtroProductos('proveedor',this.value)"
+            class="estiloInputLogin"
+            name="fecha_inicial_salida"
+            id="fecha_inicial_salida"
+            style="width: 13vh"
+            tabindex="4"
+            type="date"
+          />
+        </div>
+      </div>
+      <div class="cajaInput">
+        <label for="fecha_final_salida">Fecha Final</label>
+        <div class="imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <input
+            onchange="filtroProductos('color',this.value)"
+            class="estiloInputLogin"
+            name="fecha_final_salida"
+            id="fecha_final_salida"
+            style="width: 13vh"
+            tabindex="-1"
+            type="date"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="min-width: 25vh; max-width: 25vh; width: 25vh">Nº</th>
+        <th style="min-width: 25vh; max-width: 25vh; width: 25vh">Codigo</th>
+        <th style="min-width: 25vh; max-width: 25vh; width: 25vh">Fecha</th>
+        <th style="min-width: 25vh; max-width: 25vh; width: 25vh">Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tablaSalidas" style="max-height: 70vh; height: 70vh"></tbody>
+  </table>
+</div>
+<script src="scripts/historial_salidas.js"></script>
+<%-include('./partials/footer.ejs') %>

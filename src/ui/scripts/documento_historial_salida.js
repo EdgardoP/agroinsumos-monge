@@ -4,20 +4,20 @@ let btnImprimir = document.getElementById("btnImprimir");
 btnImprimir.addEventListener("click", () => {
   let opt = {
     margin: 0.2,
-    filename: `Entrada-${fechaActual.innerHTML}`,
+    filename: `Salida-${fechaActual.innerHTML}`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 4 },
-    jsPDF: { format: "a3", unit: "in", orientation: "landscape" },
+    jsPDF: { format: "a3", unit: "in", orientation: "portrait" },
   };
   let elementoImprimir = document.getElementById("elementoImprimir");
   html2pdf().set(opt).from(elementoImprimir).save();
 });
 
 let fechaActual = document.getElementById("fechaActual");
-let tablaEntradas = document.getElementById("tablaEntradas");
+let tablaSalidas = document.getElementById("tablaSalidas");
 let numeroSerie = document.getElementById("numeroSerie");
 document.addEventListener("DOMContentLoaded", function () {
-  fechaActual.innerHTML = obtenerFecha("YYYY/MM/DD");
+  fechaActual.innerHTML = obtenerFecha("");
 });
 
 var XLSX = require("xlsx");
@@ -30,7 +30,7 @@ function ExportExcel(type, fn, dl) {
     : XLSX.writeFile(
         wb,
         fn ||
-          `../EntradaNo-${numeroSerie.innerHTML}-${fechaActual.innerHTML}.` +
+          `../SalidaNo-${numeroSerie.innerHTML}-${fechaActual.innerHTML}.` +
             (type || "xlsx")
       );
 }
@@ -68,12 +68,10 @@ const convertirFecha = (fecha) => {
 };
 
 function formatDinero(numero) {
-  // console.log(numero.toLocaleString());
   return numero.toLocaleString();
 }
-// console.log(formatDinero("5"));
 
-ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
+ipcRenderer.on("documento_historial_salida", (event, results, id) => {
   numeroSerie.innerHTML = id;
   let listado = results[0];
   console.log(results[0]);
@@ -100,50 +98,34 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
       ${element.lote_presentacion}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      ${element.lote_valor_unitario_compra}
+      L.${element.lote_valor_unitario_venta}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      ${element.entrada_cantidad_ingresar}
+      L.${element.salida_cantidad}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      ${element.entrada_tipo_pago}
+      L.${element.salida_tipo_pago}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      ${element.entrada_otros_gastos}
-      </td>
-      <td style="min-width: 130px; max-width: 130px; width: 130px">
-      ${element.sub_total}
+      L.${element.sub_total}
       </td>
     </tr>`;
   });
-  tablaEntradas.innerHTML += plantilla;
-  tablaEntradas.innerHTML += `
+  tablaSalidas.innerHTML += plantilla;
+  tablaSalidas.innerHTML += `
     <tr class = "filas">
     <td style="min-width: 20px; max-width: 20px; width: 20px"></td>
     <td style="min-width: 50px; max-width: 50px; width: 50px"></td>
     <td style="min-width: 200px; max-width: 200px; width: 200px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong> L. ${totalOtrosGastos} </strong></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong>L. ${totalSubTotales}</strong></td>
-    </tr>
-    <tr class = "filas">
-    <td style="min-width: 20px; max-width: 20px; width: 20px"></td>
-    <td style="min-width: 50px; max-width: 50px; width: 50px"></td>
-    <td style="min-width: 200px; max-width: 200px; width: 200px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px">Total:</td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"> <strong>L. ${formatDinero(
-      totalOtrosGastos + totalSubTotales
+    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong>L. ${formatDinero(
+      totalSubTotales
     )}</strong></td>
     </tr>
     `;
-  //   tablaEntradas.innerHTML += plantillaTotales;
 });
 
 //Imprimir el Reporte

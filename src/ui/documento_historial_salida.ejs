@@ -3,7 +3,7 @@
 <div
   class="contenedorDashboard"
   id="elementoImprimir"
-  style="background-color: #fff"
+  style="background-color: #fff; height: 80vh"
 >
   <div
     class="flexRow"
@@ -16,7 +16,7 @@
     />
     <div class="flexColumn" style="text-align: center">
       <h3 style="margin-bottom: 10px">
-        AGROINSUMOS MONGE | ENTRADA DE PRODUCTO
+        AGROINSUMOS MONGE | SALIDA DE PRODUCTO
       </h3>
       <div style="justify-items: center" class="flexRow">
         <p style="margin-right: 10px"><strong>FECHA DE EMISION: </strong></p>
@@ -41,23 +41,20 @@
             Presentacion
           </th>
           <th style="min-width: 130px; max-width: 130px; width: 130px">
-            Valor Unit Compra
+            Valor Unit Venta
           </th>
           <th style="min-width: 130px; max-width: 130px; width: 130px">
-            Cantidad Ingresada
+            Cantidad
           </th>
           <th style="min-width: 130px; max-width: 130px; width: 130px">
             Tipo de Pago
-          </th>
-          <th style="min-width: 130px; max-width: 130px; width: 130px">
-            Otros Gastos
           </th>
           <th style="min-width: 130px; max-width: 130px; width: 130px">
             Sub-Total
           </th>
         </tr>
       </thead>
-      <tbody id="tablaEntradas" style="height: 60vh; max-height: 60vh"></tbody>
+      <tbody id="tablaSalidas" style="height: 60vh; max-height: 60vh"></tbody>
     </table>
   </div>
 </div>
@@ -88,5 +85,5 @@
 </div>
 <%- include('./partials/modal_nueva_aportacion.ejs') %>
 <script src="scripts/html2pdf.bundle.min.js"></script>
-<script src="scripts/documento_historial_entrada.js"></script>
+<script src="scripts/documento_historial_salida.js"></script>
 <%-include('./partials/footer.ejs') %>

@@ -434,6 +434,41 @@ const historialEntradas = (id) => {
 
 //////////////Salidas
 
+ipcMain.handle("cargar_historial_salidas", (event) => {
+  cargar_historial_salidas();
+});
+
+const cargar_historial_salidas = () => {
+  const query = "call historial_salidas()";
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaPrincipal.webContents.send("historial_salidas", results);
+    }
+  });
+};
+ipcMain.handle("historial_salidas", (event, id) => {
+  historialSalidas(id);
+});
+
+const historialSalidas = (id) => {
+  const query = "call documento_historial_salidas(?)";
+  db.query(query, [id], (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaPrincipal.webContents.once("did-finish-load", function () {
+        ventanaPrincipal.webContents.send(
+          "documento_historial_salida",
+          results,
+          id
+        );
+      });
+    }
+  });
+};
+
 ipcMain.handle("insertarMultiplesSalidas", (event, obj) => {
   insertarMultiplesSalidas(obj);
 });
