@@ -44,9 +44,6 @@ ipcRenderer.on("historial_entradas", (event, results) => {
       <td style="max-width: 25vh; min-width: 25vh; width: 25vh"><strong>${
         element.numero_serie
       }</strong></td>
-      <td style="max-width: 35vh; min-width: 35vh; width: 35vh">L. 
-      ${formatDinero(element.gastos_totales)}
-      </td>
       <td style="max-width: 25vh; min-width: 25vh; width: 25vh">${convertirFecha(
         element.entradas_fecha
       )}</td>

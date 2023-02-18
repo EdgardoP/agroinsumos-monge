@@ -1,4 +1,5 @@
 const { ipcRenderer } = require("electron");
+// const { TableToExcel } = require("table2excel");
 
 let idProveedor;
 let tablaEntradas = document.getElementById("tablaEntradas");
@@ -112,3 +113,15 @@ ipcRenderer.on("historial_cuentas", (event, results, id) => {
   });
   tablaEntradas.innerHTML += plantilla;
 });
+
+var XLSX = require("xlsx");
+function ExportExcel(type, fn, dl) {
+  var elt = document.getElementById("exportable_table");
+  var wb = XLSX.utils.table_to_book(elt, { sheet: "Libro 1" });
+  return dl
+    ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
+    : XLSX.writeFile(
+        wb,
+        fn || "../Estado de Cuenta Proveedores." + (type || "xlsx")
+      );
+}

@@ -36,7 +36,7 @@
   </div>
 </div>
 <div class="contenedorDashboard">
-  <table class="estiloTabla">
+  <table class="estiloTabla" id="exportable_table">
     <thead>
       <tr>
         <th style="max-width: 5vh; min-width: 5vh; width: 5vh">Nº</th>
@@ -58,6 +58,28 @@
     </thead>
     <tbody id="tablaEntradas" style="max-height: 65vh; height: 65vh"></tbody>
   </table>
+</div>
+<div>
+  <div class="flexRow" style="justify-content: center">
+    <div class="flexRow">
+      <button
+        style="margin-right: 10px"
+        tabindex="6"
+        id="btnLimpiar"
+        class="boton colorPrimario"
+        onclick=""
+      >
+        GENERAR REPORTE
+      </button>
+      <button
+        tabindex="5"
+        onclick="ExportExcel('xlsx')"
+        class="boton colorSecundario"
+      >
+        GENERAR HOJA DE EXCEL
+      </button>
+    </div>
+  </div>
 </div>
 <%- include('./partials/modal_nueva_aportacion.ejs') %>
 <script src="scripts/proveedores_historial_documento.js"></script>

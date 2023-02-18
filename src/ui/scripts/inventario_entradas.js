@@ -519,6 +519,19 @@ const limpiarTextos = () => {
   entradaCantidadIngresar.value = "";
   entradaOtrosGastos.value = "";
   entradaTipoPago.value = "-1";
+  productoNombre.value = "";
+  productoDescripcion.value = "";
+  productoProveedorFk.value = "-1";
+  productoColor.value = "";
+  productoPresentacion.value = "-1";
+  productoCategoriaFk.value = "0";
+  producto_valor_unitario_compra.value = "";
+  nuevoLoteProductoActualValorVenta.value = "";
+  productoFechaVencimiento.value = "";
+  nuevoProveedorNombre.value = "";
+  nuevoProveedorNumero.value = "";
+  nuevaCategoriaNombre.value = "";
+  nuevaCategoriaDescripcion.value = "";
 };
 
 const restarStock = (param) => {
