@@ -215,38 +215,62 @@ const agregarSalidaLista = () => {
   // console.log(elementoTabla);
   let idProveedor = elementoTabla.proveedor_id;
   let stockAntiguo = parseInt(salidaStockActual.value);
-  let nuevaSalida = parseFloat(salidaCantidad.value);
   let valorUnitVenta = parseInt(salidaValorUnitarioVenta.value);
+  let nuevaSalida = parseInt(salidaCantidad.value);
   let subtotal = nuevaSalida * valorUnitVenta;
   let filasElementos = document.getElementsByClassName("filasElementos");
+  let valorLote = salidaLoteFk.value;
   let sumaCantidades;
-  let cantidadSalidaLista;
-  let contarStock = 0;
+  // let cantidadSalidaLista;
+  let BANDERA = false;
   let CREAR = true;
+  let contarStock = 0;
+  let tipoPago = salidaTipoPago.value;
   for (let index = 0; index < filasElementos.length; index++) {
     let VALOR_LOTE_LISTA = filasElementos[index].children[2].innerHTML;
     let VALOR_TIPO_PAGO = filasElementos[index].children[8].innerHTML;
-    if (salidaLoteFk.value === VALOR_LOTE_LISTA) {
-      contarStock +=
-        parseInt(filasElementos[index].children[6].innerHTML) +
-        parseInt(salidaCantidad.value);
+    let cantidadSalidaLista = parseInt(
+      filasElementos[index].children[6].innerHTML
+    );
+    if (valorLote === VALOR_LOTE_LISTA) {
+      BANDERA = true;
+      contarStock += cantidadSalidaLista;
       console.log(contarStock);
-      if (contarStock > stockAntiguo) {
-        console.log("No puedes ingresar mas");
-      }
-    }
-    if (
-      salidaLoteFk.value === VALOR_LOTE_LISTA &&
-      salidaTipoPago.value === VALOR_TIPO_PAGO
-    ) {
-      cantidadSalidaLista = parseInt(
-        filasElementos[index].children[6].innerHTML
-      );
-      sumaCantidades = nuevaSalida + cantidadSalidaLista;
-      filasElementos[index].children[6].innerHTML = sumaCantidades;
-      CREAR = false;
     }
   }
+  if (BANDERA === true) {
+    contarStock += nuevaSalida;
+    console.log(contarStock);
+    if (contarStock > stockAntiguo) {
+      CREAR = false;
+      location.href = "#modal_advertencia";
+    }
+  }
+  // if (
+  //   salidaLoteFk.value === VALOR_LOTE_LISTA &&
+  //   salidaTipoPago.value === VALOR_TIPO_PAGO &&
+  //   CREAR === true
+  // ) {
+  //   cantidadSalidaLista = parseInt(
+  //     filasElementos[index].children[6].innerHTML
+  //   );
+  //   sumaCantidades = nuevaSalida + cantidadSalidaLista;
+  //   filasElementos[index].children[6].innerHTML = sumaCantidades;
+  //   CREAR = false;
+  // }
+  // if (salidaLoteFk.value === VALOR_LOTE_LISTA) {
+  //   contarStock +=
+  //     parseInt(filasElementos[index].children[6].innerHTML) +
+  //     parseInt(nuevaSalida);
+  //   limpiarTextos();
+  //   console.log(contarStock);
+  //   if (contarStock > stockAntiguo) {
+  //     console.log("No puedes ingresar mas");
+  //     CREAR = false;
+  //     location.href = "#modal_advertencia";
+  //   }
+  // }
+  // }
   // console.log(elementoTabla);
   if (CREAR === true) {
     plantilla += `
@@ -259,7 +283,7 @@ const agregarSalidaLista = () => {
       <td style="min-width: 120px; max-width: 120px; width: 120px">${elementoTabla.lote_valor_unitario_venta}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">${nuevaSalida}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">${stockAntiguo}</td>
-      <td style="min-width: 120px; max-width: 120px; width: 120px">${salidaTipoPago.value}</td>
+      <td style="min-width: 120px; max-width: 120px; width: 120px">${tipoPago}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">${subtotal}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">
             <div>
@@ -279,9 +303,10 @@ const agregarSalidaLista = () => {
             </div>
       </td>
     </tr>`;
+    limpiarTextos();
   }
   tablaSalidas.innerHTML += plantilla;
-  limpiarTextos();
+  // limpiarTextos();
 };
 
 //Funcion de autompletado
