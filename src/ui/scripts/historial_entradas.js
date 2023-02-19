@@ -2,13 +2,19 @@ const { ipcRenderer } = require("electron");
 
 let buscarEntrada = document.getElementById("buscarEntrada");
 let tablaEntradas = document.getElementById("tablaEntradas");
+let fecha_inicial_entrada = document.getElementById("fecha_inicial_entrada");
+let fecha_final_entrada = document.getElementById("fecha_final_entrada");
 
 document.addEventListener("DOMContentLoaded", function () {
   cargarEntradas();
 });
 
 const cargarEntradas = async () => {
-  await ipcRenderer.invoke("cargar_historial_entradas");
+  await ipcRenderer.invoke(
+    "cargar_historial_entradas",
+    "1999-01-01",
+    "2050-01-01"
+  );
 };
 
 function formatDinero(numero) {
@@ -29,11 +35,20 @@ const convertirFecha = (fecha) => {
 
 const visualizarEntrada = async (id) => {
   await ipcRenderer.invoke("historial_entradas", id);
-  window.location = "documento_historial_entrada.ejs";
+  // window.location = "documento_historial_entrada.ejs";
+};
+
+const filtrarDocumentos = async () => {
+  let fechaUno = fecha_inicial_entrada.value;
+  let fechaDos = fecha_final_entrada.value;
+  await ipcRenderer.invoke("cargar_historial_entradas", fechaUno, fechaDos);
+  tablaEntradas.innerHTML = "";
+  // window.location = "historial_entradas.ejs";
 };
 
 let i = 0;
 ipcRenderer.on("historial_entradas", (event, results) => {
+  console.log(results);
   let documentos = results[0];
   let plantilla = "";
   documentos.forEach((element, index, array) => {

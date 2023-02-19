@@ -71,23 +71,37 @@
             </select>
           </div>
         </div>
-        <button class="accionesBoton colorSecundario">
-          <img src="icons/plus.png" alt="" />
-        </button>
-      </div>
-      <div class="flexRow" style="align-items: center">
         <div class="cajaInput">
           <label for="lote_valor_unitario_compra">Fecha de Vencimiento</label>
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
               style="width: 15vh"
-              type="text"
+              type="date"
               name="lote_valor_unitario_compra"
               id="lote_valor_unitario_compra"
               class="estiloInputLogin"
               tabindex="-1"
             />
+          </div>
+        </div>
+      </div>
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput">
+          <label for="entrada_tipo_pago">Presentacion</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="entrada_tipo_pago"
+              id="entrada_tipo_pago"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="">Seleccione</option>
+              <option value="">Efectivo</option>
+              <option value="">Credito</option>
+            </select>
           </div>
         </div>
         <div class="cajaInput">
@@ -107,21 +121,60 @@
             </select>
           </div>
         </div>
-        <button class="accionesBoton colorSecundario">
-          <img src="icons/plus.png" alt="" />
-        </button>
+        <div class="cajaInput">
+          <label for="lote_producto_fk">Valor Unitario de Compra</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="lote_producto_fk"
+              id="lote_producto_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="lote_producto_fk">Valor Unitario de Venta</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="lote_producto_fk"
+              id="lote_producto_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="lote_producto_fk">Cantidad a Ingresar</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="lote_producto_fk"
+              id="lote_producto_fk"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <div class="botonesDashboard">
       <div class="flexColumn space-around">
         <div class="flexColumn">
-          <button tabindex="5" id="btnAceptar" class="boton colorSecundario">
-            SIGUIENTE
+          <button tabindex="5" id="btnAceptar" class="boton colorAmarillo">
+            LIMPIAR
           </button>
         </div>
         <div class="flexColumn">
-          <button tabindex="5" id="btnAceptar" class="boton colorAmarillo">
-            LIMPIAR
+          <button tabindex="5" id="btnAceptar" class="boton colorSecundario">
+            SIGUIENTE
           </button>
         </div>
       </div>
@@ -129,93 +182,47 @@
   </form>
 </div>
 <div class="contenedorDashboard">
-  <div class="flexRow">
-    <div class="cajaInput">
-      <label for="entrada_otros_gastos">ID Producto</label>
-      <div class="imagenInput">
-        <img src="icons/pencil.png" alt="" />
-        <input
-          style="width: 15vh"
-          type="text"
-          name="entrada_otros_gastos"
-          id="entrada_otros_gastos"
-          class="estiloInputLogin"
-          tabindex="3"
-        />
-      </div>
-    </div>
-    <div class="cajaInput">
-      <label for="entrada_otros_gastos">Cantidad</label>
-      <div class="imagenInput">
-        <img src="icons/pencil.png" alt="" />
-        <input
-          style="width: 15vh"
-          type="text"
-          name="entrada_otros_gastos"
-          id="entrada_otros_gastos"
-          class="estiloInputLogin"
-          tabindex="3"
-        />
-      </div>
-    </div>
-    <div class="cajaInput">
-      <label for="entrada_otros_gastos">V. Unit Compra</label>
-      <div class="imagenInput">
-        <img src="icons/pencil.png" alt="" />
-        <input
-          style="width: 15vh"
-          type="text"
-          name="entrada_otros_gastos"
-          id="entrada_otros_gastos"
-          class="estiloInputLogin"
-          tabindex="3"
-        />
-      </div>
-    </div>
-    <div class="cajaInput">
-      <label for="entrada_otros_gastos">V. Unit Venta</label>
-      <div class="imagenInput">
-        <img src="icons/pencil.png" alt="" />
-        <input
-          style="width: 15vh"
-          type="text"
-          name="entrada_otros_gastos"
-          id="entrada_otros_gastos"
-          class="estiloInputLogin"
-          tabindex="3"
-        />
-      </div>
-    </div>
-  </div>
-  <div class="flexRow">
-    <div class="cajaInput">
-      <label for="entrada_otros_gastos">Presentacion</label>
-      <div class="imagenInput">
-        <img src="icons/pencil.png" alt="" />
-        <input
-          style="width: 15vh"
-          type="text"
-          name="entrada_otros_gastos"
-          id="entrada_otros_gastos"
-          class="estiloInputLogin"
-          tabindex="3"
-        />
-      </div>
-    </div>
-    <div class="cajaInput">
-      <label for="entrada_otros_gastos">Fecha de Vencimiento</label>
-      <div class="imagenInput">
-        <img src="icons/pencil.png" alt="" />
-        <input
-          style="width: 15vh"
-          type="date"
-          name="entrada_otros_gastos"
-          id="entrada_otros_gastos"
-          class="estiloInputLogin"
-          tabindex="3"
-        />
-      </div>
-    </div>
-  </div>
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="min-width: 20px; max-width: 20px; width: 20px">Nº</th>
+        <th style="min-width: 200px; max-width: 200px; width: 200px">
+          Producto
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Presentacion
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Descripcion
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">Color</th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          ID Proveedor
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Fec.Vencimiento
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Presentacion
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Categoria
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          V.Unit Compra
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          V.Unit Venta
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Cantidad
+        </th>
+        <th style="min-width: 120px; max-width: 120px; width: 120px">
+          Acciones
+        </th>
+      </tr>
+    </thead>
+    <tbody id="tablaEntradas"></tbody>
+  </table>
 </div>
 <%- include('./partials/footer.ejs') %>

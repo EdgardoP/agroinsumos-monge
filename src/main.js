@@ -3,7 +3,8 @@ const ejse = require("ejs-electron");
 const db = require("./database");
 let ventanaLogin;
 let ventanaPrincipal;
-
+let ventanaEntrada;
+let ventanaSalida;
 function crearLogin() {
   ventanaLogin = new BrowserWindow({
     width: 1000,
@@ -30,6 +31,34 @@ function crearPrincipal() {
     },
   });
   ventanaPrincipal.loadFile("src/ui/index.ejs");
+}
+
+function crearVerEntrada() {
+  ventanaEntrada = new BrowserWindow({
+    width: 1280,
+    height: 720,
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  ventanaEntrada.loadFile("src/ui/documento_historial_entrada.ejs");
+}
+
+function crearVerSalida() {
+  ventanaSalida = new BrowserWindow({
+    width: 1280,
+    height: 720,
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  ventanaSalida.loadFile("src/ui/documento_historial_salida.ejs");
 }
 
 app.on("window-all-closed", () => {
@@ -251,15 +280,15 @@ const documentosHistorialProveedores = () => {
   });
 };
 // console.log();
-ipcMain.handle("historial_proveedor", (event, id) => {
-  historialProveedor(id);
+ipcMain.handle("historial_proveedor", (event, id, fechaInicial, fechaFinal) => {
+  historialProveedor(id, fechaInicial, fechaFinal);
 });
 
-const historialProveedor = (id) => {
-  let query = `call historial_proveedor(?)`;
-  db.query(query, id, (error, results, fields) => {
+const historialProveedor = (id, fechaInicial, fechaFinal) => {
+  let query = `call historial_proveedor(?,?,?)`;
+  db.query(query, [id, fechaInicial, fechaFinal], (error, results, fields) => {
     if (error) {
-      // console.log(error);
+      console.log(error);
     } else {
       ventanaPrincipal.webContents.once("did-finish-load", function () {
         ventanaPrincipal.webContents.send("historial_cuentas", results, id);
@@ -396,13 +425,16 @@ const insertarMultiplesEntradas = (obj) => {
   });
 };
 
-ipcMain.handle("cargar_historial_entradas", (event) => {
-  cargarHistorialEntradas();
-});
+ipcMain.handle(
+  "cargar_historial_entradas",
+  (event, fechaInicio, fechaFinal) => {
+    cargarHistorialEntradas(fechaInicio, fechaFinal);
+  }
+);
 
-const cargarHistorialEntradas = () => {
-  const query = "call historial_entradas()";
-  db.query(query, (error, results, fields) => {
+const cargarHistorialEntradas = (fechaInicial, fechaFinal) => {
+  const query = "call historial_entradas(?,?)";
+  db.query(query, [fechaInicial, fechaFinal], (error, results, fields) => {
     if (error) {
       console.log(error);
     } else {
@@ -421,26 +453,28 @@ const historialEntradas = (id) => {
     if (error) {
       console.log(error);
     } else {
-      ventanaPrincipal.webContents.once("did-finish-load", function () {
-        ventanaPrincipal.webContents.send(
+      crearVerEntrada();
+      ventanaEntrada.webContents.once("did-finish-load", function () {
+        ventanaEntrada.webContents.send(
           "documento_historial_entrada",
           results,
           id
         );
       });
+      ventanaEntrada.show();
     }
   });
 };
 
 //////////////Salidas
 
-ipcMain.handle("cargar_historial_salidas", (event) => {
-  cargar_historial_salidas();
+ipcMain.handle("cargar_historial_salidas", (event, fechaInicio, fechaFinal) => {
+  cargar_historial_salidas(fechaInicio, fechaFinal);
 });
 
-const cargar_historial_salidas = () => {
-  const query = "call historial_salidas()";
-  db.query(query, (error, results, fields) => {
+const cargar_historial_salidas = (fechaInicio, fechaFinal) => {
+  const query = "call historial_salidas(?,?)";
+  db.query(query, [fechaInicio, fechaFinal], (error, results, fields) => {
     if (error) {
       console.log(error);
     } else {
@@ -458,13 +492,15 @@ const historialSalidas = (id) => {
     if (error) {
       console.log(error);
     } else {
-      ventanaPrincipal.webContents.once("did-finish-load", function () {
-        ventanaPrincipal.webContents.send(
+      crearVerSalida();
+      ventanaSalida.webContents.once("did-finish-load", function () {
+        ventanaSalida.webContents.send(
           "documento_historial_salida",
           results,
           id
         );
       });
+      ventanaSalida.show();
     }
   });
 };
@@ -489,6 +525,10 @@ const insertarMultiplesSalidas = (obj) => {
     }
   });
 };
+
+//Clientes
+
+//Cargar Clientes
 
 ipcMain.handle("insertarHistorialCliente", (event, obj) => {
   insertarHistorialCliente(obj);
@@ -522,9 +562,6 @@ const insertarHistorialCliente = (obj) => {
   );
 };
 
-//Clientes
-
-//Cargar Clientes
 ipcMain.handle("obtenerClientes", (event) => {
   obtenerClientes();
 });
@@ -585,6 +622,58 @@ const insertarAportacionCliente = (obj) => {
         "Transaccion exitosa",
         "Se ha ingresado una nueva aportacion a los clientes"
       );
+    }
+  });
+};
+
+ipcMain.handle("documentosHistorialClientes", (event, obj) => {
+  documentosHistorialClientes();
+});
+
+const documentosHistorialClientes = () => {
+  db.query("SELECT * FROM clientes", (error, results, historial) => {
+    if (error) {
+      console.log(error);
+    } else {
+      results.forEach((element) => {
+        db.query(
+          `call documentos_historial_clientes(${element.cliente_id})`,
+          (err, res, hist) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(res);
+              ventanaPrincipal.webContents.send(
+                "documentos_historial_clientes",
+                res
+              );
+            }
+          }
+        );
+      });
+      // console.log(results);
+    }
+  });
+};
+
+ipcMain.handle("historial_clientes", (event, id) => {
+  historialClientes(id);
+});
+
+const historialClientes = (id) => {
+  let query = `call historial_clientes(?)`;
+  db.query(query, id, (error, results, fields) => {
+    if (error) {
+      // console.log(error);
+    } else {
+      ventanaPrincipal.webContents.once("did-finish-load", function () {
+        ventanaPrincipal.webContents.send(
+          "historial_cuentas_clientes",
+          results,
+          id
+        );
+      });
+      // console.log(results);
     }
   });
 };

@@ -33,7 +33,6 @@
         <div class="imagenInput">
           <img src="icons/pencil.png" alt="" />
           <input
-            onchange="filtroProductos('proveedor',this.value)"
             class="estiloInputLogin"
             name="fecha_inicial_entrada"
             id="fecha_inicial_entrada"
@@ -44,17 +43,17 @@
         </div>
       </div>
       <div class="cajaInput">
-        <label for="fecha_final_final">Fecha Final</label>
+        <label for="fecha_final_entrada">Fecha Final</label>
         <div class="imagenInput">
           <img src="icons/pencil.png" alt="" />
           <input
-            onchange="filtroProductos('color',this.value)"
             class="estiloInputLogin"
-            name="fecha_final_final"
-            id="fecha_final_final"
+            name="fecha_final_entrada"
+            id="fecha_final_entrada"
             style="width: 13vh"
             tabindex="-1"
             type="date"
+            onchange="filtrarDocumentos()"
           />
         </div>
       </div>

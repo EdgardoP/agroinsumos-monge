@@ -1,7 +1,7 @@
 <%- include('./partials/header.ejs') %>
 <link rel="stylesheet" href="style/style.css" />
 <div class="contenedorDashboard">
-  <h3>Estado de Cuenta Proveedores</h3>
+  <h3>Estado de Cuenta Clientes</h3>
 </div>
 <div class="contenedorDashboard flexRow">
   <div class="flexColumn" style="margin-right: 300px">
@@ -11,8 +11,8 @@
       style="width: 600px; justify-content: space-between; margin: 10px 0px"
     >
       <div class="flexRow">
-        <h4 style="margin-right: 5px">Nombre del Proveedor:</h4>
-        <p id="nombreProveedor">
+        <h4 style="margin-right: 5px">Nombre del Cliente:</h4>
+        <p id="nombreCliente">
           <!-- <strong> Nombre del Proveedor: </strong> Distribuidora Fernandez -->
         </p>
       </div>
@@ -24,8 +24,8 @@
     </div>
     <div class="flexRow" style="width: 600px; justify-content: space-between">
       <div class="flexRow">
-        <h4 style="margin-right: 5px">Numero de Telefono:</h4>
-        <p id="numeroProveedor">
+        <h4 style="margin-right: 5px">Referencia:</h4>
+        <p id="referenciaCliente">
           <!-- <strong> Numero del Proveedor: </strong> 9876-7823 -->
         </p>
       </div>
@@ -41,31 +41,30 @@
   >
     <div class="flexRow">
       <div class="cajaInput">
-        <label for="fechaInicial">Fecha Inicio</label>
+        <label for="proveedor_nombre">Fecha Inicio</label>
         <div class="imagenInput">
           <img src="icons/pencil.png" alt="" />
           <input
             type="date"
             class="estiloInputLogin"
-            name="fechaInicial"
-            id="fechaInicial"
+            name="proveedor_nombre"
+            id="proveedor_nombre"
             style="width: 13vh"
             tabindex="4"
           />
         </div>
       </div>
       <div class="cajaInput">
-        <label for="fechaFinal">Fecha Final</label>
+        <label for="proveedor_nombre">Fecha Fin</label>
         <div class="imagenInput">
           <img src="icons/pencil.png" alt="" />
           <input
             type="date"
             class="estiloInputLogin"
-            name="fechaFinal"
-            id="fechaFinal"
+            name="proveedor_nombre"
+            id="proveedor_nombre"
             style="width: 13vh"
             tabindex="4"
-            onchange="visualizarDocumento()"
           />
         </div>
       </div>
@@ -127,5 +126,5 @@
   </div>
 </div>
 <%- include('./partials/modal_nueva_aportacion.ejs') %>
-<script src="scripts/proveedores_historial_documento.js"></script>
+<script src="scripts/clientes_historial_documento.js"></script>
 <%-include('./partials/footer.ejs') %>

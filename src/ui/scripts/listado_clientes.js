@@ -2,12 +2,13 @@ const { ipcRenderer } = require("electron");
 
 let buscarProveedor = document.getElementById("buscarProveedor");
 let tablaEntradas = document.getElementById("tablaEntradas");
+
 document.addEventListener("DOMContentLoaded", function () {
   cargarDocumentos();
 });
 
 const cargarDocumentos = async () => {
-  await ipcRenderer.invoke("documentosHistorialProveedores");
+  await ipcRenderer.invoke("documentosHistorialClientes");
 };
 
 function formatDinero(numero) {
@@ -27,14 +28,13 @@ const convertirFecha = (fecha) => {
 };
 
 const visualizarDocumento = async (id) => {
-  let fechaInicial = "1999-01-01";
-  let fechaFinal = "2050-01-01";
-  await ipcRenderer.invoke("historial_proveedor", id, fechaInicial, fechaFinal);
-  window.location = "proveedores_historial_documento.ejs";
+  await ipcRenderer.invoke("historial_clientes", id);
+  window.location = "clientes_historial_documento.ejs";
 };
 
 let i = 0;
-ipcRenderer.on("documentos_historial_proveedores", (event, results) => {
+ipcRenderer.on("documentos_historial_clientes", (event, results) => {
+  console.log(results);
   let documentos = results[0];
   let plantilla = "";
   documentos.forEach((element, index, array) => {
@@ -43,24 +43,24 @@ ipcRenderer.on("documentos_historial_proveedores", (event, results) => {
     <tr>
       <td style="max-width: 10vh; min-width: 10vh; width: 10vh">${i}</td>
       <td style="max-width: 10vh; min-width: 10vh; width: 10vh">${
-        element.proveedor_id
+        element.cliente_id
       }</td>
       <td style="max-width: 28vh; min-width: 28vh; width: 28vh">
-      ${element.proveedor_nombre}
+      ${element.cliente_nombre}
       </td>
       <td style="max-width: 28vh; min-width: 28vh; width: 28vh">${convertirFecha(
-        element.historial_proveedor_fecha
+        element.historial_cliente_fecha
       )}</td>
       <td style="max-width: 28vh; min-width: 28vh; width: 28vh">${
-        element.proveedor_estado
+        element.cliente_estado
       }</td>
       <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-        L. ${formatDinero(element.historial_proveedor_saldo_nuevo)}.00
+        L. ${formatDinero(element.historial_cliente_saldo_nuevo)}.00
       </td>
       <td style="max-width: 22vh; min-width: 22vh; width: 22vh">
         <div class="flexRow">
           <button
-            id = ${element.proveedor_id}
+            id = ${element.cliente_id}
             onclick="visualizarDocumento(this.id)"
             class="botonListado colorSecundario"
             style="margin-right: 20px"
@@ -68,7 +68,7 @@ ipcRenderer.on("documentos_historial_proveedores", (event, results) => {
             VER
           </button>
           <button
-            id = ${element.proveedor_id}
+            id = ${element.cliente_id}
             onclick="event.preventDefault()"
             class="botonListado colorRojo"
           >

@@ -1,0 +1,64 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Clientes / Listado Clientes</h3>
+</div>
+<div class="contenedorDashboard">
+  <div class="flexRow">
+    <div class="flexRow" style="align-items: center">
+      <div class="cajaInput">
+        <label for="buscarCliente">Buscar Cliente</label>
+        <div class="autocomplete imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <input
+            style="width: 40vh"
+            type="text"
+            name="buscarCliente"
+            id="buscarCliente"
+            class="estiloInputLogin"
+            tabindex="2"
+          />
+        </div>
+      </div>
+      <button
+        onclick="location.href='#modal_nueva_categoria'; event.preventDefault()"
+        class="accionesBoton colorSecundario"
+      >
+        <img src="icons/lupa.png" alt="" />
+      </button>
+    </div>
+  </div>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="max-width: 10vh; min-width: 10vh; width: 10vh">Nº</th>
+        <th style="max-width: 10vh; min-width: 10vh; width: 10vh">
+          ID Cliente
+        </th>
+        <th style="max-width: 28vh; min-width: 28vh; width: 28vh">
+          Nombre Cliente
+        </th>
+        <th style="max-width: 28vh; min-width: 28vh; width: 28vh">
+          Ultima Actualizacion
+        </th>
+        <th style="max-width: 28vh; min-width: 28vh; width: 28vh">Estado</th>
+        <th style="max-width: 20vh; min-width: 20vh; width: 20vh">Saldo</th>
+        <th
+          style="
+            max-width: 22vh;
+            min-width: 22vh;
+            width: 22vh;
+            text-align: center;
+          "
+        >
+          Acciones
+        </th>
+      </tr>
+    </thead>
+    <tbody id="tablaEntradas" style="max-height: 70vh; height: 70vh"></tbody>
+  </table>
+</div>
+<script src="scripts/listado_clientes.js"></script>
+<%-include('./partials/footer.ejs') %>

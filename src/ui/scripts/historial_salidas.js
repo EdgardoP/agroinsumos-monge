@@ -2,13 +2,19 @@ const { ipcRenderer } = require("electron");
 
 let buscarEntrada = document.getElementById("buscarEntrada");
 let tablaEntradas = document.getElementById("tablaSalidas");
+let fecha_inicial_salida = document.getElementById("fecha_inicial_salida");
+let fecha_final_salida = document.getElementById("fecha_final_salida");
 
 document.addEventListener("DOMContentLoaded", function () {
   cargarEntradas();
 });
 
 const cargarEntradas = async () => {
-  await ipcRenderer.invoke("cargar_historial_salidas");
+  await ipcRenderer.invoke(
+    "cargar_historial_salidas",
+    "1999-01-01",
+    "2050-01-01"
+  );
 };
 
 function formatDinero(numero) {
@@ -29,7 +35,14 @@ const convertirFecha = (fecha) => {
 
 const visualizarEntrada = async (id) => {
   await ipcRenderer.invoke("historial_salidas", id);
-  window.location = "documento_historial_salida.ejs";
+  // window.location = "documento_historial_salida.ejs";
+};
+
+const filtrarDocumentos = async () => {
+  let fechaUno = fecha_inicial_salida.value;
+  let fechaDos = fecha_final_salida.value;
+  await ipcRenderer.invoke("cargar_historial_salidas", fechaUno, fechaDos);
+  tablaEntradas.innerHTML = "";
 };
 
 let i = 0;
