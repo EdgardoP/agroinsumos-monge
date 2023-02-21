@@ -177,6 +177,29 @@ const nuevoProducto = (obj, objLote) => {
   });
 };
 
+ipcMain.handle("nuevoProductoMultiple", (event, obj, objLote) => {
+  nuevoProductoMultiple(obj, objLote);
+});
+
+const nuevoProductoMultiple = (obj, objLote) => {
+  const query = "INSERT INTO productos SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+      notificacion("Error", "No se ha podido realizar la accion");
+      // ventanaPrincipal.webContents.send("producto_id", -1);
+    } else {
+      let lote_producto_fk = {
+        lote_producto_fk: results.insertId,
+      };
+      let datosLote = Object.assign(objLote, lote_producto_fk);
+      nuevoLote(datosLote);
+      notificacion("Transaccion exitosa", "Se ha ingresado un nuevo producto");
+      // ventanaPrincipal.webContents.send("producto_id", results.insertId);
+    }
+  });
+};
+
 //Lotes
 
 ipcMain.handle("nuevoLote", (event, obj) => {
@@ -188,7 +211,7 @@ const nuevoLote = (obj) => {
   const query = "INSERT INTO lotes SET ?";
   db.query(query, obj, (error, results, fields) => {
     if (error) {
-      // console.log(error);
+      console.log(error);
     } else {
       notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Lote");
       ventanaPrincipal.webContents.send("lote_id", results.insertId);
@@ -577,6 +600,25 @@ const obtenerClientes = () => {
   });
 };
 
+ipcMain.handle("modificarCliente", (event, obj) => {
+  modificarCliente(obj);
+});
+
+const modificarCliente = (obj) => {
+  const { cliente_id } = obj;
+  const { cliente_nombre } = obj;
+  const { cliente_apellido } = obj;
+  const { cliente_referencia } = obj;
+  let query = `UPDATE clientes SET cliente_nombre = '${cliente_nombre}', cliente_apellido = '${cliente_apellido}', cliente_referencia = '${cliente_referencia}' WHERE cliente_id = ${cliente_id}`;
+  db.query(query, (error, results, proveedores) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
+    }
+  });
+};
+
 //Nuevo Cliente
 
 ipcMain.handle("nuevoCliente", (event, obj, fecha) => {
@@ -656,15 +698,15 @@ const documentosHistorialClientes = () => {
   });
 };
 
-ipcMain.handle("historial_clientes", (event, id) => {
-  historialClientes(id);
+ipcMain.handle("historial_clientes", (event, id, fechaInicial, fechaFinal) => {
+  historialClientes(id, fechaInicial, fechaFinal);
 });
 
-const historialClientes = (id) => {
-  let query = `call historial_clientes(?)`;
-  db.query(query, id, (error, results, fields) => {
+const historialClientes = (id, fechaInicial, fechaFinal) => {
+  let query = `call historial_clientes(?,?,?)`;
+  db.query(query, [id, fechaInicial, fechaFinal], (error, results, fields) => {
     if (error) {
-      // console.log(error);
+      console.log(error);
     } else {
       ventanaPrincipal.webContents.once("did-finish-load", function () {
         ventanaPrincipal.webContents.send(

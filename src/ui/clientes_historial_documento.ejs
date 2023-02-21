@@ -41,30 +41,31 @@
   >
     <div class="flexRow">
       <div class="cajaInput">
-        <label for="proveedor_nombre">Fecha Inicio</label>
+        <label for="fechaInicial">Fecha Inicio</label>
         <div class="imagenInput">
           <img src="icons/pencil.png" alt="" />
           <input
             type="date"
             class="estiloInputLogin"
-            name="proveedor_nombre"
-            id="proveedor_nombre"
+            name="fechaInicial"
+            id="fechaInicial"
             style="width: 13vh"
             tabindex="4"
           />
         </div>
       </div>
       <div class="cajaInput">
-        <label for="proveedor_nombre">Fecha Fin</label>
+        <label for="proveedor_nombre">Fecha Final</label>
         <div class="imagenInput">
           <img src="icons/pencil.png" alt="" />
           <input
             type="date"
             class="estiloInputLogin"
-            name="proveedor_nombre"
-            id="proveedor_nombre"
+            name="fechaFinal"
+            id="fechaFinal"
             style="width: 13vh"
             tabindex="4"
+            onchange="visualizarDocumento()"
           />
         </div>
       </div>

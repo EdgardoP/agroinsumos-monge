@@ -1,0 +1,321 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Productos / Derivar un producto</h3>
+</div>
+<div class="contenedorDashboard" style="overflow-x: inherit">
+  <form action="" class="flexRow">
+    <div class="flexColumn">
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput autocomplete">
+          <label for="productoId">ID Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 5vh"
+              type="text"
+              name="productoId"
+              id="productoId"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput autocomplete">
+          <label for="productoNombre">Nombre del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoNombre"
+              id="productoNombre"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="loteId">ID Lote</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 5vh"
+              type="text"
+              name="loteId"
+              id="loteId"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="productoDescripcion">Descripcion del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoDescripcion"
+              id="productoDescripcion"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="productoFechaVencimiento">Fecha Vencimiento</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoFechaVencimiento"
+              id="productoFechaVencimiento"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput">
+          <label for="productoPresentacion">Presentacion</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="productoPresentacion"
+              id="productoPresentacion"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="-1">Seleccione</option>
+              <option value="Caja">Caja</option>
+              <option value="Botella">Botella</option>
+              <option value="Saco">Saco</option>
+              <option value="Libra">Libra</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="productoValorUnitarioCompra"
+            >Valor Unitario de Compra</label
+          >
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoValorUnitarioCompra"
+              id="productoValorUnitarioCompra"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="productoValorUnitarioVenta">Valor Unitario Venta</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoValorUnitarioVenta"
+              id="productoValorUnitarioVenta"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="productoCantidad">Cantidad en Stock</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoCantidad"
+              id="productoCantidad"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="contenedorDashboard">
+  <form action="" class="flexRow">
+    <div class="flexColumn">
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput">
+          <label for="cantidadRestar">Cantidad a Restar</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 6vh"
+              type="text"
+              name="cantidadRestar"
+              id="cantidadRestar"
+              class="estiloInputLogin"
+              tabindex="-1"
+              onkeyup="restarCantidad(this.value)"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="cantidadDerivado">Cantidad del Derivado</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="cantidadDerivado"
+              id="cantidadDerivado"
+              class="estiloInputLogin"
+              tabindex="-1"
+              onkeyup="calcularValorCompra(this.value)"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="nuevaPresentacion">Presentacion del Derivado</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="nuevaPresentacion"
+              id="nuevaPresentacion"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="-1">Seleccione</option>
+              <option value="Caja">Caja</option>
+              <option value="Botella">Botella</option>
+              <option value="Saco">Saco</option>
+              <option value="Libra">Libra</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="derivadoValorCompra">Nuevo Valor Unitario Compra</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="derivadoValorCompra"
+              id="derivadoValorCompra"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="derivadoValorVenta">Nuevo Valor Unitario Venta</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="derivadoValorVenta"
+              id="derivadoValorVenta"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="botonesDashboard">
+      <div class="flexColumn space-around">
+        <div class="flexColumn">
+          <button
+            onclick="limpiar();event.preventDefault()"
+            tabindex="5"
+            id="btnAceptar"
+            class="boton colorAmarillo"
+          >
+            LIMPIAR
+          </button>
+          <button
+            onclick="agregarFilasDerivados();event.preventDefault()"
+            tabindex="5"
+            id="btnAceptar"
+            class="boton colorSecundario"
+          >
+            SIGUIENTE
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="min-width: 20px; max-width: 20px; width: 20px">Nº</th>
+        <th style="min-width: 80px; max-width: 80px; width: 80px">ID Lote</th>
+        <th style="min-width: 100px; max-width: 100px; width: 100px">
+          ID Producto
+        </th>
+        <th style="min-width: 200px; max-width: 200px; width: 200px">
+          Nombre Producto
+        </th>
+        <th style="min-width: 100px; max-width: 100px; width: 100px">
+          Presentacion
+        </th>
+        <th style="min-width: 60px; max-width: 60px; width: 60px">Restar</th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Nueva Cantidad
+        </th>
+        <th style="min-width: 200px; max-width: 200px; width: 200px">
+          Nuevo Valor Unitario Compra
+        </th>
+        <th style="min-width: 200px; max-width: 200px; width: 200px">
+          Nuevo Valor Unitario Venta
+        </th>
+        <th style="min-width: 140px; max-width: 140px; width: 140px">
+          Nueva Presentacion
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Fecha Vencimiento
+        </th>
+        <th style="min-width: 130px; max-width: 130px; width: 130px">
+          Acciones
+        </th>
+      </tr>
+    </thead>
+    <tbody id="tablaEntradas" style="max-height: 43vh; height: 43vh"></tbody>
+  </table>
+</div>
+<div>
+  <div class="flexRow" style="justify-content: space-evenly">
+    <div class="flexRow">
+      <button
+        style="margin-right: 10px"
+        tabindex="6"
+        id="btnLimpiar"
+        class="boton colorAmarillo"
+        onclick="limpiarTextos()"
+      >
+        CANCELAR
+      </button>
+      <button
+        onclick="nuevoDerivado();event.preventDefault()"
+        tabindex="5"
+        id="btnAceptar"
+        class="boton colorSecundario"
+      >
+        ACEPTAR Y GUARDAR
+      </button>
+    </div>
+  </div>
+</div>
+<script src="scripts/producto_derivado.js"></script>
+<%- include('./partials/footer.ejs') %>

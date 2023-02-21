@@ -10,11 +10,14 @@ let ultimaActualizacion = document.getElementById("ultimaActualizacion");
 let formaPago = document.getElementById("forma_pago");
 let nombreCliente = document.getElementById("nombreCliente");
 let referenciaCliente = document.getElementById("referenciaCliente");
+let fechaInicial = document.getElementById("fechaInicial");
+let fechaFinal = document.getElementById("fechaFinal");
 let fechaActual;
 
 document.addEventListener("DOMContentLoaded", function () {
   fechaActual = obtenerFecha("YYYY/MM/DD");
   console.log(fechaActual);
+  renderizar();
 });
 
 const obtenerFecha = (formato) => {
@@ -74,22 +77,30 @@ function formatDinero(numero) {
 //   // await ipcRenderer.invoke("modificarMultiplesLotes", obj);
 // };
 
-ipcRenderer.on("historial_cuentas_clientes", (event, results, id) => {
-  // console.log(id);
-  console.log(results);
-  let datos = results[0];
-  let plantilla = "";
-  idCliente = id;
-  datos.forEach((element, index, array) => {
-    ultimaActualizacion.innerHTML = `<strong>Ultima Actualizacion: </strong>${convertirFecha(
-      element.historial_cliente_fecha
-    )}`;
-    nombreCliente.innerHTML = `${element.cliente_nombre} ${element.cliente_apellido}`;
-    referenciaCliente.innerHTML = `${element.cliente_referencia}`;
-    saldoActual.innerHTML = `${formatDinero(
-      element.historial_cliente_saldo_nuevo
-    )}`;
-    plantilla += `
+const visualizarDocumento = async () => {
+  let fechaUno = fechaInicial.value;
+  let fechaDos = fechaFinal.value;
+  await ipcRenderer.invoke("historial_clientes", idCliente, fechaUno, fechaDos);
+  window.location = "clientes_historial_documento.ejs";
+};
+
+const renderizar = () => {
+  ipcRenderer.on("historial_cuentas_clientes", (event, results, id) => {
+    // console.log(id);
+    console.log(results);
+    let datos = results[0];
+    let plantilla = "";
+    idCliente = id;
+    datos.forEach((element, index, array) => {
+      ultimaActualizacion.innerHTML = `<strong>Ultima Actualizacion: </strong>${convertirFecha(
+        element.historial_cliente_fecha
+      )}`;
+      nombreCliente.innerHTML = `${element.cliente_nombre} ${element.cliente_apellido}`;
+      referenciaCliente.innerHTML = `${element.cliente_referencia}`;
+      saldoActual.innerHTML = `${formatDinero(
+        element.historial_cliente_saldo_nuevo
+      )}`;
+      plantilla += `
       <tr>
           <td style="max-width: 5vh; min-width: 5vh; width: 5vh">${index}</td>
           <td style="max-width: 10vh; min-width: 10vh; width: 10vh">
@@ -111,10 +122,10 @@ ipcRenderer.on("historial_cuentas_clientes", (event, results, id) => {
             ${element.historial_cliente_tipo_aportacion}
           </td>
         </tr>`;
+    });
+    tablaEntradas.innerHTML += plantilla;
   });
-  tablaEntradas.innerHTML += plantilla;
-});
-
+};
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");

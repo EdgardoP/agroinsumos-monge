@@ -1,0 +1,163 @@
+<div id="modal_nuevo_cliente" class="modal">
+  <div class="modal__content">
+    <div class="contenedorDashboard">
+      <div class="contenedorDashboard">
+        <h2>Registrar un Nuevo Cliente</h2>
+      </div>
+      <div class="contenedorDashboard">
+        <form action="" class="flexRow">
+          <div class="flexColumn">
+            <div class="flexRow">
+              <div class="cajaInput">
+                <label for="cliente_nombre">Nombre</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="cliente_nombre"
+                    id="cliente_nombre"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="cliente_apellido">Apellido</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="cliente_apellido"
+                    id="cliente_apellido"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="cliente_referencia">Referencia</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="cliente_referencia"
+                    id="cliente_referencia"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="botonesDashboard">
+            <div class="flexColumn space-around">
+              <div class="flexColumn">
+                <button
+                  tabindex="-1"
+                  id="btnNuevoLote"
+                  class="boton colorSecundario modal__close"
+                  onclick="nuevoCliente();event.preventDefault();"
+                >
+                  GUARDAR
+                </button>
+                <button
+                  tabindex="-1"
+                  id="btnLimpiar"
+                  class="boton colorAmarillo modal__close"
+                  onclick="location.href= '#';event.preventDefault()"
+                >
+                  CANCELAR
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_modificar_cliente" class="modal">
+  <div class="modal__content">
+    <div class="contenedorDashboard">
+      <div class="contenedorDashboard">
+        <h2>Modificar Datos del Cliente</h2>
+      </div>
+      <div class="contenedorDashboard">
+        <form action="" class="flexRow">
+          <div class="flexColumn">
+            <div class="flexRow">
+              <div class="cajaInput">
+                <label for="cliente_nombre_modificar">Nombre</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="cliente_nombre_modificar"
+                    id="cliente_nombre_modificar"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="cliente_apellido_modificar">Apellido</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="cliente_apellido_modificar"
+                    id="cliente_apellido_modificar"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="cliente_referencia_modificar">Referencia</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 13vh"
+                    type="text"
+                    name="cliente_referencia_modificar"
+                    id="cliente_referencia_modificar"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="botonesDashboard">
+            <div class="flexColumn space-around">
+              <div class="flexColumn">
+                <button
+                  tabindex="-1"
+                  id="btnNuevoLote"
+                  class="boton colorSecundario modal__close"
+                  onclick="location.href= '#';modificarCliente();event.preventDefault();"
+                >
+                  GUARDAR
+                </button>
+                <button
+                  tabindex="-1"
+                  id="btnLimpiar"
+                  class="boton colorAmarillo modal__close"
+                  onclick="location.href= '#';event.preventDefault()"
+                >
+                  CANCELAR
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

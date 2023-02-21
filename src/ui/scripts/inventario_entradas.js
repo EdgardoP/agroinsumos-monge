@@ -546,10 +546,15 @@ const restarStock = (param) => {
 };
 
 const nuevoDerivado = async () => {
+  let stockInicial = parseInt(productoDerivarCantidad.value);
+  let precioCompra = parseInt(entradaValorUnitarioCompra.value);
+  let inversion = stockInicial * precioCompra;
+  let cantidadNueva = parseInt(productoDerivadoStock.value);
+  let nuevoPrecioCompra = inversion / cantidadNueva;
   obj = {
     lote_producto_fk: entradaLoteProductoFk.value,
     lote_cantidad: productoDerivadoStock.value,
-    lote_valor_unitario_compra: "0",
+    lote_valor_unitario_compra: nuevoPrecioCompra,
     lote_valor_unitario_venta: productoDerivadoValorVenta.value,
     lote_presentacion: productoDerivadoPresentacion.value,
     lote_ultima_actualizacion: entradaFecha.value,

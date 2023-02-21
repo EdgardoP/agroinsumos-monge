@@ -1,13 +1,27 @@
 <%- include('./partials/header.ejs') %>
 <link rel="stylesheet" href="style/style.css" />
 <div class="contenedorDashboard">
-  <h3>Productos / Ingresar Nuevos Productos</h3>
+  <h3>Productos / Ingresar Nuevo Lote</h3>
 </div>
-<div class="contenedorDashboard">
+<div style="overflow-x: inherit" class="contenedorDashboard">
   <form action="" class="flexRow">
     <div class="flexColumn">
       <div class="flexRow" style="align-items: center">
-        <div class="cajaInput">
+        <div class="cajaInput autocomplete">
+          <label for="idProducto">ID Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="idProducto"
+              id="idProducto"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput autocomplete">
           <label for="productoNombre">Nombre del Producto</label>
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
@@ -36,58 +50,6 @@
           </div>
         </div>
         <div class="cajaInput">
-          <label for="productoProveedor">Proveedor</label>
-          <div class="imagenInput">
-            <img src="icons/pencil.png" alt="" />
-            <select
-              class="estiloInputLogin"
-              name="productoProveedor"
-              id="productoProveedor"
-              style="width: 15vh"
-              tabindex="4"
-            ></select>
-          </div>
-        </div>
-        <div class="cajaInput">
-          <label for="productoColor">Color</label>
-          <div class="imagenInput">
-            <img src="icons/pencil.png" alt="" />
-            <select
-              class="estiloInputLogin"
-              name="productoColor"
-              id="productoColor"
-              style="width: 15vh"
-              tabindex="4"
-            >
-              <option value="0">Seleccione</option>
-              <option value="Amarillo">Amarillo</option>
-              <option value="Azul">Azul</option>
-              <option value="Rosa">Rosa</option>
-              <option value="Beige">Beige</option>
-              <option value="Verde">Verde</option>
-            </select>
-          </div>
-        </div>
-        <div class="cajaInput">
-          <label for="productoCategoria">Categoria</label>
-          <div class="imagenInput">
-            <img src="icons/pencil.png" alt="" />
-            <select
-              class="estiloInputLogin"
-              name="productoCategoria"
-              id="productoCategoria"
-              style="width: 15vh"
-              tabindex="4"
-            >
-              <option value="">Seleccione</option>
-              <option value="">Efectivo</option>
-              <option value="">Credito</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="flexRow" style="align-items: center">
-        <div class="cajaInput">
           <label for="lotePresentacion">Presentacion</label>
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
@@ -107,20 +69,8 @@
             </select>
           </div>
         </div>
-        <div class="cajaInput">
-          <label for="productoFechaVencimiento">Fecha de Vencimiento</label>
-          <div class="imagenInput">
-            <img src="icons/pencil.png" alt="" />
-            <input
-              style="width: 15vh"
-              type="date"
-              name="productoFechaVencimiento"
-              id="productoFechaVencimiento"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
-          </div>
-        </div>
+      </div>
+      <div class="flexRow" style="align-items: center">
         <div class="cajaInput">
           <label for="loteValorUnitarioCompra">Valor Unitario de Compra</label>
           <div class="imagenInput">
@@ -150,6 +100,20 @@
           </div>
         </div>
         <div class="cajaInput">
+          <label for="productoFechaVencimiento">Fecha de Vencimiento</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="date"
+              name="productoFechaVencimiento"
+              id="productoFechaVencimiento"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
           <label for="loteCantidad">Cantidad a Ingresar</label>
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
@@ -168,7 +132,12 @@
     <div class="botonesDashboard">
       <div class="flexColumn space-around">
         <div class="flexColumn">
-          <button tabindex="5" id="btnAceptar" class="boton colorAmarillo">
+          <button
+            tabindex="5"
+            id="btnAceptar"
+            class="boton colorAmarillo"
+            onclick="limpiarTextos();event.preventDefault()"
+          >
             LIMPIAR
           </button>
         </div>
@@ -191,24 +160,20 @@
     <thead>
       <tr>
         <th style="min-width: 20px; max-width: 20px; width: 20px">Nº</th>
-        <th style="min-width: 200px; max-width: 200px; width: 200px">
-          Producto
+        <th style="min-width: 150px; max-width: 150px; width: 150px">
+          ID Producto
         </th>
         <th style="min-width: 130px; max-width: 130px; width: 130px">
-          Presentacion
+          Producto
         </th>
         <th style="min-width: 130px; max-width: 130px; width: 130px">
           Descripcion
         </th>
         <th style="min-width: 130px; max-width: 130px; width: 130px">
-          Fec.Vencimiento
+          Presentacion
         </th>
         <th style="min-width: 130px; max-width: 130px; width: 130px">
-          Categoria
-        </th>
-        <th style="min-width: 130px; max-width: 130px; width: 130px">Color</th>
-        <th style="min-width: 130px; max-width: 130px; width: 130px">
-          Proveedor
+          Fecha Vencimiento
         </th>
         <th style="min-width: 130px; max-width: 130px; width: 130px">
           V.Unit Compra
@@ -240,7 +205,7 @@
         CANCELAR
       </button>
       <button
-        onclick="nuevoProducto();event.preventDefault()"
+        onclick="nuevoLote();event.preventDefault()"
         tabindex="5"
         id="btnAceptar"
         class="boton colorSecundario"
@@ -250,5 +215,5 @@
     </div>
   </div>
 </div>
-<script src="scripts/producto_nuevo.js"></script>
+<script src="scripts/producto_nuevo_lote.js"></script>
 <%- include('./partials/footer.ejs') %>
