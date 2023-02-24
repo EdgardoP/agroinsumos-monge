@@ -1,0 +1,137 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Productos / Modificar Producto</h3>
+</div>
+<div style="overflow-x: inherit" class="contenedorDashboard">
+  <form action="" class="flexRow">
+    <div class="flexColumn">
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput autocomplete">
+          <label for="idProducto">ID Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="idProducto"
+              id="idProducto"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput autocomplete">
+          <label for="productoNombre">Nombre del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoNombre"
+              id="productoNombre"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="productoDescripcion">Descripcion del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoDescripcion"
+              id="productoDescripcion"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="producto_proveedor_fk">Proveedor</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="producto_proveedor_fk"
+              id="producto_proveedor_fk"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="%">Seleccione</option>
+            </select>
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="productoColor">Color</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="productoColor"
+              id="productoColor"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="%">Seleccione</option>
+              <option value="NN">Sin Color</option>
+              <option value="Azul">Azul</option>
+              <option value="Verde">Verde</option>
+              <option value="Rosa">Rosa</option>
+              <option value="Morado">Morado</option>
+              <option value="Amarillo">Amarillo</option>
+              <option value="Blanco">Blanco</option>
+              <option value="Negro">Negro</option>
+              <option value="Gris">Gris</option>
+              <option value="Celeste">Celeste</option>
+              <option value="Cafe">Cafe</option>
+            </select>
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="producto_categoria">Categoria</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="producto_categoria"
+              id="producto_categoria"
+              style="width: 13vh"
+              tabindex="-1"
+            >
+              <option value="">Seleccione</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="botonesDashboard">
+      <div class="flexColumn space-around">
+        <div class="flexColumn">
+          <button
+            tabindex="5"
+            id="btnAceptar"
+            class="boton colorAmarillo"
+            onclick="limpiarTextos();event.preventDefault()"
+          >
+            LIMPIAR
+          </button>
+        </div>
+        <div class="flexColumn">
+          <button
+            onclick="modificarProducto();event.preventDefault()"
+            tabindex="5"
+            id="btnAceptar"
+            class="boton colorSecundario"
+          >
+            ACEPTAR
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="scripts/modificar_producto.js"></script>
+<%- include('./partials/footer.ejs') %>

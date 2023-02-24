@@ -5,6 +5,8 @@ let ventanaLogin;
 let ventanaPrincipal;
 let ventanaEntrada;
 let ventanaSalida;
+let ventanaLiquidacionDiaria;
+
 function crearLogin() {
   ventanaLogin = new BrowserWindow({
     width: 1000,
@@ -59,6 +61,20 @@ function crearVerSalida() {
     },
   });
   ventanaSalida.loadFile("src/ui/documento_historial_salida.ejs");
+}
+
+function crearVerLiquidacionDiaria() {
+  ventanaLiquidacionDiaria = new BrowserWindow({
+    width: 1280,
+    height: 1400,
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  ventanaLiquidacionDiaria.loadFile("src/ui/liquidacion_diaria_resumen.ejs");
 }
 
 app.on("window-all-closed", () => {
@@ -117,6 +133,41 @@ const iniciarSesion = (obj) => {
 };
 
 // Productos
+ipcMain.handle("obtenerInformacionProductos", (event) => {
+  obtenerInformacionProductos();
+});
+
+const obtenerInformacionProductos = (obj) => {
+  db.query("SELECT * FROM productos", (error, results, productos) => {
+    if (error) {
+      // console.log("No se cargaron los productos");
+    } else {
+      ventanaPrincipal.webContents.send("informacion_productos", results);
+    }
+  });
+};
+
+ipcMain.handle("modificarProducto", (event, obj) => {
+  modificarProducto(obj);
+});
+
+const modificarProducto = (obj) => {
+  const { producto_id } = obj;
+  const { producto_nombre } = obj;
+  const { producto_descripcion } = obj;
+  const { producto_color } = obj;
+  const { producto_categoria } = obj;
+
+  let query = `UPDATE productos SET producto_nombre = '${producto_nombre}', producto_descripcion = '${producto_descripcion}', producto_color = '${producto_color}', producto_categoria_fk = '${producto_categoria}' WHERE producto_id = '${producto_id}'`;
+  db.query(query, (error, results, productos) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
+    }
+  });
+};
+
 ipcMain.handle("obtenerNombreProductos", (event) => {
   listaProductos();
 });
@@ -329,7 +380,7 @@ const nuevoProveedor = (obj, fecha) => {
   const query = "INSERT INTO proveedores SET ?";
   db.query(query, obj, (error, results, fields) => {
     if (error) {
-      // console.log(error);
+      console.log(error);
     } else {
       let idProveedor = results.insertId;
       let objInicializar = {
@@ -343,6 +394,24 @@ const nuevoProveedor = (obj, fecha) => {
       };
       insertarAportacionProveedor(objInicializar);
       notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Proveedor");
+    }
+  });
+};
+
+ipcMain.handle("modificarProveedor", (event, obj) => {
+  modificarProveedor(obj);
+});
+
+const modificarProveedor = (obj) => {
+  const { proveedor_id } = obj;
+  const { proveedor_nombre } = obj;
+  const { proveedor_numero } = obj;
+  let query = ` UPDATE proveedores SET proveedor_nombre = '${proveedor_nombre}', proveedor_numero = '${proveedor_numero}' WHERE proveedor_id = ${proveedor_id};`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
     }
   });
 };
@@ -545,6 +614,48 @@ const insertarMultiplesSalidas = (obj) => {
         "Se han ingresado los productos correctamente"
       );
       // console.log(results);
+    }
+  });
+};
+
+ipcMain.handle("ventasDelDia", (event, fecha) => {
+  ventasDelDia(fecha);
+});
+
+const ventasDelDia = (fecha) => {
+  let query = `call ventasDelDia('${fecha}')`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      crearVerLiquidacionDiaria();
+      ventanaLiquidacionDiaria.webContents.once("did-finish-load", function () {
+        ventanaLiquidacionDiaria.webContents.send("ventas_del_dia", results);
+      });
+      ventanaLiquidacionDiaria.show();
+    }
+  });
+};
+
+ipcMain.handle("aportacionesDelDia", (event, fecha) => {
+  aportacionesDelDia(fecha);
+});
+
+const aportacionesDelDia = (fecha) => {
+  let query = `call aportacionesDelDia('${fecha}')`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
+      // ventanaPrincipal.webContents.send("aportaciones_del_dia", results);
+      ventanaLiquidacionDiaria.webContents.once("did-finish-load", function () {
+        ventanaLiquidacionDiaria.webContents.send(
+          "aportaciones_del_dia",
+          results
+        );
+      });
+      ventanaLiquidacionDiaria.show();
     }
   });
 };

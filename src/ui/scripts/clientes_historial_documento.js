@@ -57,25 +57,25 @@ function formatDinero(numero) {
   return numero.toLocaleString();
 }
 
-// const nuevaAportacion = async () => {
-//   let saldoAnterior = parseInt(saldoActual.innerHTML);
-//   console.log(saldoAnterior);
-//   let saldoAporte = parseInt(cantidadAporte.value);
-//   console.log(saldoAporte);
+const nuevaAportacion = async () => {
+  let saldoAnterior = parseInt(saldoActual.innerHTML);
+  console.log(saldoAnterior);
+  let saldoAporte = parseInt(cantidadAporte.value);
+  console.log(saldoAporte);
 
-//   let saldoNuevo = saldoAnterior - saldoAporte;
-//   obj = {
-//     historial_proveedor_fk: idCliente,
-//     historial_proveedor_fecha: fechaActual,
-//     historial_proveedor_detalle: detallesAportacion.value,
-//     historial_proveedor_saldo_anterior: saldoActual.innerHTML,
-//     historial_proveedor_aportacion: cantidadAporte.value,
-//     historial_proveedor_saldo_nuevo: saldoNuevo,
-//     historial_proveedor_tipo_aportacion: formaPago.value,
-//   };
-//   console.log(obj);
-//   // await ipcRenderer.invoke("modificarMultiplesLotes", obj);
-// };
+  let saldoNuevo = saldoAnterior - saldoAporte;
+  obj = {
+    historial_cliente_fk: idCliente,
+    historial_cliente_fecha: fechaActual,
+    historial_cliente_detalle: detallesAportacion.value,
+    historial_cliente_saldo_anterior: saldoActual.innerHTML,
+    historial_cliente_aportacion: parseInt(cantidadAporte.value) * -1,
+    historial_cliente_saldo_nuevo: saldoNuevo,
+    historial_cliente_tipo_aportacion: formaPago.value,
+  };
+  console.log(obj);
+  await ipcRenderer.invoke("insertarAportacionCliente", obj);
+};
 
 const visualizarDocumento = async () => {
   let fechaUno = fechaInicial.value;

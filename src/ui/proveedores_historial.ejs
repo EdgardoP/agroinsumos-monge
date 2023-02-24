@@ -3,7 +3,10 @@
 <div class="contenedorDashboard">
   <h3>Proveedores / Estados de Cuenta</h3>
 </div>
-<div class="contenedorDashboard">
+<div
+  class="contenedorDashboard flexRow"
+  style="justify-content: space-between; align-items: center"
+>
   <div class="flexRow">
     <div class="flexRow" style="align-items: center">
       <div class="cajaInput">
@@ -28,6 +31,16 @@
       </button>
     </div>
   </div>
+  <div>
+    <button
+      id="${element.cliente_id}"
+      onclick="location.href='#modal_nuevo_proveedor'; event.preventDefault()"
+      class="boton colorSecundario"
+      style="margin-right: 20px"
+    >
+      NUEVO PROVEEDOR
+    </button>
+  </div>
 </div>
 <div class="contenedorDashboard">
   <table class="estiloTabla">
@@ -43,22 +56,14 @@
         <th style="max-width: 28vh; min-width: 28vh; width: 28vh">
           Ultima Actualizacion
         </th>
-        <th style="max-width: 28vh; min-width: 28vh; width: 28vh">Estado</th>
+        <th style="max-width: 20vh; min-width: 20vh; width: 20vh">Estado</th>
         <th style="max-width: 20vh; min-width: 20vh; width: 20vh">Saldo</th>
-        <th
-          style="
-            max-width: 22vh;
-            min-width: 22vh;
-            width: 22vh;
-            text-align: center;
-          "
-        >
-          Acciones
-        </th>
+        <th style="max-width: 30vh; min-width: 30vh; width: 30vh">Acciones</th>
       </tr>
     </thead>
     <tbody id="tablaEntradas" style="max-height: 70vh; height: 70vh"></tbody>
   </table>
 </div>
+<%- include('./partials/modal_nuevo_proveedor.ejs') %>
 <script src="scripts/proveedores_historial.js"></script>
 <%-include('./partials/footer.ejs') %>
