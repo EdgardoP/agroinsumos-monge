@@ -1,292 +1,375 @@
-<script type="text/javascript" src="scripts/jquery.min.js"></script>
-<script type="text/javascript" src="scripts/xlsx.full.min.js"></script>
-<script type="text/javascript" src="scripts/unpkxlsx.full.min.js"></script>
-<link rel="stylesheet" href="style/sliderMenu.css" />
-<link rel="stylesheet" href="style/style.css" />
-<div
-  id="elementoImprimir"
-  style="background-color: #fff; padding: 20px; overflow-y: scroll"
->
-  <div class="flexColumn" style="justify-content: center">
-    <div class="flexRow" style="justify-content: center; margin-bottom: 20px">
-      <h2>AGROINSUMOS MONGE</h2>
-    </div>
-    <div
-      class="flexRow"
-      style="justify-content: space-around; margin-bottom: 20px"
-    >
-      <h3>LIQUIDACION</h3>
-      <h3 id="fechaActual"></h3>
-    </div>
-  </div>
-  <div
-    class="flexColumn"
-    style="
-      border: 2px solid #000;
-      padding: 20px 100px;
-      margin: 0px 5%;
-      border-radius: 9px;
-    "
-  >
-    <div
-      class="flexColumn"
-      style="border: 1px solid #000; padding: 10px 100px; margin-bottom: 40px"
-    >
-      <div style="text-align: center">
-        <h4><strong> VENTAS DEL DIA</strong></h4>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-between"
-      >
-        <p>VENTAS DE CONTADO</p>
-        <div class="cajaInput">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="scripts/unpkxlsx.full.min.js"></script>
+    <script src="scripts/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style/sliderMenu.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>Liquidacion Diaria</title>
+  </head>
+  <body style="margin: 2% 10%; background-color: #333">
+    <div style="padding: 100px 5%; background-color: #fff">
+      <div id="elementoImprimir" style="background-color: #fff">
+        <div class="flexColumn" style="justify-content: center">
           <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
+            class="flexRow"
+            style="justify-content: center; margin-bottom: 20px"
           >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="ventasContado"
-              id="ventasContado"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
+            <h2>AGROINSUMOS MONGE</h2>
+          </div>
+          <div
+            class="flexRow"
+            style="justify-content: space-around; margin-bottom: 20px"
+          >
+            <h3>LIQUIDACION</h3>
+            <h3 class="fechaActual"></h3>
           </div>
         </div>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-between"
-      >
-        <p>VENTAS DE CREDITO</p>
-        <div class="cajaInput">
+        <div
+          class="flexColumn"
+          style="border: 2px solid #000; padding: 20px 100px"
+        >
           <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
+            class="flexColumn"
+            style="
+              border: 1px solid #000;
+              padding: 10px 100px;
+              margin-bottom: 100px;
+            "
           >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="ventasCredito"
-              id="ventasCredito"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
+            <div style="text-align: center">
+              <h4><strong> VENTAS DEL DIA</strong></h4>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-between"
+            >
+              <p>VENTAS DE CONTADO</p>
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="ventasContado"
+                    id="ventasContado"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-between"
+            >
+              <p>VENTAS DE CREDITO</p>
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="ventasCredito"
+                    id="ventasCredito"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-between"
+            >
+              <p>VENTAS DE DEPOSITO</p>
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="ventasDeposito"
+                    id="ventasDeposito"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-evenly"
+            >
+              <p>TOTAL DE VENTAS</p>
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="totalVentas"
+                    id="totalVentas"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-between"
-      >
-        <p>VENTAS DE DEPOSITO</p>
-        <div class="cajaInput">
           <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
+            class="flexColumn"
+            style="
+              border: 1px solid #000;
+              padding: 10px 100px;
+              margin-bottom: 100px;
+            "
           >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="ventasDeposito"
-              id="ventasDeposito"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
+            <div style="text-align: center">
+              <h4><strong> RECUPERACIONES DE LAS VENTAS</strong></h4>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-between"
+            >
+              <p>RECUPERACIONES DE CONTADO</p>
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="recuperacionContado"
+                    id="recuperacionContado"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-between"
+            >
+              <p>RECUPERACIONES DE DEPOSITO</p>
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="recuperacionDeposito"
+                    id="recuperacionDeposito"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-evenly"
+            >
+              <p>TOTAL DE RECUPERACIONES</p>
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="totalRecuperaciones"
+                    id="totalRecuperaciones"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-evenly"
-      >
-        <p>TOTAL DE VENTAS</p>
-        <div class="cajaInput">
           <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
+            class="flexColumn"
+            style="
+              border: 1px solid #000;
+              padding: 10px 100px;
+              margin-bottom: 10px;
+            "
           >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="totalVentas"
-              id="totalVentas"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flexColumn"
-      style="border: 1px solid #000; padding: 10px 100px; margin-bottom: 40px"
-    >
-      <div style="text-align: center">
-        <h4><strong> RECUPERACIONES DE LAS VENTAS</strong></h4>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-between"
-      >
-        <p>RECUPERACIONES DE CONTADO</p>
-        <div class="cajaInput">
-          <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
-          >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="recuperacionContado"
-              id="recuperacionContado"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-between"
-      >
-        <p>RECUPERACIONES DE DEPOSITO</p>
-        <div class="cajaInput">
-          <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
-          >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="recuperacionDeposito"
-              id="recuperacionDeposito"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-evenly"
-      >
-        <p>TOTAL DE RECUPERACIONES</p>
-        <div class="cajaInput">
-          <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
-          >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="totalRecuperaciones"
-              id="totalRecuperaciones"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="flexColumn"
-      style="border: 1px solid #000; padding: 10px 100px; margin-bottom: 10px"
-    >
-      <div style="text-align: center">
-        <h4><strong> TOTAL</strong></h4>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-between"
-      >
-        <p>TOTAL VENTAS DE CONTADO Y RECUPERACIONES AL CONTADO</p>
-        <div class="cajaInput">
-          <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
-          >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="sumaTotalContado"
-              id="sumaTotalContado"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="flexRow"
-        style="align-items: center; justify-content: space-between"
-      >
-        <div>
-          <p style="margin-bottom: 5px">TOTAL VENTAS DE DEPOSITO</p>
-          <p>CUENTA: 1111-4000-2008 BANCO OCCIDENTE</p>
-        </div>
+            <div style="text-align: center">
+              <h4><strong> TOTAL</strong></h4>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-between"
+            >
+              <p>TOTAL VENTAS DE CONTADO Y RECUPERACIONES AL CONTADO</p>
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="sumaTotalContado"
+                    id="sumaTotalContado"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="flexRow"
+              style="align-items: center; justify-content: space-between"
+            >
+              <div>
+                <p style="margin-bottom: 5px">TOTAL VENTAS DE DEPOSITO</p>
+                <p>CUENTA: 1111-4000-2008 BANCO OCCIDENTE</p>
+              </div>
 
-        <div class="cajaInput">
+              <div class="cajaInput">
+                <div
+                  class="imagenInput"
+                  style="border: #000 1px solid; background-color: #fff"
+                >
+                  <input
+                    style="width: 100px; background-color: #fff"
+                    type="text"
+                    name="sumaTotalDeposito"
+                    id="sumaTotalDeposito"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flexRow"
+          style="
+            justify-content: space-evenly;
+            margin-top: 100px;
+            margin-bottom: 100px;
+          "
+        >
+          <p style="border-top: 1px solid #000; padding: 0px 100px">
+            <strong> REALIZADO</strong>
+          </p>
+          <p style="border-top: 1px solid #000; padding: 0px 100px">
+            <strong>REVISADO</strong>
+          </p>
+        </div>
+        <div class="html2pdf__page-break"></div>
+        <div>
           <div
-            class="imagenInput"
-            style="border: #000 1px solid; background-color: #fff"
+            class="flexRow"
+            style="justify-content: space-around; margin-bottom: 20px"
           >
-            <input
-              style="width: 15vh; background-color: #fff"
-              type="text"
-              name="sumaTotalDeposito"
-              id="sumaTotalDeposito"
-              class="estiloInputLogin"
-              tabindex="-1"
-            />
+            <h3>VENTAS DE CREDITO</h3>
+            <h3 class="fechaActual"></h3>
+          </div>
+          <table class="tablaFinanzas">
+            <thead>
+              <tr>
+                <th style="width: 150px; max-width: 150px">CANTIDAD</th>
+                <th style="width: 160px; max-width: 150px">CODIGO</th>
+                <th style="width: 400px; max-width: 400px">DESCRIPCION</th>
+                <th style="width: 150px; max-width: 150px">PRECIO</th>
+                <th style="width: 120px; max-width: 120px">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoTablaCredito"></tbody>
+          </table>
+        </div>
+        <div class="html2pdf__page-break"></div>
+        <div>
+          <div
+            class="flexRow"
+            style="justify-content: space-around; margin-bottom: 20px"
+          >
+            <h3>VENTAS DE CONTADO</h3>
+            <h3 class="fechaActual"></h3>
+          </div>
+          <table class="tablaFinanzas">
+            <thead>
+              <tr>
+                <th style="width: 150px; max-width: 150px">CANTIDAD</th>
+                <th style="width: 160px; max-width: 150px">CODIGO</th>
+                <th style="width: 400px; max-width: 400px">DESCRIPCION</th>
+                <th style="width: 150px; max-width: 150px">PRECIO</th>
+                <th style="width: 120px; max-width: 120px">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoTablaContado"></tbody>
+          </table>
+        </div>
+        <div class="html2pdf__page-break"></div>
+        <div>
+          <div
+            class="flexRow"
+            style="justify-content: space-around; margin-bottom: 20px"
+          >
+            <h3>VENTAS DE DEPOSITO</h3>
+            <h3 class="fechaActual"></h3>
+          </div>
+          <table class="tablaFinanzas">
+            <thead>
+              <tr>
+                <th style="width: 150px; max-width: 150px">CANTIDAD</th>
+                <th style="width: 160px; max-width: 150px">CODIGO</th>
+                <th style="width: 400px; max-width: 400px">DESCRIPCION</th>
+                <th style="width: 150px; max-width: 150px">PRECIO</th>
+                <th style="width: 120px; max-width: 120px">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoTablaDeposito"></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="flexRow" style="justify-content: space-evenly">
+          <div class="flexRow">
+            <button
+              style="margin-right: 10px"
+              tabindex="6"
+              id="btnImprimir"
+              class="boton colorPrimario"
+              onclick=""
+            >
+              GUARDAR COMO PDF
+            </button>
+            <button
+              onclick="ExportExcel('xlsx')"
+              tabindex="5"
+              id="btnAceptar"
+              class="boton colorSecundario"
+            >
+              EXPORTAR A EXCEL
+            </button>
           </div>
         </div>
       </div>
+      <script src="scripts/liquidacion_diaria_resumen.js"></script>
     </div>
-  </div>
-  <div
-    class="flexRow"
-    style="
-      justify-content: space-evenly;
-      margin-top: 70px;
-      margin-bottom: 100px;
-    "
-  >
-    <p style="border-top: 1px solid #000; padding: 0px 100px">
-      <strong> REALIZADO</strong>
-    </p>
-    <p style="border-top: 1px solid #000; padding: 0px 100px">
-      <strong>REVISADO</strong>
-    </p>
-  </div>
-</div>
-<div>
-  <div>
-    <div class="flexRow" style="justify-content: space-evenly">
-      <div class="flexRow">
-        <button
-          style="margin-right: 10px"
-          tabindex="6"
-          id="btnImprimir"
-          class="boton colorPrimario"
-          onclick=""
-        >
-          GUARDAR COMO PDF
-        </button>
-        <button
-          onclick="ExportExcel('xlsx')"
-          tabindex="5"
-          id="btnAceptar"
-          class="boton colorSecundario"
-        >
-          EXPORTAR A EXCEL
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<%- include('./partials/modal_nueva_aportacion.ejs') %>
-<script src="scripts/html2pdf.bundle.min.js"></script>
-<script src="scripts/liquidacion_diaria_resumen.js"></script>
+  </body>
+</html>

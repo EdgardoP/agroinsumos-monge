@@ -352,3 +352,18 @@ body {
   font-weight: bold;
   font-family: "Roboto-Light";
 }
+
+.tablaFinanzas{
+  justify-content: center; 
+  border-collapse: collapse;
+  width: 100%
+}
+
+.tablaFinanzas th{
+  border: 1px solid;
+}
+
+.tablaFinanzas td{
+  border: 1px solid;
+  font-weight: bold;
+}

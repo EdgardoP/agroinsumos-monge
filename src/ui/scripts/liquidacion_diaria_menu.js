@@ -30,6 +30,7 @@ const ventasDelDia = async () => {
   let fechaHoy = fechaLiquidacion.value;
   await ipcRenderer.invoke("ventasDelDia", fechaHoy);
   await ipcRenderer.invoke("aportacionesDelDia", fechaHoy);
+  await ipcRenderer.invoke("salidasDelDia", fechaHoy);
 };
 
 // const aportacionesDelDia = async () => {

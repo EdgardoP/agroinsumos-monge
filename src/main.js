@@ -630,7 +630,11 @@ const ventasDelDia = (fecha) => {
     } else {
       crearVerLiquidacionDiaria();
       ventanaLiquidacionDiaria.webContents.once("did-finish-load", function () {
-        ventanaLiquidacionDiaria.webContents.send("ventas_del_dia", results);
+        ventanaLiquidacionDiaria.webContents.send(
+          "ventas_del_dia",
+          results,
+          fecha
+        );
       });
       ventanaLiquidacionDiaria.show();
     }
@@ -654,6 +658,25 @@ const aportacionesDelDia = (fecha) => {
           "aportaciones_del_dia",
           results
         );
+      });
+      ventanaLiquidacionDiaria.show();
+    }
+  });
+};
+
+ipcMain.handle("salidasDelDia", (event, fecha) => {
+  salidasDelDia(fecha);
+});
+
+const salidasDelDia = (fecha) => {
+  let query = `call salidas_del_dia('${fecha}')`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
+      ventanaLiquidacionDiaria.webContents.once("did-finish-load", function () {
+        ventanaLiquidacionDiaria.webContents.send("salidas_del_dia", results);
       });
       ventanaLiquidacionDiaria.show();
     }
