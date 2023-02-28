@@ -1,9 +1,12 @@
 const { ipcRenderer } = require("electron");
 
 let fechaLiquidacion = document.getElementById("fechaLiquidacion");
+let fechaRecuperacion = document.getElementById("fechaRecuperacion");
+let mesVentas = document.getElementById("mesVentas");
 
 document.addEventListener("DOMContentLoaded", function () {
   fechaLiquidacion.value = obtenerFecha("YYYY/MM/DD");
+  fechaRecuperacion.value = obtenerFecha("YYYY/MM/DD");
 });
 
 const obtenerFecha = (formato) => {
@@ -27,10 +30,25 @@ const obtenerFecha = (formato) => {
 };
 
 const ventasDelDia = async () => {
-  let fechaHoy = fechaLiquidacion.value;
-  await ipcRenderer.invoke("ventasDelDia", fechaHoy);
-  await ipcRenderer.invoke("aportacionesDelDia", fechaHoy);
-  await ipcRenderer.invoke("salidasDelDia", fechaHoy);
+  let fecha = fechaLiquidacion.value;
+  await ipcRenderer.invoke("ventasDelDia", fecha);
+  await ipcRenderer.invoke("aportacionesDelDia", fecha);
+  await ipcRenderer.invoke("salidasDelDia", fecha);
+};
+
+const recuperacionesClientesDia = async () => {
+  let fecha = fechaRecuperacion.value;
+  await ipcRenderer.invoke("recuperacionesClientesDia", fecha);
+};
+
+const ventasMensuales = async () => {
+  let valor = mesVentas.value;
+  let split = valor.split("-");
+  let anio = split[0];
+  let mes = split[1];
+  console.log(anio);
+  console.log(mes);
+  await ipcRenderer.invoke("ventasMensualesCreditoContado", anio, mes);
 };
 
 // const aportacionesDelDia = async () => {

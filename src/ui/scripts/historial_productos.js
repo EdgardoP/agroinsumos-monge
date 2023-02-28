@@ -99,6 +99,10 @@ const obtenerFecha = (formato) => {
   return formato === "YYYY/MM/DD" ? fechaAnioMesDia : fechaDiaMesAnio;
 };
 
+const contabilizarProductos = async () => {
+  await ipcRenderer.invoke("contabilizarProductos", objFiltro);
+};
+
 const obtenerHistorialProductos = async (objFiltro) => {
   await ipcRenderer.invoke("obtenerHistorialProductos", objFiltro);
 };

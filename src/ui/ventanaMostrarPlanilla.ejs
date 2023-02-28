@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="scripts/unpkxlsx.full.min.js"></script>
+    <script src="scripts/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style/sliderMenu.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>Planillas</title>
+  </head>
+  <body style="margin: 2% 10%; background-color: #333">
+    <div style="padding: 100px 5%; background-color: #fff">
+      <div id="elementoImprimir" style="background-color: #fff">
+        <div>
+          <table id="exportable_table" class="tablaFinanzas">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <h1>PLANILLA</h1>
+                </th>
+                <th colspan="6">
+                  <h1>CORRESPONDIENTE DEL 15 DE ABRIL AL 30 DEL 2022</h1>
+                </th>
+              </tr>
+              <tr>
+                <th>Nº</th>
+                <th>NOMBRE DE EMPLEADO</th>
+                <th>SUELDO BASE</th>
+                <th>HORAS EXTRA</th>
+                <th>BONIFICACIONES</th>
+                <th>'-' DEDUCCIONES</th>
+                <th>TOTAL NETO A PAGAR</th>
+                <th>FIRMA Y HUELLA</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoTablaPlanilla"></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="flexRow" style="justify-content: space-evenly">
+          <div class="flexRow">
+            <button
+              style="margin-right: 10px"
+              tabindex="6"
+              id="btnImprimir"
+              class="boton colorPrimario"
+              onclick=""
+            >
+              GUARDAR COMO PDF
+            </button>
+            <button
+              onclick="ExportExcel('xlsx')"
+              tabindex="5"
+              id="btnAceptar"
+              class="boton colorSecundario"
+            >
+              EXPORTAR A EXCEL
+            </button>
+          </div>
+        </div>
+      </div>
+      <script src="scripts/ventanaMostrarPlanilla.js"></script>
+    </div>
+  </body>
+</html>

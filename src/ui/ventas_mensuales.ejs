@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="scripts/unpkxlsx.full.min.js"></script>
+    <script src="scripts/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style/sliderMenu.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>Cuadros Ventas al Contado y al Credito</title>
+  </head>
+  <body style="margin: 2% 10%; background-color: #333">
+    <div style="padding: 100px 5%; background-color: #fff">
+      <div id="elementoImprimir" style="background-color: #fff">
+        <div>
+          <div
+            class="flexRow"
+            style="justify-content: space-around; margin-bottom: 20px"
+          >
+            <h3>VENTAS AL CONTADO</h3>
+            <h3 class="fechaActual"></h3>
+          </div>
+          <table class="tablaFinanzas">
+            <thead>
+              <tr>
+                <th style="width: 200px; max-width: 200px">PRODUCTO</th>
+                <th style="width: 160px; max-width: 150px">CANTIDAD</th>
+                <th style="width: 20px; max-width: 200px">TOTAL DE VENTAS</th>
+                <th style="width: 150px; max-width: 150px">
+                  VALOR UNITARIO PRODUCTO
+                </th>
+                <th style="width: 150px; max-width: 150px">
+                  COSTO TOTAL DE LA COMPRA
+                </th>
+                <th style="width: 120px; max-width: 120px">UTILIDAD BRUTA</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoVentasContado"></tbody>
+          </table>
+        </div>
+        <div class="html2pdf__page-break"></div>
+        <div>
+          <div
+            class="flexRow"
+            style="justify-content: space-around; margin-bottom: 20px"
+          >
+            <h3>VENTAS POR LIBRA AL CONTADO</h3>
+            <h3 class="fechaActual"></h3>
+          </div>
+          <table class="tablaFinanzas">
+            <thead>
+              <tr>
+                <th style="width: 200px; max-width: 200px">PRODUCTO</th>
+                <th style="width: 160px; max-width: 150px">CANTIDAD</th>
+                <th style="width: 20px; max-width: 200px">TOTAL DE VENTAS</th>
+                <th style="width: 150px; max-width: 150px">
+                  VALOR UNITARIO PRODUCTO
+                </th>
+                <th style="width: 150px; max-width: 150px">
+                  COSTO TOTAL DE LA COMPRA
+                </th>
+                <th style="width: 120px; max-width: 120px">UTILIDAD BRUTA</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoVentasContadoLibra"></tbody>
+          </table>
+        </div>
+        <div class="html2pdf__page-break"></div>
+        <div>
+          <div
+            class="flexRow"
+            style="justify-content: space-around; margin-bottom: 20px"
+          >
+            <h3>VENTAS POR SACO AL CONTADO</h3>
+            <h3 class="fechaActual"></h3>
+          </div>
+          <table class="tablaFinanzas">
+            <thead>
+              <tr>
+                <th style="width: 200px; max-width: 200px">PRODUCTO</th>
+                <th style="width: 160px; max-width: 150px">CANTIDAD</th>
+                <th style="width: 20px; max-width: 200px">TOTAL DE VENTAS</th>
+                <th style="width: 150px; max-width: 150px">
+                  VALOR UNITARIO PRODUCTO
+                </th>
+                <th style="width: 150px; max-width: 150px">
+                  COSTO TOTAL DE LA COMPRA
+                </th>
+                <th style="width: 120px; max-width: 120px">UTILIDAD BRUTA</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoVentasContadoSaco"></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="flexRow" style="justify-content: space-evenly">
+          <div class="flexRow">
+            <button
+              style="margin-right: 10px"
+              tabindex="6"
+              id="btnImprimir"
+              class="boton colorPrimario"
+              onclick=""
+            >
+              GUARDAR COMO PDF
+            </button>
+            <button
+              onclick="ExportExcel('xlsx')"
+              tabindex="5"
+              id="btnAceptar"
+              class="boton colorSecundario"
+            >
+              EXPORTAR A EXCEL
+            </button>
+          </div>
+        </div>
+      </div>
+      <script src="scripts/ventas_mensuales.js"></script>
+    </div>
+  </body>
+</html>

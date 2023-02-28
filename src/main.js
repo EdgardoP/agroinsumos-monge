@@ -6,6 +6,10 @@ let ventanaPrincipal;
 let ventanaEntrada;
 let ventanaSalida;
 let ventanaLiquidacionDiaria;
+let ventanaRecuperacionesDiaria;
+let ventanaVentasMesuales;
+let ventanaContabilizarProductos;
+let ventanaMostrarPlanilla;
 
 function crearLogin() {
   ventanaLogin = new BrowserWindow({
@@ -75,6 +79,64 @@ function crearVerLiquidacionDiaria() {
     },
   });
   ventanaLiquidacionDiaria.loadFile("src/ui/liquidacion_diaria_resumen.ejs");
+}
+
+function crearVerRecuperacionesDiaria() {
+  ventanaRecuperacionesDiaria = new BrowserWindow({
+    width: 1280,
+    height: 1400,
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  ventanaRecuperacionesDiaria.loadFile("src/ui/recuperaciones_diaria.ejs");
+}
+
+function crearVentasMensuales() {
+  ventanaVentasMesuales = new BrowserWindow({
+    width: 1280,
+    height: 1400,
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  ventanaVentasMesuales.loadFile("src/ui/ventas_mensuales.ejs");
+}
+
+function crearVentanaContabilizarProductos() {
+  ventanaContabilizarProductos = new BrowserWindow({
+    width: 1280,
+    height: 1400,
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  ventanaContabilizarProductos.loadFile(
+    "src/ui/ventana_contabilizar_productos.ejs"
+  );
+}
+
+function crearVentanaMostrarPlanilla() {
+  ventanaMostrarPlanilla = new BrowserWindow({
+    width: 1280,
+    height: 1400,
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  ventanaMostrarPlanilla.loadFile("src/ui/ventanaMostrarPlanilla.ejs");
 }
 
 app.on("window-all-closed", () => {
@@ -252,6 +314,38 @@ const nuevoProductoMultiple = (obj, objLote) => {
 };
 
 //Lotes
+
+ipcMain.handle("contabilizarProductos", (event, obj) => {
+  contabilizarProductos(obj);
+});
+
+const contabilizarProductos = (obj) => {
+  console.log(obj);
+  const { proveedor } = obj;
+  const { color } = obj;
+  const { presentacion } = obj;
+  const { categoria } = obj;
+  db.query(
+    `call historial_de_productos('${proveedor}','${presentacion}','${color}','${categoria}')`,
+    (error, results, productos) => {
+      if (error) {
+        console.log(error);
+      } else {
+        crearVentanaContabilizarProductos();
+        ventanaContabilizarProductos.webContents.once(
+          "did-finish-load",
+          function () {
+            ventanaContabilizarProductos.webContents.send(
+              "listado_de_productos",
+              results
+            );
+          }
+        );
+        ventanaContabilizarProductos.show();
+      }
+    }
+  );
+};
 
 ipcMain.handle("nuevoLote", (event, obj) => {
   nuevoLote(obj);
@@ -618,6 +712,30 @@ const insertarMultiplesSalidas = (obj) => {
   });
 };
 
+ipcMain.handle("ventasMensualesCreditoContado", (event, anio, mes) => {
+  ventasMensualesCreditoContado(anio, mes);
+});
+
+const ventasMensualesCreditoContado = (anio, mes) => {
+  let query = `call ventas_mensuales_credito_contado(${anio},${mes})`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      crearVentasMensuales();
+      ventanaVentasMesuales.webContents.once("did-finish-load", function () {
+        ventanaVentasMesuales.webContents.send(
+          "ventas_mensuales_credito_contado",
+          results,
+          anio,
+          mes
+        );
+      });
+      ventanaVentasMesuales.show();
+    }
+  });
+};
+
 ipcMain.handle("ventasDelDia", (event, fecha) => {
   ventasDelDia(fecha);
 });
@@ -802,6 +920,32 @@ const insertarAportacionCliente = (obj) => {
   });
 };
 
+ipcMain.handle("recuperacionesClientesDia", (event, fecha) => {
+  recuperacionesClientesDia(fecha);
+});
+
+const recuperacionesClientesDia = (fecha) => {
+  let query = `call recuperaciones_clientes_dia('${fecha}')`;
+  db.query(query, (error, results, filas) => {
+    if (error) {
+      console.log(error);
+    } else {
+      crearVerRecuperacionesDiaria();
+      ventanaRecuperacionesDiaria.webContents.once(
+        "did-finish-load",
+        function () {
+          ventanaRecuperacionesDiaria.webContents.send(
+            "recuperaciones_clientes",
+            results,
+            fecha
+          );
+        }
+      );
+      ventanaRecuperacionesDiaria.show();
+    }
+  });
+};
+
 ipcMain.handle("documentosHistorialClientes", (event, obj) => {
   documentosHistorialClientes();
 });
@@ -850,6 +994,64 @@ const historialClientes = (id, fechaInicial, fechaFinal) => {
         );
       });
       // console.log(results);
+    }
+  });
+};
+
+//Planillas
+ipcMain.handle("historial_planillas", (event) => {
+  historial_planillas();
+});
+
+const historial_planillas = () => {
+  let query = `call historial_planillas`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaPrincipal.webContents.once("did-finish-load", function () {
+        ventanaPrincipal.webContents.send("historial_planillas", results);
+      });
+      // console.log(results);
+    }
+  });
+};
+
+ipcMain.handle("insertar_nueva_planilla", (event, obj) => {
+  insertarNuevaPlanilla(obj);
+});
+
+const insertarNuevaPlanilla = (obj) => {
+  // console.log(obj);
+  const query = "INSERT INTO planillas SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      notificacion("Transaccion exitosa", "Se ha ingresado una nueva planilla");
+    }
+  });
+};
+
+ipcMain.handle("mostrar_planilla_documento", (event, id) => {
+  mostrar_planilla_documento(id);
+});
+
+const mostrar_planilla_documento = (id) => {
+  const query = "call mostrar_planilla_documento(?)";
+  db.query(query, [id], (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      crearVentanaMostrarPlanilla();
+      ventanaMostrarPlanilla.webContents.once("did-finish-load", function () {
+        ventanaMostrarPlanilla.webContents.send(
+          "documento_planilla",
+          results,
+          id
+        );
+      });
+      ventanaMostrarPlanilla.show();
     }
   });
 };

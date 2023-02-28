@@ -1,7 +1,7 @@
 <%- include('./partials/header.ejs') %>
 <link rel="stylesheet" href="style/style.css" />
 <div class="contenedorDashboard">
-  <h3>Finanzas / Liquidacion</h3>
+  <h3>Generar Liquidacion</h3>
 </div>
 <div
   class="contenedorDashboard flexRow"
@@ -29,6 +29,78 @@
     <button
       id="${element.cliente_id}"
       onclick="ventasDelDia(); event.preventDefault()"
+      class="boton colorSecundario"
+      style="margin-right: 20px"
+    >
+      GENERAR
+    </button>
+  </div>
+</div>
+<div class="contenedorDashboard">
+  <h3>Recuperaciones de Clientes</h3>
+</div>
+<div
+  class="contenedorDashboard flexRow"
+  style="justify-content: space-between; align-items: center"
+>
+  <div class="flexRow">
+    <div class="flexRow" style="align-items: center">
+      <div class="cajaInput">
+        <label for="fechaRecuperacion">Fecha de Recuperacion</label>
+        <div class="autocomplete imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <input
+            style="width: 40vh"
+            type="date"
+            name="fechaRecuperacion"
+            id="fechaRecuperacion"
+            class="estiloInputLogin"
+            tabindex="2"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button
+      id="${element.cliente_id}"
+      onclick="recuperacionesClientesDia(); event.preventDefault()"
+      class="boton colorSecundario"
+      style="margin-right: 20px"
+    >
+      GENERAR
+    </button>
+  </div>
+</div>
+<div class="contenedorDashboard">
+  <h3>Ventas Mensuales al Credito y Contado</h3>
+</div>
+<div
+  class="contenedorDashboard flexRow"
+  style="justify-content: space-between; align-items: center"
+>
+  <div class="flexRow">
+    <div class="flexRow" style="align-items: center">
+      <div class="cajaInput">
+        <label for="mesVentas">Seleccionar Mes de Ventas</label>
+        <div class="autocomplete imagenInput">
+          <img src="icons/pencil.png" alt="" />
+          <input
+            style="width: 40vh"
+            type="month"
+            name="mesVentas"
+            id="mesVentas"
+            class="estiloInputLogin"
+            tabindex="2"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button
+      id="${element.cliente_id}"
+      onclick="ventasMensuales(); event.preventDefault()"
       class="boton colorSecundario"
       style="margin-right: 20px"
     >
