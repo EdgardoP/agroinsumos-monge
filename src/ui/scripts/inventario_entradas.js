@@ -1,6 +1,7 @@
 const { ipcRenderer } = require("electron");
 
 //Inputs del dashboard entradas
+let entrada_proveedor = document.getElementById("entrada_proveedor");
 let entradaProductoNombre = document.getElementById("entrada_producto_nombre");
 let entradaProductoDescripcion = document.getElementById(
   "entrada_producto_descripcion"
@@ -445,6 +446,8 @@ function autocomplete(inp, arr) {
           entradaFechaVencimiento.value = `${convertirFecha(
             listaDeProductosRaw[indice].lote_fecha_vencimiento
           )}`;
+          entrada_proveedor.value =
+            listaDeProductosRaw[indice].proveedor_nombre;
           entradaValorUnitarioCompra.value =
             listaDeProductosRaw[indice].lote_valor_unitario_compra;
           nuevoLoteProductoActualValorVenta.value =
@@ -533,6 +536,7 @@ const limpiarTextos = () => {
   nuevoProveedorNumero.value = "";
   nuevaCategoriaNombre.value = "";
   nuevaCategoriaDescripcion.value = "";
+  entrada_proveedor.value = "";
 };
 
 const restarStock = (param) => {

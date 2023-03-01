@@ -6,7 +6,7 @@ let cuerpoTablaPlanilla = document.getElementById("cuerpoTablaPlanilla");
 btnImprimir.addEventListener("click", () => {
   let opt = {
     margin: 1,
-    filename: `REPORTE_INVENTARIO_${obtenerFecha("")}`,
+    filename: `REPORTE_PLANILLA_${obtenerFecha("")}`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 2, scrollY: 0 },
     jsPDF: { format: "a3", unit: "in", orientation: "landscape" },
@@ -67,9 +67,10 @@ var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
   var wb = XLSX.utils.table_to_book(elt, { sheet: "Libro 1" });
+  window.location.href = "#modal_excel";
   return dl
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
-    : XLSX.writeFile(wb, fn || `../INVENTARIO-FECHA.` + (type || "xlsx"));
+    : XLSX.writeFile(wb, fn || `../PLANILLA-NUEVA.` + (type || "xlsx"));
 }
 
 const obtenerFecha = (formato) => {

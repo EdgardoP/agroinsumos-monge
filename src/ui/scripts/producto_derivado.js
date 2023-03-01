@@ -259,6 +259,7 @@ const nuevoDerivado = async () => {
       lote_presentacion: nuevaPresentacion,
       lote_ultima_actualizacion: fechaHoy,
       lote_fecha_vencimiento: fechaVencimientoP,
+      lote_estado: "Activo",
     };
     let elemento = listaDeProductosRaw.find(
       (element) => element.lote_id == idLote

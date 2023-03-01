@@ -246,32 +246,6 @@ const agregarSalidaLista = () => {
       location.href = "#modal_advertencia";
     }
   }
-  // if (
-  //   salidaLoteFk.value === VALOR_LOTE_LISTA &&
-  //   salidaTipoPago.value === VALOR_TIPO_PAGO &&
-  //   CREAR === true
-  // ) {
-  //   cantidadSalidaLista = parseInt(
-  //     filasElementos[index].children[6].innerHTML
-  //   );
-  //   sumaCantidades = nuevaSalida + cantidadSalidaLista;
-  //   filasElementos[index].children[6].innerHTML = sumaCantidades;
-  //   CREAR = false;
-  // }
-  // if (salidaLoteFk.value === VALOR_LOTE_LISTA) {
-  //   contarStock +=
-  //     parseInt(filasElementos[index].children[6].innerHTML) +
-  //     parseInt(nuevaSalida);
-  //   limpiarTextos();
-  //   console.log(contarStock);
-  //   if (contarStock > stockAntiguo) {
-  //     console.log("No puedes ingresar mas");
-  //     CREAR = false;
-  //     location.href = "#modal_advertencia";
-  //   }
-  // }
-  // }
-  // console.log(elementoTabla);
   if (CREAR === true) {
     plantilla += `
     <tr id = "${idProveedor}" class = "filasElementos">
@@ -338,22 +312,29 @@ function autocomplete(inp, arr) {
         items.addEventListener("click", function (e) {
           //capturo el indice con la variable e, mediante target.id
           let indice = e.target.id;
-          salidaLoteProductoFk.value = listaDeProductosRaw[indice].producto_id;
-          salidaLoteFk.value = listaDeProductosRaw[indice].lote_id;
-          salidaProductoDescripcion.value =
-            listaDeProductosRaw[indice].producto_descripcion;
-          salidaLotePresentacion.value =
-            listaDeProductosRaw[indice].lote_presentacion;
-          salidaStockActual.value = listaDeProductosRaw[indice].lote_cantidad;
-          salidaFechaVencimiento.value = `${convertirFecha(
-            listaDeProductosRaw[indice].lote_fecha_vencimiento
-          )}`;
-          salidaValorUnitarioVenta.value =
-            listaDeProductosRaw[indice].lote_valor_unitario_venta;
-          salidaProductoNombre.value =
-            listaDeProductosRaw[indice].producto_nombre;
-          closeAllLists();
-          salidaCantidad.focus();
+          if (listaDeProductosRaw[indice].lote_cantidad === 0) {
+            window.location.href = "#modal_lote_vacio";
+            limpiarTextos();
+            salidaProductoNombre.focus();
+          } else {
+            salidaLoteProductoFk.value =
+              listaDeProductosRaw[indice].producto_id;
+            salidaLoteFk.value = listaDeProductosRaw[indice].lote_id;
+            salidaProductoDescripcion.value =
+              listaDeProductosRaw[indice].producto_descripcion;
+            salidaLotePresentacion.value =
+              listaDeProductosRaw[indice].lote_presentacion;
+            salidaStockActual.value = listaDeProductosRaw[indice].lote_cantidad;
+            salidaFechaVencimiento.value = `${convertirFecha(
+              listaDeProductosRaw[indice].lote_fecha_vencimiento
+            )}`;
+            salidaValorUnitarioVenta.value =
+              listaDeProductosRaw[indice].lote_valor_unitario_venta;
+            salidaProductoNombre.value =
+              listaDeProductosRaw[indice].producto_nombre;
+            closeAllLists();
+            salidaCantidad.focus();
+          }
         });
         contenedorItems.appendChild(items);
       }
