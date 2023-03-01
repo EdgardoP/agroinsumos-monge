@@ -1,5 +1,9 @@
 <%- include('./partials/header.ejs') %>
 <link rel="stylesheet" href="style/style.css" />
+<script type="text/javascript" src="scripts/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/xlsx.full.min.js"></script>
+<script type="text/javascript" src="scripts/unpkxlsx.full.min.js"></script>
+<script src="scripts/html2pdf.bundle.min.js"></script>
 <div class="contenedorDashboard">
   <h3>Estado de Cuenta Clientes</h3>
 </div>
@@ -110,7 +114,7 @@
       <button
         style="margin-right: 10px"
         tabindex="6"
-        id="btnLimpiar"
+        id="btnImprimir"
         class="boton colorPrimario"
         onclick=""
       >
@@ -126,6 +130,7 @@
     </div>
   </div>
 </div>
-<%- include('./partials/modal_nueva_aportacion.ejs') %>
+<%- include('./partials/modal_nueva_aportacion.ejs') %> <%-
+include('./partials/modal_notificacion_excel.ejs') %>
 <script src="scripts/clientes_historial_documento.js"></script>
 <%-include('./partials/footer.ejs') %>

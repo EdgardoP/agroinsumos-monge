@@ -67,6 +67,7 @@ var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
   var wb = XLSX.utils.table_to_book(elt, { sheet: "Libro 1" });
+  window.location.href = "#modal_excel";
   return dl
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
     : XLSX.writeFile(

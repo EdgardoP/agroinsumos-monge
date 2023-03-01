@@ -402,6 +402,22 @@ const modificarLote = (obj) => {
     }
   });
 };
+
+ipcMain.handle("desabilitar_lote", (event, id) => {
+  desabilitarLote(id);
+});
+const desabilitarLote = (id) => {
+  const query = `UPDATE lotes SET lote_estado = 'Inactivo' where lote_id = ${id}`;
+  db.query(query, id, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(query);
+      notificacion("Transaccion exitosa", "Se ha Deshabilitado el lote");
+    }
+  });
+};
+
 //Proveedores
 ipcMain.handle("obtenerProveedores", (event) => {
   obtenerProveedores();
@@ -584,6 +600,45 @@ const nuevaCategoria = (obj) => {
       // console.log(error);
     } else {
       notificacion("Transaccion exitosa", "Se ha ingresado un nueva Categoria");
+    }
+  });
+};
+
+ipcMain.handle("modificarCategoria", (event, obj) => {
+  modificarCategoria(obj);
+});
+
+const modificarCategoria = (obj) => {
+  const { categoria_id } = obj;
+  const { categoria_nombre } = obj;
+  const { categoria_descripcion } = obj;
+  let query = ` UPDATE categorias SET categoria_nombre = '${categoria_nombre}', categoria_descripcion = '${categoria_descripcion}' WHERE categoria_id = ${categoria_id};`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
+      notificacion("Transaccion exitosa", "Se ha modificado una Categoria");
+    }
+  });
+};
+
+ipcMain.handle("eliminarCategoria", (event, id) => {
+  eliminarCategoria(id);
+});
+
+const eliminarCategoria = (id) => {
+  let query = `DELETE FROM categorias WHERE categoria_id = ${id};`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+      notificacion(
+        "Transaccion Fallida",
+        "Esta categoria posee productos registrados"
+      );
+    } else {
+      console.log(results);
+      notificacion("Transaccion exitosa", "Se ha eliminado una Categoria");
     }
   });
 };

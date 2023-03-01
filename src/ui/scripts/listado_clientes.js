@@ -75,7 +75,8 @@ const nuevoCliente = async () => {
     cliente_estado: "Activo",
   };
   await ipcRenderer.invoke("nuevoCliente", obj, fecha);
-  window.location.reload();
+  window.location.href = "#";
+  location.reload();
 };
 
 const obtenerClientes = async () => {

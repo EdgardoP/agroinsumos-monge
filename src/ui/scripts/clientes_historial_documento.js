@@ -20,6 +20,19 @@ document.addEventListener("DOMContentLoaded", function () {
   renderizar();
 });
 
+let btnImprimir = document.getElementById("btnImprimir");
+btnImprimir.addEventListener("click", () => {
+  let opt = {
+    margin: 1,
+    filename: `Estado de Cuenta ${nombreCliente.innerHTML}`,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 4 },
+    jsPDF: { format: "a3", unit: "in", orientation: "landscape" },
+  };
+  let exportable_table = document.getElementById("exportable_table");
+  html2pdf().set(opt).from(exportable_table).save();
+});
+
 const obtenerFecha = (formato) => {
   let nuevaFecha = Date.now();
   const fechaHoy = new Date(nuevaFecha);
@@ -130,6 +143,7 @@ var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
   var wb = XLSX.utils.table_to_book(elt, { sheet: "Libro 1" });
+  window.location.href = "#modal_excel";
   return dl
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
     : XLSX.writeFile(

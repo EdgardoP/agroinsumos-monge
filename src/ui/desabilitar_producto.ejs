@@ -1,0 +1,159 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Productos / Desabilitar un Producto</h3>
+</div>
+<div style="overflow-x: inherit" class="contenedorDashboard">
+  <form action="" class="flexRow">
+    <div class="flexColumn">
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput autocomplete">
+          <label for="idProducto">ID Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 5vh"
+              type="text"
+              name="idProducto"
+              id="idProducto"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="id_lote">ID Lote</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 5vh"
+              type="text"
+              name="id_lote"
+              id="id_lote"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput autocomplete">
+          <label for="productoNombre">Nombre del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoNombre"
+              id="productoNombre"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="productoDescripcion">Descripcion del Producto</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="productoDescripcion"
+              id="productoDescripcion"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="lotePresentacion">Presentacion</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <select
+              class="estiloInputLogin"
+              name="lotePresentacion"
+              id="lotePresentacion"
+              style="width: 15vh"
+              tabindex="4"
+            >
+              <option value="-1">Seleccione</option>
+              <option value="Caja">Caja</option>
+              <option value="Botella">Botella</option>
+              <option value="Saco">Saco</option>
+              <option value="Libra">Libra</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="flexRow" style="align-items: center">
+        <div class="cajaInput">
+          <label for="loteValorUnitarioCompra">Valor Unitario de Compra</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="loteValorUnitarioCompra"
+              id="loteValorUnitarioCompra"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="loteValorUnitarioVenta">Valor Unitario de Venta</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="loteValorUnitarioVenta"
+              id="loteValorUnitarioVenta"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div class="cajaInput">
+          <label for="loteCantidad">Stock</label>
+          <div class="imagenInput">
+            <img src="icons/pencil.png" alt="" />
+            <input
+              style="width: 15vh"
+              type="text"
+              name="loteCantidad"
+              id="loteCantidad"
+              class="estiloInputLogin"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="botonesDashboard">
+      <div class="flexColumn space-around">
+        <div class="flexColumn">
+          <button
+            tabindex="5"
+            id="btnAceptar"
+            class="boton colorAmarillo"
+            onclick="limpiarTextos();event.preventDefault()"
+          >
+            LIMPIAR
+          </button>
+        </div>
+        <div class="flexColumn">
+          <button
+            onclick="deshabilitarProducto();event.preventDefault()"
+            tabindex="5"
+            id="btnAceptar"
+            class="boton colorRojo"
+          >
+            DESHABILITAR
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="scripts/desabilitar_producto.js"></script>
+<%- include('./partials/footer.ejs') %>

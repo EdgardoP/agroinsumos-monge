@@ -260,6 +260,7 @@ const nuevoProducto = async () => {
     lote_valor_unitario_venta: producto_valor_unitario_venta.value,
     lote_ultima_actualizacion: entradaFecha.value,
     lote_fecha_vencimiento: productoFechaVencimiento.value,
+    lote_estado: "Activo",
   };
   await ipcRenderer.invoke("nuevoProducto", obj, objLote);
   ipcRenderer.on("producto_id", (event, id) => {
@@ -559,6 +560,7 @@ const nuevoDerivado = async () => {
     lote_presentacion: productoDerivadoPresentacion.value,
     lote_ultima_actualizacion: entradaFecha.value,
     lote_fecha_vencimiento: entradaFechaVencimiento.value,
+    lote_estado: "Activo",
   };
   objModificar = {
     lote_id: entradaLoteFk.value,
@@ -608,6 +610,7 @@ const nuevoLote = async () => {
     lote_ultima_actualizacion: entradaFecha.value,
     lote_fecha_vencimiento: nuevoLoteProductoNuevoFechaVencimiento.value,
     lote_cantidad: "0",
+    lote_estado: "Activo",
   };
   await ipcRenderer.invoke("nuevoLote", objLote);
   ipcRenderer.on("lote_id", (event, id) => {

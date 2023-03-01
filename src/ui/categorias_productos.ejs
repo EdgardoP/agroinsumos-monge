@@ -1,0 +1,95 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Proveedores / Estados de Cuenta</h3>
+</div>
+<div
+  class="contenedorDashboard flexRow"
+  style="justify-content: space-between; align-items: center"
+>
+  <div class="flexRow">
+    <div class="cajaInput">
+      <label for="categoria_id">ID Categoria</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 13vh"
+          type="text"
+          name="categoria_id"
+          id="categoria_id"
+          class="estiloInputLogin"
+          tabindex="-1"
+          readonly
+        />
+      </div>
+    </div>
+    <div class="cajaInput">
+      <label for="categoria_nombre">Nombre Categoria</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 13vh"
+          type="text"
+          name="categoria_nombre"
+          id="categoria_nombre"
+          class="estiloInputLogin"
+          tabindex="-1"
+        />
+      </div>
+    </div>
+    <div class="cajaInput">
+      <label for="categoria_descripcion">Descripcion Categoria</label>
+      <div class="imagenInput">
+        <img src="icons/pencil.png" alt="" />
+        <input
+          style="width: 13vh"
+          type="text"
+          name="categoria_descripcion"
+          id="categoria_descripcion"
+          class="estiloInputLogin"
+          tabindex="-1"
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <button
+      id="${element.cliente_id}"
+      onclick="nuevaCategoria(); event.preventDefault()"
+      class="boton colorSecundario"
+      style="margin-right: 20px"
+    >
+      NUEVA CATEGORIA
+    </button>
+    <button
+      id="${element.cliente_id}"
+      onclick="guardarModificarCategoria();event.preventDefault()"
+      class="boton colorAmarillo"
+      style="margin-right: 20px"
+    >
+      MODIFICAR CATEGORIA
+    </button>
+  </div>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="max-width: 10vh; min-width: 10vh; width: 10vh">Nº</th>
+        <th style="max-width: 10vh; min-width: 10vh; width: 10vh">
+          ID Categoria
+        </th>
+        <th style="max-width: 28vh; min-width: 28vh; width: 28vh">
+          Nombre Categoria
+        </th>
+        <th style="max-width: 28vh; min-width: 28vh; width: 28vh">
+          Categoria Descripcion
+        </th>
+        <th style="max-width: 30vh; min-width: 30vh; width: 30vh">Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tablaEntradas" style="max-height: 70vh; height: 70vh"></tbody>
+  </table>
+</div>
+<script src="scripts/categorias_productos.js"></script>
+<%-include('./partials/footer.ejs') %>

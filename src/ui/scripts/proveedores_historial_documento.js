@@ -13,10 +13,24 @@ let numeroProveedor = document.getElementById("numeroProveedor");
 let fechaActual;
 let fechaInicial = document.getElementById("fechaInicial");
 let fechaFinal = document.getElementById("fechaFinal");
+
 document.addEventListener("DOMContentLoaded", function () {
   fechaActual = obtenerFecha("YYYY/MM/DD");
   console.log(fechaActual);
   renderizar();
+});
+
+let btnImprimir = document.getElementById("btnImprimir");
+btnImprimir.addEventListener("click", () => {
+  let opt = {
+    margin: 1,
+    filename: `Estado de Cuenta Proveedor ${nombreP}`,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 4 },
+    jsPDF: { format: "a3", unit: "in", orientation: "landscape" },
+  };
+  let exportable_table = document.getElementById("exportable_table");
+  html2pdf().set(opt).from(exportable_table).save();
 });
 
 const obtenerFecha = (formato) => {
@@ -88,12 +102,14 @@ const visualizarDocumento = async () => {
   window.location = "proveedores_historial_documento.ejs";
 };
 
+let nombreP;
 const renderizar = () => {
   ipcRenderer.on("historial_cuentas", (event, results, id) => {
     let datos = results[0];
     let plantilla = "";
     idProveedor = id;
     datos.forEach((element, index, array) => {
+      nombreP = element.proveedor_nombre;
       ultimaActualizacion.innerHTML = `<strong>Ultima Actualizacion: </strong>${convertirFecha(
         element.historial_proveedor_fecha
       )}`;
@@ -133,10 +149,11 @@ var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
   var wb = XLSX.utils.table_to_book(elt, { sheet: "Libro 1" });
+  window.location.href = "#modal_excel";
   return dl
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
     : XLSX.writeFile(
         wb,
-        fn || "../Estado de Cuenta Proveedores." + (type || "xlsx")
+        fn || `../Estado de Cuenta Proveedor ${nombreP}.` + (type || "xlsx")
       );
 }
