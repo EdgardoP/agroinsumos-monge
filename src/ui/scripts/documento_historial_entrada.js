@@ -6,7 +6,7 @@ btnImprimir.addEventListener("click", () => {
     margin: 0.2,
     filename: `Entrada-${fechaActual.innerHTML}`,
     image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 4 },
+    html2canvas: { scale: 4, scrollY: 0 },
     jsPDF: { format: "a3", unit: "in", orientation: "landscape" },
   };
   let elementoImprimir = document.getElementById("elementoImprimir");

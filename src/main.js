@@ -650,7 +650,10 @@ ipcMain.handle("insertarMultiplesEntradas", (event, obj) => {
 });
 
 const insertarMultiplesEntradas = (obj) => {
-  // console.log(obj);
+  console.log(obj);
+  console.log(obj[0][7]);
+  const entrada_num_serie = obj[0][7];
+  // console.log(entrada_num_serie);
   const query =
     "INSERT INTO entradas (entradas_fecha, entradas_lote_fk, entrada_stock_antiguo, entrada_cantidad_ingresar, entrada_tipo_pago, entrada_otros_gastos, entrada_usuario_fk, entrada_num_serie) VALUES ?";
   db.query(query, [obj], (error, results, fields) => {
@@ -661,6 +664,8 @@ const insertarMultiplesEntradas = (obj) => {
         "Transaccion Exitosa",
         "Se han ingresado los productos correctamente"
       );
+      console.log(entrada_num_serie);
+      historialEntradas(entrada_num_serie);
       // console.log(results);
     }
   });
@@ -752,6 +757,7 @@ ipcMain.handle("insertarMultiplesSalidas", (event, obj) => {
 
 const insertarMultiplesSalidas = (obj) => {
   console.log(obj);
+  const salida_num_serie = obj[0][5];
   const query =
     "INSERT INTO salidas (salida_fecha, salida_lote_fk, salida_cantidad, salida_tipo_pago, salida_usuario_fk, salida_num_serie) VALUES ?";
   db.query(query, [obj], (error, results, fields) => {
@@ -762,17 +768,18 @@ const insertarMultiplesSalidas = (obj) => {
         "Transaccion Exitosa",
         "Se han ingresado los productos correctamente"
       );
+      historialSalidas(salida_num_serie);
       // console.log(results);
     }
   });
 };
 
-ipcMain.handle("ventasMensualesCreditoContado", (event, anio, mes) => {
-  ventasMensualesCreditoContado(anio, mes);
+ipcMain.handle("ventasMensualesContado", (event, anio, mes) => {
+  ventasMensualesContado(anio, mes);
 });
 
-const ventasMensualesCreditoContado = (anio, mes) => {
-  let query = `call ventas_mensuales_credito_contado(${anio},${mes})`;
+const ventasMensualesContado = (anio, mes) => {
+  let query = `call ventas_mensuales_contado(${anio},${mes})`;
   db.query(query, (error, results, fields) => {
     if (error) {
       console.log(error);
@@ -780,13 +787,35 @@ const ventasMensualesCreditoContado = (anio, mes) => {
       crearVentasMensuales();
       ventanaVentasMesuales.webContents.once("did-finish-load", function () {
         ventanaVentasMesuales.webContents.send(
-          "ventas_mensuales_credito_contado",
+          "ventas_mensuales_contado",
           results,
           anio,
           mes
         );
       });
       ventanaVentasMesuales.show();
+    }
+  });
+};
+
+ipcMain.handle("ventasMensualesCredito", (event, anio, mes) => {
+  ventasMensualesCredito(anio, mes);
+});
+
+const ventasMensualesCredito = (anio, mes) => {
+  let query = `call ventas_mensuales_credito(${anio},${mes})`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaVentasMesuales.webContents.once("did-finish-load", function () {
+        ventanaVentasMesuales.webContents.send(
+          "ventas_mensuales_credito",
+          results,
+          anio,
+          mes
+        );
+      });
     }
   });
 };
@@ -1107,6 +1136,28 @@ const mostrar_planilla_documento = (id) => {
         );
       });
       ventanaMostrarPlanilla.show();
+    }
+  });
+};
+
+ipcMain.handle("salariosDelMes", (event, anio, mes) => {
+  salariosDelMes(anio, mes);
+});
+
+const salariosDelMes = (anio, mes) => {
+  let query = `call salariosDelMes(${anio},${mes})`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaVentasMesuales.webContents.once("did-finish-load", function () {
+        ventanaVentasMesuales.webContents.send(
+          "salariosDelMes",
+          results,
+          anio,
+          mes
+        );
+      });
     }
   });
 };

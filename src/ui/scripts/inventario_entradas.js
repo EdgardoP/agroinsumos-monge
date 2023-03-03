@@ -1,6 +1,10 @@
 const { ipcRenderer } = require("electron");
 
 //Inputs del dashboard entradas
+let modalBtnNuevoLote = document.getElementById("modalBtnNuevoLote");
+let modalBtnNuevoDerivado = document.getElementById("modalBtnNuevoDerivado");
+let btnAceptar = document.getElementById("btnAceptar");
+let btnModalNuevoProducto = document.getElementById("btnModalNuevoProducto");
 let entrada_proveedor = document.getElementById("entrada_proveedor");
 let entradaProductoNombre = document.getElementById("entrada_producto_nombre");
 let entradaProductoDescripcion = document.getElementById(
@@ -110,8 +114,74 @@ document.addEventListener("DOMContentLoaded", function () {
   autocomplete(entradaProductoNombre, listaDeProductosNombre);
   autocomplete(entradaLoteProductoFk, listaDeProductosId);
   entradaProductoNombre.focus();
+  entradaIndexadaDefault();
 });
 
+const limpiarIndexacion = () => {
+  entradaProductoNombre.tabIndex = -1;
+  entradaCantidadIngresar.tabIndex = -1;
+  entradaOtrosGastos.tabIndex = -1;
+  entradaTipoPago.tabIndex = -1;
+  btnAceptar.tabIndex = -1;
+  productoNombre.tabIndex = -1;
+  productoDescripcion.tabIndex = -1;
+  productoProveedorFk.tabIndex = -1;
+  productoColor.tabIndex = -1;
+  productoPresentacion.tabIndex = -1;
+  productoCategoriaFk.tabIndex = -1;
+  producto_valor_unitario_compra.tabIndex = -1;
+  producto_valor_unitario_venta.tabIndex = -1;
+  productoFechaVencimiento.tabIndex = -1;
+  btnModalNuevoProducto.tabIndex = -1;
+  productoDerivarCantidad.tabIndex = -1;
+  productoDerivadoPresentacion.tabIndex = -1;
+  productoDerivadoStock.tabIndex = -1;
+  productoDerivadoValorVenta.tabIndex = -1;
+  modalBtnNuevoDerivado.tabIndex = -1;
+};
+
+const entradaIndexadaDefault = () => {
+  limpiarIndexacion();
+  entradaProductoNombre.focus();
+  entradaProductoNombre.tabIndex = 1;
+  entradaCantidadIngresar.tabIndex = 2;
+  entradaOtrosGastos.tabIndex = 3;
+  entradaTipoPago.tabIndex = 4;
+  btnAceptar.tabIndex = 5;
+};
+
+const entradaIndexNuevoProducto = () => {
+  limpiarIndexacion();
+  productoNombre.focus();
+  productoNombre.tabIndex = 1;
+  productoDescripcion.tabIndex = 2;
+  productoProveedorFk.tabIndex = 3;
+  productoColor.tabIndex = 4;
+  productoPresentacion.tabIndex = 5;
+  productoCategoriaFk.tabIndex = 6;
+  producto_valor_unitario_compra.tabIndex = 7;
+  producto_valor_unitario_venta.tabIndex = 8;
+  productoFechaVencimiento.tabIndex = 9;
+  btnModalNuevoProducto.tabIndex = 10;
+};
+
+const entradaIndexNuevoDerivado = () => {
+  limpiarIndexacion();
+  productoDerivarCantidad.focus();
+  productoDerivarCantidad.tabIndex = 1;
+  productoDerivadoPresentacion.tabIndex = 2;
+  productoDerivadoStock.tabIndex = 3;
+  productoDerivadoValorVenta.tabIndex = 4;
+  modalBtnNuevoDerivado.tabIndex = 5;
+};
+
+const entradaIndexNuevoLote = () => {
+  limpiarIndexacion();
+  nuevoLoteProductoNuevoValorCompra.tabIndex = 1;
+  nuevoLoteProductoNuevoValorVenta.tabIndex = 2;
+  nuevoLoteProductoNuevoFechaVencimiento.tabIndex = 3;
+  modalBtnNuevoLote.tabIndex = 4;
+};
 //Funcion para obtener la fecha del sistema
 const obtenerFecha = (formato) => {
   let nuevaFecha = Date.now();
@@ -348,6 +418,7 @@ const confirmarEntradas = async () => {
   obtenerNombreProductos();
   autocomplete(entradaProductoNombre, listaDeProductosNombre);
   autocomplete(entradaLoteProductoFk, listaDeProductosId);
+  window.location.reload();
 };
 
 let cantidad_filas_ingresadas = 0;

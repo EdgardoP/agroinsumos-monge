@@ -3,7 +3,7 @@
 <div class="contenedorDashboard">
   <h3>Inventario / Historial de Productos</h3>
 </div>
-<div class="contenedorDashboard">
+<div class="contenedorDashboard" style="overflow-x: inherit">
   <div class="flexRow">
     <div class="flexRow" style="align-items: center">
       <div class="cajaInput">
@@ -21,7 +21,7 @@
         </div>
       </div>
       <button
-        onclick="location.href='#modal_nueva_categoria'; event.preventDefault()"
+        onclick="buscarListaProducto();event.preventDefault()"
         class="accionesBoton colorSecundario"
       >
         <img src="icons/lupa.png" alt="" />

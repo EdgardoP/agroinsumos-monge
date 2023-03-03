@@ -52,6 +52,7 @@
                 </div>
               </div>
               <button
+                tabindex="-1"
                 onclick="location.href='#modal_nuevo_proveedor'; event.preventDefault()"
                 class="accionesBoton colorSecundario"
               >
@@ -97,10 +98,17 @@
                     tabindex="-1"
                   >
                     <option value="-1">Seleccione</option>
-                    <option value="Caja">Caja</option>
-                    <option value="Botella">Botella</option>
+                    <option value="Libra">Unidad</option>
                     <option value="Saco">Saco</option>
                     <option value="Libra">Libra</option>
+                    <option value="Caja">Caja</option>
+                    <option value="Frasco">Frasco</option>
+                    <option value="Botella">Botella</option>
+                    <option value="Bolsa">Bolsa</option>
+                    <option value="Lata">Lata</option>
+                    <option value="Jeringa">Jeringa</option>
+                    <option value="mL(Mililitros)">mL(Mililitros)</option>
+                    <option value="Tabletas">Tabletas</option>
                     <option value="Otro">Otro</option>
                   </select>
                 </div>
@@ -121,6 +129,7 @@
                 </div>
               </div>
               <button
+                tabindex="-1"
                 onclick="location.href='#modal_nueva_categoria'; event.preventDefault()"
                 class="accionesBoton colorSecundario"
               >
@@ -183,9 +192,9 @@
               <div class="flexColumn">
                 <button
                   tabindex="-1"
-                  id="btnNuevoLote"
+                  id="btnModalNuevoProducto"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevoProducto(),event.preventDefault()"
+                  onclick="nuevoProducto(),entradaIndexadaDefault(),event.preventDefault()"
                 >
                   REGISTRAR Y AÑADIR UNIDADES
                 </button>
@@ -193,7 +202,7 @@
                   tabindex="-1"
                   id="btnLimpiar"
                   class="boton colorRojo modal__close"
-                  onclick="location.href= '#';event.preventDefault()"
+                  onclick="entradaIndexadaDefault();location.href= '#';event.preventDefault()"
                 >
                   CANCELAR
                 </button>
@@ -291,10 +300,17 @@
                     tabindex="-1"
                   >
                     <option value="-1">Seleccione</option>
-                    <option value="Caja">Caja</option>
-                    <option value="Botella">Botella</option>
+                    <option value="Libra">Unidad</option>
                     <option value="Saco">Saco</option>
                     <option value="Libra">Libra</option>
+                    <option value="Caja">Caja</option>
+                    <option value="Frasco">Frasco</option>
+                    <option value="Botella">Botella</option>
+                    <option value="Bolsa">Bolsa</option>
+                    <option value="Lata">Lata</option>
+                    <option value="Jeringa">Jeringa</option>
+                    <option value="mL(Mililitros)">mL(Mililitros)</option>
+                    <option value="Tabletas">Tabletas</option>
                     <option value="Otro">Otro</option>
                   </select>
                 </div>
@@ -338,9 +354,9 @@
               <div class="flexColumn">
                 <button
                   tabindex="-1"
-                  id="btnNuevoLote"
+                  id="modalBtnNuevoDerivado"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevoDerivado(),event.preventDefault()"
+                  onclick="nuevoDerivado(),entradaIndexadaDefault(),location.href= '#',event.preventDefault()"
                 >
                   REGISTRAR NUEVO DERIVADO
                 </button>
@@ -348,7 +364,7 @@
                   tabindex="-1"
                   id="btnLimpiar"
                   class="boton colorRojo modal__close"
-                  onclick="location.href= '#';event.preventDefault()"
+                  onclick="location.href= '#';entradaIndexadaDefault();event.preventDefault()"
                 >
                   CANCELAR
                 </button>
@@ -495,9 +511,9 @@
               <div class="flexColumn">
                 <button
                   tabindex="-1"
-                  id="btnNuevoLote"
+                  id="modalBtnNuevoLote"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevoLote(),event.preventDefault()"
+                  onclick="nuevoLote(),entradaIndexadaDefault(),event.preventDefault()"
                 >
                   REGISTRAR NUEVO LOTE
                 </button>
@@ -505,7 +521,7 @@
                   tabindex="-1"
                   id="btnLimpiar"
                   class="boton colorRojo modal__close"
-                  onclick="location.href= '#';event.preventDefault()"
+                  onclick="location.href= '#';entradaIndexadaDefault(),event.preventDefault()"
                 >
                   CANCELAR
                 </button>

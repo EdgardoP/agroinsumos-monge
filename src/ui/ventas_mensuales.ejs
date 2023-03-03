@@ -23,7 +23,7 @@
             <h3>VENTAS AL CONTADO</h3>
             <h3 class="fechaActual"></h3>
           </div>
-          <table class="tablaFinanzas">
+          <table class="tablaFinanzas" id="exportable_table">
             <thead>
               <tr>
                 <th style="width: 200px; max-width: 200px">PRODUCTO</th>
@@ -47,10 +47,10 @@
             class="flexRow"
             style="justify-content: space-around; margin-bottom: 20px"
           >
-            <h3>VENTAS POR LIBRA AL CONTADO</h3>
+            <h3>VENTAS AL CONTADO LIBRA Y SACO</h3>
             <h3 class="fechaActual"></h3>
           </div>
-          <table class="tablaFinanzas">
+          <table class="tablaFinanzas" id="exportable_table2">
             <thead>
               <tr>
                 <th style="width: 200px; max-width: 200px">PRODUCTO</th>
@@ -65,7 +65,7 @@
                 <th style="width: 120px; max-width: 120px">UTILIDAD BRUTA</th>
               </tr>
             </thead>
-            <tbody id="cuerpoVentasContadoLibra"></tbody>
+            <tbody id="cuerpoVentasContadoLibraSaco"></tbody>
           </table>
         </div>
         <div class="html2pdf__page-break"></div>
@@ -74,10 +74,10 @@
             class="flexRow"
             style="justify-content: space-around; margin-bottom: 20px"
           >
-            <h3>VENTAS POR SACO AL CONTADO</h3>
+            <h3>VENTAS AL CREDITO</h3>
             <h3 class="fechaActual"></h3>
           </div>
-          <table class="tablaFinanzas">
+          <table class="tablaFinanzas" id="exportable_table3">
             <thead>
               <tr>
                 <th style="width: 200px; max-width: 200px">PRODUCTO</th>
@@ -92,7 +92,57 @@
                 <th style="width: 120px; max-width: 120px">UTILIDAD BRUTA</th>
               </tr>
             </thead>
-            <tbody id="cuerpoVentasContadoSaco"></tbody>
+            <tbody id="cuerpoVentasCredito"></tbody>
+          </table>
+        </div>
+        <div class="html2pdf__page-break"></div>
+        <div>
+          <div
+            class="flexRow"
+            style="justify-content: space-around; margin-bottom: 20px"
+          >
+            <h3>VENTAS AL CREDITO LIBRA Y SACO</h3>
+            <h3 class="fechaActual"></h3>
+          </div>
+          <table class="tablaFinanzas" id="exportable_table4">
+            <thead>
+              <tr>
+                <th style="width: 200px; max-width: 200px">PRODUCTO</th>
+                <th style="width: 160px; max-width: 150px">CANTIDAD</th>
+                <th style="width: 20px; max-width: 200px">TOTAL DE VENTAS</th>
+                <th style="width: 150px; max-width: 150px">
+                  VALOR UNITARIO PRODUCTO
+                </th>
+                <th style="width: 150px; max-width: 150px">
+                  COSTO TOTAL DE LA COMPRA
+                </th>
+                <th style="width: 120px; max-width: 120px">UTILIDAD BRUTA</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoVentasCreditoLibraSaco"></tbody>
+          </table>
+        </div>
+        <div class="html2pdf__page-break"></div>
+        <div style="margin-top: 20px">
+          <table class="tablaFinanzas" id="exportable_table5">
+            <thead>
+              <tr>
+                <th style="text-align: center" colspan="2">
+                  <h2>AGROINSUMOS MONGE</h2>
+                </th>
+              </tr>
+              <tr>
+                <th style="text-align: center" colspan="2">
+                  <h2 id="mesActual">RESUMEN DEL MES DE</h2>
+                </th>
+              </tr>
+              <tr>
+                <th style="text-align: center" colspan="2">
+                  <h3>REPORTE DEL MES</h3>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoResumenMes"></tbody>
           </table>
         </div>
       </div>

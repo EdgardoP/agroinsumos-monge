@@ -38,6 +38,12 @@ const visualizarEntrada = async (id) => {
   // window.location = "documento_historial_entrada.ejs";
 };
 
+const buscarDocumento = async () => {
+  let valorBuscar = buscarEntrada.value;
+  let newValor = valorBuscar.trim();
+  await ipcRenderer.invoke("historial_entradas", newValor);
+};
+
 const filtrarDocumentos = async () => {
   let fechaUno = fecha_inicial_entrada.value;
   let fechaDos = fecha_final_entrada.value;

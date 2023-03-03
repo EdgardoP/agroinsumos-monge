@@ -77,7 +77,7 @@
               name="entrada_producto_nombre"
               id="entrada_producto_nombre"
               class="estiloInputLogin"
-              tabindex="1"
+              tabindex="-1"
             />
           </div>
         </div>
@@ -194,7 +194,7 @@
               name="entrada_proveedor"
               id="entrada_proveedor"
               class="estiloInputLogin"
-              tabindex="3"
+              tabindex="-1"
             />
           </div>
         </div>
@@ -208,7 +208,7 @@
               name="entrada_cantidad_ingresar"
               id="entrada_cantidad_ingresar"
               class="estiloInputLogin"
-              tabindex="2"
+              tabindex="-1"
             />
           </div>
         </div>
@@ -222,7 +222,7 @@
               name="entrada_otros_gastos"
               id="entrada_otros_gastos"
               class="estiloInputLogin"
-              tabindex="3"
+              tabindex="-1"
             />
           </div>
         </div>
@@ -235,7 +235,7 @@
               name="entrada_tipo_pago"
               id="entrada_tipo_pago"
               style="width: 13vh"
-              tabindex="4"
+              tabindex="-1"
             >
               <option value="-1">Seleccione</option>
               <option value="Contado">Contado</option>
@@ -250,7 +250,7 @@
       <div class="flexColumn space-around">
         <div class="flexColumn">
           <button
-            onclick="location.href='#modal_nuevo_producto'; event.preventDefault()"
+            onclick="location.href='#modal_nuevo_producto';limpiarIndexacion();entradaIndexNuevoProducto();event.preventDefault()"
             tabindex="-1"
             id="btnNuevoProducto"
             class="boton colorSecundario"
@@ -258,7 +258,7 @@
             NUEVO PRODUCTO
           </button>
           <button
-            onclick="location.href='#modal_nuevo_derivado'; event.preventDefault()"
+            onclick="location.href='#modal_nuevo_derivado';limpiarIndexacion();entradaIndexNuevoDerivado(); event.preventDefault()"
             tabindex="-1"
             id="btnNuevoDerivado"
             class="boton colorSecundario"
@@ -266,9 +266,9 @@
             NUEVO DERIVADO
           </button>
           <button
-            onclick=" location.href='#modal_nuevo_lote'; event.preventDefault()"
+            onclick=" entradaIndexNuevoLote();location.href='#modal_nuevo_lote'; event.preventDefault()"
             tabindex="-1"
-            id="btnNuevoLote"
+            id="btnNuevoDerivado"
             class="boton colorPrimario"
           >
             NUEVO LOTE
@@ -277,14 +277,15 @@
         <div class="flexColumn">
           <button
             onclick="agregarEntradaLista();event.preventDefault()"
-            tabindex="5"
+            tabindex="-1"
             id="btnAceptar"
             class="boton colorSecundario"
+            tabindex="-1"
           >
             ACEPTAR
           </button>
           <button
-            tabindex="6"
+            tabindex="-1"
             id="btnLimpiar"
             class="boton colorAmarillo"
             onclick="limpiarTextos();event.preventDefault();"
@@ -345,18 +346,18 @@
     <div class="flexRow">
       <button
         style="margin-right: 10px"
-        tabindex="6"
         id="btnLimpiar"
         class="boton colorAmarillo"
+        tabindex="-1"
         onclick="limpiarTextos()"
       >
         CANCELAR
       </button>
       <button
         onclick="confirmarEntradas();event.preventDefault()"
-        tabindex="5"
         id="btnAceptar"
         class="boton colorSecundario"
+        tabindex="-1"
       >
         ACEPTAR Y GUARDAR
       </button>

@@ -1,25 +1,16 @@
 const { ipcRenderer } = require("electron");
 
 let btnImprimir = document.getElementById("btnImprimir");
-let ventasContado = document.getElementById("ventasContado");
-let ventasCredito = document.getElementById("ventasCredito");
-let ventasDeposito = document.getElementById("ventasDeposito");
-let totalVentas = document.getElementById("totalVentas");
-let recuperacionContado = document.getElementById("recuperacionContado");
-let recuperacionDeposito = document.getElementById("recuperacionDeposito");
-let totalRecuperaciones = document.getElementById("totalRecuperaciones");
-let sumaTotalContado = document.getElementById("sumaTotalContado");
-let sumaTotalDeposito = document.getElementById("sumaTotalDeposito");
 let cuerpoVentasContado = document.getElementById("cuerpoVentasContado");
-let cuerpoVentasContadoLibra = document.getElementById(
-  "cuerpoVentasContadoLibra"
-);
-let cuerpoVentasContadoSaco = document.getElementById(
-  "cuerpoVentasContadoSaco"
+let cuerpoVentasContadoLibraSaco = document.getElementById(
+  "cuerpoVentasContadoLibraSaco"
 );
 
-let cuerpoTablaContado = document.getElementById("cuerpoTablaContado");
-let cuerpoTablaDeposito = document.getElementById("cuerpoTablaDeposito");
+let cuerpoVentasCredito = document.getElementById("cuerpoVentasCredito");
+let cuerpoVentasCreditoLibraSaco = document.getElementById(
+  "cuerpoVentasCreditoLibraSaco"
+);
+let cuerpoResumenMes = document.getElementById("cuerpoResumenMes");
 
 btnImprimir.addEventListener("click", () => {
   let opt = {
@@ -84,10 +75,28 @@ const fechaPalabras = (fecha) => {
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
-  var wb = XLSX.utils.table_to_book(elt, { sheet: "Libro 1" });
+  var ws = XLSX.utils.table_to_sheet(elt);
+  var elt2 = document.getElementById("exportable_table2");
+  var ws2 = XLSX.utils.table_to_sheet(elt2);
+  var elt3 = document.getElementById("exportable_table3");
+  var ws3 = XLSX.utils.table_to_sheet(elt3);
+  var elt4 = document.getElementById("exportable_table4");
+  var ws4 = XLSX.utils.table_to_sheet(elt4);
+  var elt5 = document.getElementById("exportable_table5");
+  var ws5 = XLSX.utils.table_to_sheet(elt5);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Ventas al Contado");
+  XLSX.utils.book_append_sheet(wb, ws2, "Ventas al Contado Libra Saco");
+  XLSX.utils.book_append_sheet(wb, ws3, "Ventas al Credito");
+  XLSX.utils.book_append_sheet(wb, ws4, "Ventas al Credito Libra Saco");
+  XLSX.utils.book_append_sheet(wb, ws5, "Resumen del Mes");
+
   return dl
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
-    : XLSX.writeFile(wb, fn || `../SalidaNo.` + (type || "xlsx"));
+    : XLSX.writeFile(
+        wb,
+        fn || `../VENTAS-MENSUALES-${tituloLibro}.` + (type || "xlsx")
+      );
 }
 
 const obtenerFecha = (formato) => {
@@ -122,301 +131,317 @@ const convertirFecha = (fecha) => {
   return fechaDiaMesAnio;
 };
 
-//class html2pdf__page-break
+let mesActual;
+let anioActual;
+let totalGeneralVentasContado = 0;
+let totalVentasContadoNormal = 0;
+let totalVentasContadoLibraSaco = 0;
+let totalGeneralComprasContado = 0;
+let totalComprasContadoNormal = 0;
+let totalComprasContadoLibraSaco = 0;
+let totalProductosContadoNormal = 0;
+let totalProductosContadoLibraSaco = 0;
+let totalGeneralUtilidadContado = 0;
+let totalUtilidadContadoNormal = 0;
+let totalUtilidadContadoLibraSaco = 0;
 
-// let totalContado = 0;
-// let totalDeposito = 0;
-// let fechaMostrar;
-// ipcRenderer.on("ventas_mensuales_credito_contado", (event, results, fecha) => {
-//   fechaMostrar = fecha;
-//   let fechaActual = document.getElementsByClassName("fechaActual");
-//   for (let index = 0; index < fechaActual.length; index++) {
-//     fechaActual[index].innerHTML = fechaPalabras(fechaMostrar);
-//   }
-//   console.log(results[0]);
-//   let ventas = results[0];
-//   // let totalContado = 0;
-//   let totalCredito = 0;
-//   // let totalDeposito = 0;
-//   let sumaTotalVentas = 0;
-//   ventas.forEach((element) => {
-//     if (element.salida_tipo_pago === "Contado") {
-//       totalContado += parseInt(element.total_venta);
-//     }
-//     if (element.salida_tipo_pago === "Credito") {
-//       totalCredito += parseInt(element.total_venta);
-//     }
-//     if (element.salida_tipo_pago === "Deposito") {
-//       totalDeposito += parseInt(element.total_venta);
-//     }
-//   });
-//   ventasContado.value = `L. ${totalContado.toFixed(2)}`;
-//   ventasCredito.value = `L. ${totalCredito.toFixed(2)}`;
-//   ventasDeposito.value = `L. ${totalDeposito.toFixed(2)}`;
-//   sumaTotalVentas = (totalContado + totalCredito + totalDeposito).toFixed(2);
-//   totalVentas.value = `L. ${sumaTotalVentas}`;
-// });
-
-// ipcRenderer.on("aportaciones_del_dia", (event, results) => {
-//   console.log(results[0]);
-//   let aportaciones = results[0];
-//   let recuperacionesContado = 0;
-//   let recuperacionesDeposito = 0;
-//   let recuperacionesTotal = 0;
-//   let sumaContado = 0;
-//   let sumaDeposito = 0;
-//   aportaciones.forEach((element) => {
-//     if (element.historial_cliente_tipo_aportacion === "Contado") {
-//       recuperacionesContado += parseInt(element.historial_cliente_aportacion);
-//     }
-//     if (element.historial_cliente_tipo_aportacion === "Deposito") {
-//       recuperacionesDeposito += parseInt(element.historial_cliente_aportacion);
-//     }
-//   });
-//   recuperacionesTotal = (
-//     (recuperacionesContado + recuperacionesDeposito) *
-//     -1
-//   ).toFixed(2);
-//   recuperacionContado.value = `L. ${(recuperacionesContado * -1).toFixed(2)}`;
-//   recuperacionDeposito.value = `L. ${(recuperacionesDeposito * -1).toFixed(2)}`;
-//   totalRecuperaciones.value = `L. ${recuperacionesTotal}`;
-//   sumaContado = totalContado + recuperacionesContado * -1;
-//   sumaDeposito = totalDeposito + recuperacionesDeposito * -1;
-//   sumaTotalContado.value = `L. ${sumaContado.toFixed(2)}`;
-//   sumaTotalDeposito.value = `L. ${sumaDeposito.toFixed(2)}`;
-// });
-let mes;
-let anio;
-ipcRenderer.on(
-  "ventas_mensuales_credito_contado",
-  (event, results, anio, mes) => {
-    console.log(results);
-    let ventas = results[0];
-    mes = mes;
-    anio = anio;
-    let fechaActual = document.getElementsByClassName("fechaActual");
-    for (let index = 0; index < fechaActual.length; index++) {
-      fechaActual[index].innerHTML = `${fechaPalabras(mes)} ${anio}`;
-    }
-    let plantillaVentasContado = "";
-    let plantillaVentasContadoLibra = "";
-    let plantillaVentasContadoSaco = "";
-    let plantillaVentasCredito = "";
-    let plantillaVentasDeposito = "";
-
-    ventas.forEach((element) => {
-      let PRESENTACION_LIBRA = "Libra";
-      let PRESENTACION_SACO = "Saco";
-      let PAGO_CONTADO = "Contado";
-      let PAGO_DEPOSITO = "Deposito";
-      let PAGO_CREDITO = "Credito";
-      if (
-        element.salida_tipo_pago === PAGO_CONTADO &&
-        element.lote_presentacion != PRESENTACION_LIBRA &&
-        element.lote_presentacion != PRESENTACION_SACO
-      ) {
-        plantillaVentasContado += `
-        <tr>
-          <td style="width: 200px; max-width: 200px">${
-            element.producto_nombre
-          }</td>
-          <td style="width: 160px; max-width: 150px">${parseInt(
-            element.cantidad_producto
-          )}</td>
-          <td style="width: 20px; max-width: 200px">L. ${parseInt(
-            element.total_ventas
-          ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
-            element.lote_valor_unitario_venta
-          ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
-            element.costo_total_compras
-          ).toFixed(2)}</td>
-          <td style="width: 120px; max-width: 120px">L. ${parseInt(
-            element.utilidad_bruta
-          ).toFixed(2)}</td>
-        </tr>
-        `;
-      }
-
-      if (
-        element.salida_tipo_pago === PAGO_CONTADO &&
-        element.lote_presentacion === PRESENTACION_LIBRA &&
-        element.lote_presentacion != PRESENTACION_SACO
-      ) {
-        plantillaVentasContadoLibra += `
-        <tr>
-          <td style="width: 200px; max-width: 200px">${
-            element.producto_nombre
-          }</td>
-          <td style="width: 160px; max-width: 150px">${parseInt(
-            element.cantidad_producto
-          )}</td>
-          <td style="width: 20px; max-width: 200px">L. ${parseInt(
-            element.total_ventas
-          ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
-            element.lote_valor_unitario_venta
-          ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
-            element.costo_total_compras
-          ).toFixed(2)}</td>
-          <td style="width: 120px; max-width: 120px">L. ${parseInt(
-            element.utilidad_bruta
-          ).toFixed(2)}</td>
-        </tr>
-        `;
-      }
-
-      if (
-        element.salida_tipo_pago === PAGO_CONTADO &&
-        element.lote_presentacion != PRESENTACION_LIBRA &&
-        element.lote_presentacion === PRESENTACION_SACO
-      ) {
-        plantillaVentasContadoSaco += `
-        <tr>
-          <td style="width: 200px; max-width: 200px">${
-            element.producto_nombre
-          }</td>
-          <td style="width: 160px; max-width: 150px">${parseInt(
-            element.cantidad_producto
-          )}</td>
-          <td style="width: 20px; max-width: 200px">L. ${parseInt(
-            element.total_ventas
-          ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
-            element.lote_valor_unitario_venta
-          ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
-            element.costo_total_compras
-          ).toFixed(2)}</td>
-          <td style="width: 120px; max-width: 120px">L. ${parseInt(
-            element.utilidad_bruta
-          ).toFixed(2)}</td>
-        </tr>
-        `;
-      }
-    });
-    cuerpoVentasContado.innerHTML += plantillaVentasContado;
-    cuerpoVentasContadoLibra.innerHTML += plantillaVentasContadoLibra;
-    cuerpoVentasContadoSaco.innerHTML += plantillaVentasContadoSaco;
-    // let salidas = results[0];
-    // console.log(results[0]);
-    // let plantillaCredito = "";
-    // let plantillaContado = "";
-    // let plantillaDeposito = "";
-    // let contarFilasCredito = 0;
-    // let contarFilasContado = 0;
-    // let contarFilasDeposito = 0;
-    // let totalCredito = 0;
-    // let totalContado = 0;
-    // let totalDeposito = 0;
-
-    // salidas.forEach((element, index, array) => {
-    //   if (element.salida_tipo_pago === "Credito") {
-    //     let total = parseInt(element.total);
-    //     totalCredito += total;
-    //     if (contarFilasCredito > 48) {
-    //       plantillaCredito += `<div class="html2pdf__page-break"></div><br>`;
-    //       contarFilasCredito = 0;
-    //     }
-    //     plantillaCredito += `
-    //     <tr>
-    //         <td style="width: 150px; max-width: 150px">${
-    //           element.salida_cantidad
-    //         }</td>
-    //         <td style="width: 160px; max-width: 150px">${element.producto_id}</td>
-    //         <td style="width: 400px; max-width: 400px">${
-    //           element.producto_nombre
-    //         }</td>
-    //         <td style="width: 150px; max-width: 150px">L. ${parseInt(
-    //           element.lote_valor_unitario_venta
-    //         ).toFixed(2)}</th>
-    //         <td style="width: 120px; max-width: 120px">L. ${total.toFixed(2)}</td>
-    //       </tr>`;
-    //     contarFilasCredito++;
-    //   } else if (element.salida_tipo_pago === "Contado") {
-    //     let total = parseInt(element.total);
-    //     totalContado += total;
-    //     if (contarFilasContado > 48) {
-    //       plantillaContado += `<div class="html2pdf__page-break"></div><br>`;
-    //       contarFilasContado = 0;
-    //     }
-    //     plantillaContado += `
-    //     <tr>
-    //         <td style="width: 150px; max-width: 150px">${
-    //           element.salida_cantidad
-    //         }</td>
-    //         <td style="width: 160px; max-width: 150px">${element.producto_id}</td>
-    //         <td style="width: 400px; max-width: 400px">${
-    //           element.producto_nombre
-    //         }</td>
-    //         <td style="width: 150px; max-width: 150px">L. ${parseInt(
-    //           element.lote_valor_unitario_venta
-    //         ).toFixed(2)}</th>
-    //         <td style="width: 120px; max-width: 120px">L. ${parseInt(
-    //           element.total
-    //         ).toFixed(2)}</td>
-    //       </tr>`;
-    //     contarFilasContado++;
-    //   } else if (element.salida_tipo_pago === "Deposito") {
-    //     let total = parseInt(element.total);
-    //     totalDeposito += total;
-    //     if (contarFilasDeposito > 48) {
-    //       plantillaDeposito += `<div class="html2pdf__page-break"></div><br>`;
-    //       contarFilasDeposito = 0;
-    //     }
-    //     plantillaDeposito += `
-    //     <tr>
-    //         <td style="width: 150px; max-width: 150px">${
-    //           element.salida_cantidad
-    //         }</td>
-    //         <td style="width: 160px; max-width: 150px">${element.producto_id}</td>
-    //         <td style="width: 400px; max-width: 400px">${
-    //           element.producto_nombre
-    //         }</td>
-    //         <td style="width: 150px; max-width: 150px">L. ${parseInt(
-    //           element.lote_valor_unitario_venta
-    //         ).toFixed(2)}</th>
-    //         <td style="width: 120px; max-width: 120px">L. ${parseInt(
-    //           element.total
-    //         ).toFixed(2)}</td>
-    //       </tr>`;
-    //     contarFilasDeposito++;
-    //   }
-    // });
-    // plantillaCredito += `
-    // <tr>
-    //     <td style="width: 150px; max-width: 150px"></td>
-    //     <td style="width: 160px; max-width: 150px"></td>
-    //     <td style="width: 400px; max-width: 400px"></td>
-    //     <td style="width: 150px; max-width: 150px">TOTAL</th>
-    //     <td style="width: 120px; max-width: 120px"> L. ${totalCredito.toFixed(
-    //       2
-    //     )}</td>
-    //   </tr>`;
-    // plantillaContado += `
-    //   <tr>
-    //       <td style="width: 150px; max-width: 150px"></td>
-    //       <td style="width: 160px; max-width: 150px"></td>
-    //       <td style="width: 400px; max-width: 400px"></td>
-    //       <td style="width: 150px; max-width: 150px">TOTAL</th>
-    //       <td style="width: 120px; max-width: 120px"> L. ${totalContado.toFixed(
-    //         2
-    //       )}</td>
-    //     </tr>`;
-    // plantillaDeposito += `
-    //     <tr>
-    //         <td style="width: 150px; max-width: 150px"></td>
-    //         <td style="width: 160px; max-width: 150px"></td>
-    //         <td style="width: 400px; max-width: 400px"></td>
-    //         <td style="width: 150px; max-width: 150px">TOTAL</th>
-    //         <td style="width: 120px; max-width: 120px"> L. ${totalDeposito.toFixed(
-    //           2
-    //         )}</td>
-    //       </tr>`;
-    // cuerpoTablaCredito.innerHTML += plantillaCredito;
-    // cuerpoTablaContado.innerHTML += plantillaContado;
-    // cuerpoTablaDeposito.innerHTML += plantillaDeposito;
+let tituloLibro;
+ipcRenderer.on("ventas_mensuales_contado", (event, results, anio, mes) => {
+  let ventas = results[0];
+  mesActual = mes;
+  anioActual = anio;
+  let fechaActual = document.getElementsByClassName("fechaActual");
+  let mesAct = document.getElementById("mesActual");
+  for (let index = 0; index < fechaActual.length; index++) {
+    fechaActual[index].innerHTML = `${fechaPalabras(mesActual)} ${anioActual}`;
+    mesAct.innerHTML = `RESUMEN DEL MES DE ${fechaPalabras(
+      mesActual
+    )} ${anioActual}`;
   }
-);
+  tituloLibro = `${fechaPalabras(mesActual)} ${anioActual}`;
+  let plantillaVentasContado = "";
+  let plantillaVentasContadoLibraSaco = "";
+  ventas.forEach((element) => {
+    let venta = parseInt(element.total_ventas);
+    let compra = parseInt(element.costo_total_compras);
+    let cantidadProductos = parseInt(element.cantidad_producto);
+    let utilidad = parseInt(element.utilidad_bruta);
+    totalGeneralVentasContado += venta;
+    totalGeneralComprasContado += compra;
+    totalGeneralUtilidadContado += utilidad;
+    if (
+      element.lote_presentacion == "Libra" ||
+      element.lote_presentacion == "Saco"
+    ) {
+      totalVentasContadoLibraSaco += venta;
+      totalComprasContadoLibraSaco += compra;
+      totalProductosContadoLibraSaco += cantidadProductos;
+      totalUtilidadContadoLibraSaco += utilidad;
+
+      plantillaVentasContadoLibraSaco += `
+      <tr>
+      <td style="width: 200px; max-width: 200px">${element.producto_nombre} ${
+        element.lote_presentacion
+      }</td>
+      <td style="width: 160px; max-width: 150px">${parseInt(
+        element.cantidad_producto
+      )}</td>
+      <td style="width: 20px; max-width: 200px">L. ${parseInt(
+        element.total_ventas
+      ).toFixed(2)}</td>
+      <td style="width: 150px; max-width: 150px">L. ${parseInt(
+        element.lote_valor_unitario_venta
+      ).toFixed(2)}</td>
+      <td style="width: 150px; max-width: 150px">L. ${parseInt(
+        element.costo_total_compras
+      ).toFixed(2)}</td>
+      <td style="width: 120px; max-width: 120px">L. ${parseInt(
+        element.utilidad_bruta
+      ).toFixed(2)}</td>
+    </tr>
+      `;
+    } else {
+      totalVentasContadoNormal += venta;
+      totalComprasContadoNormal += compra;
+      totalProductosContadoNormal += cantidadProductos;
+      totalUtilidadContadoNormal += utilidad;
+      plantillaVentasContado += `
+        <tr>
+          <td style="width: 200px; max-width: 200px">${
+            element.producto_nombre
+          } ${element.lote_presentacion}</td>
+          <td style="width: 160px; max-width: 150px">${parseInt(
+            element.cantidad_producto
+          )}</td>
+          <td style="width: 20px; max-width: 200px">L. ${parseInt(
+            element.total_ventas
+          ).toFixed(2)}</td>
+          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+            element.lote_valor_unitario_venta
+          ).toFixed(2)}</td>
+          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+            element.costo_total_compras
+          ).toFixed(2)}</td>
+          <td style="width: 120px; max-width: 120px">L. ${parseInt(
+            element.utilidad_bruta
+          ).toFixed(2)}</td>
+        </tr>
+        `;
+    }
+  });
+  plantillaVentasContado += `
+  <tr>
+      <td style="width: 200px; max-width: 200px"></td>
+      <td style="width: 160px; max-width: 150px">${totalProductosContadoNormal}</td>
+      <td style="width: 20px; max-width: 200px">L. ${totalVentasContadoNormal.toFixed(
+        2
+      )}</td>
+      <td style="width: 150px; max-width: 150px"></td>
+      <td style="width: 150px; max-width: 150px">L. ${totalComprasContadoNormal.toFixed(
+        2
+      )}</td>
+      <td style="width: 120px; max-width: 120px">L. ${totalUtilidadContadoNormal.toFixed(
+        2
+      )}</td>
+  </tr>
+  `;
+
+  plantillaVentasContadoLibraSaco += `
+  <tr>
+      <td style="width: 200px; max-width: 200px"></td>
+      <td style="width: 160px; max-width: 150px">${totalProductosContadoLibraSaco}</td>
+      <td style="width: 20px; max-width: 200px">L. ${totalVentasContadoLibraSaco.toFixed(
+        2
+      )}</td>
+      <td style="width: 150px; max-width: 150px"></td>
+      <td style="width: 150px; max-width: 150px">L. ${totalComprasContadoLibraSaco.toFixed(
+        2
+      )}</td>
+      <td style="width: 120px; max-width: 120px">L. ${totalUtilidadContadoLibraSaco.toFixed(
+        2
+      )}</td>
+  </tr>
+  `;
+  cuerpoVentasContado.innerHTML += plantillaVentasContado;
+  cuerpoVentasContadoLibraSaco.innerHTML += plantillaVentasContadoLibraSaco;
+});
+
+let totalGeneralVentasCredito = 0;
+let totalVentasCreditoNormal = 0;
+let totalVentasCreditoLibraSaco = 0;
+let totalGeneralComprasCredito = 0;
+let totalComprasCreditoNormal = 0;
+let totalComprasCreditoLibraSaco = 0;
+let totalProductosCreditoNormal = 0;
+let totalProductosCreditoLibraSaco = 0;
+let totalGeneralUtilidadCredito = 0;
+let totalUtilidadCreditoNormal = 0;
+let totalUtilidadCreditoLibraSaco = 0;
+let utilidadTotal;
+ipcRenderer.on("ventas_mensuales_credito", (event, results, anio, mes) => {
+  let ventas = results[0];
+  console.log(results);
+  let plantillaVentasCredito = "";
+  let plantillaVentasCreditoLibraSaco = "";
+  ventas.forEach((element) => {
+    let venta = parseInt(element.total_ventas);
+    let compra = parseInt(element.costo_total_compras);
+    let cantidadProductos = parseInt(element.cantidad_producto);
+    let utilidad = parseInt(element.utilidad_bruta);
+    totalGeneralVentasCredito += venta;
+    totalGeneralComprasCredito += compra;
+    totalGeneralUtilidadCredito += utilidad;
+    if (
+      element.lote_presentacion == "Libra" ||
+      element.lote_presentacion == "Saco"
+    ) {
+      totalVentasCreditoLibraSaco += venta;
+      totalComprasCreditoLibraSaco += compra;
+      totalProductosCreditoLibraSaco += cantidadProductos;
+      totalUtilidadCreditoLibraSaco += utilidad;
+      plantillaVentasCreditoLibraSaco += `
+      <tr>
+      <td style="width: 200px; max-width: 200px">${element.producto_nombre} ${
+        element.lote_presentacion
+      }</td>
+      <td style="width: 160px; max-width: 150px">${parseInt(
+        element.cantidad_producto
+      )}</td>
+      <td style="width: 20px; max-width: 200px">L. ${parseInt(
+        element.total_ventas
+      ).toFixed(2)}</td>
+      <td style="width: 150px; max-width: 150px">L. ${parseInt(
+        element.lote_valor_unitario_venta
+      ).toFixed(2)}</td>
+      <td style="width: 150px; max-width: 150px">L. ${parseInt(
+        element.costo_total_compras
+      ).toFixed(2)}</td>
+      <td style="width: 120px; max-width: 120px">L. ${parseInt(
+        element.utilidad_bruta
+      ).toFixed(2)}</td>
+    </tr>
+      `;
+    } else {
+      totalVentasCreditoNormal += venta;
+      totalComprasCreditoNormal += compra;
+      totalProductosCreditoNormal += cantidadProductos;
+      totalUtilidadCreditoNormal += utilidad;
+      plantillaVentasCredito += `
+        <tr>
+          <td style="width: 200px; max-width: 200px">${
+            element.producto_nombre
+          } ${element.lote_presentacion}</td>
+          <td style="width: 160px; max-width: 150px">${parseInt(
+            element.cantidad_producto
+          )}</td>
+          <td style="width: 20px; max-width: 200px">L. ${parseInt(
+            element.total_ventas
+          ).toFixed(2)}</td>
+          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+            element.lote_valor_unitario_venta
+          ).toFixed(2)}</td>
+          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+            element.costo_total_compras
+          ).toFixed(2)}</td>
+          <td style="width: 120px; max-width: 120px">L. ${parseInt(
+            element.utilidad_bruta
+          ).toFixed(2)}</td>
+        </tr>
+        `;
+    }
+  });
+  plantillaVentasCredito += `
+  <tr>
+      <td style="width: 200px; max-width: 200px"></td>
+      <td style="width: 160px; max-width: 150px">${totalProductosCreditoNormal}</td>
+      <td style="width: 20px; max-width: 200px">L. ${totalVentasCreditoNormal.toFixed(
+        2
+      )}</td>
+      <td style="width: 150px; max-width: 150px"></td>
+      <td style="width: 150px; max-width: 150px">L. ${totalComprasCreditoNormal.toFixed(
+        2
+      )}</td>
+      <td style="width: 120px; max-width: 120px">L. ${totalUtilidadCreditoNormal.toFixed(
+        2
+      )}</td>
+  </tr>
+  `;
+
+  plantillaVentasCreditoLibraSaco += `
+  <tr>
+      <td style="width: 200px; max-width: 200px"></td>
+      <td style="width: 160px; max-width: 150px">${totalProductosCreditoLibraSaco}</td>
+      <td style="width: 20px; max-width: 200px">L. ${totalVentasCreditoLibraSaco.toFixed(
+        2
+      )}</td>
+      <td style="width: 150px; max-width: 150px"></td>
+      <td style="width: 150px; max-width: 150px">L. ${totalComprasCreditoLibraSaco.toFixed(
+        2
+      )}</td>
+      <td style="width: 120px; max-width: 120px">L. ${totalUtilidadCreditoLibraSaco.toFixed(
+        2
+      )}</td>
+  </tr>
+  `;
+  cuerpoVentasCredito.innerHTML += plantillaVentasCredito;
+  cuerpoVentasCreditoLibraSaco.innerHTML += plantillaVentasCreditoLibraSaco;
+  let totalIngresosDelMes =
+    totalGeneralVentasContado + totalGeneralVentasCredito;
+  let totalMercaderiaCosto =
+    totalGeneralComprasContado + totalGeneralComprasCredito;
+  utilidadTotal = totalIngresosDelMes - totalMercaderiaCosto;
+  let plantillaCuerpoResumen = "";
+  plantillaCuerpoResumen += `
+        <tr>
+          <td style="width: 50%;">TOTAL DE VENTAS AL CONTADO</td>
+          <td>L. ${totalGeneralVentasContado.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%;">TOTAL DE VENTAS AL CREDITO</td>
+          <td>L. ${totalGeneralVentasCredito.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%;">TOTAL DE INGRESOS DEL MES</td>
+          <td>L. ${totalIngresosDelMes.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%;">TOTAL DE MERCADERIA AL COSTO</td>
+          <td>L. ${totalMercaderiaCosto.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td style="width: 50%;">UTILIDAD</td>
+          <td>L. ${utilidadTotal.toFixed(2)}</td>
+        </tr>
+        
+  `;
+  cuerpoResumenMes.innerHTML += plantillaCuerpoResumen;
+});
+
+ipcRenderer.on("salariosDelMes", (event, results, anio, mes) => {
+  let salarios = results[0];
+  let totalSalarios;
+  salarios.forEach((element) => {
+    totalSalarios = parseInt(element.total_salarios);
+  });
+  let totalUtilidadNetaMes = utilidadTotal - totalSalarios;
+  let plantilla = `
+  <tr>
+    <td style="width: 50%;">SUELDOS Y SALARIOS</td>
+    <td>L. ${totalSalarios.toFixed(2)}</td>
+  </tr>
+  <tr>
+    <td style="width: 50%;">GASTOS DE CAJA</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="width: 50%;">PERDIDAS</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="width: 50%;">UTILIDAD NETA DEL MES</td>
+    <td>L. ${parseInt(totalUtilidadNetaMes).toFixed(2)}</td>
+  </tr>
+  `;
+  cuerpoResumenMes.innerHTML += plantilla;
+  // console.log(totalSalarios);
+});

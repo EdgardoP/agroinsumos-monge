@@ -79,6 +79,24 @@ const filtroProductos = (parametro, seleccion) => {
   obtenerHistorialProductos(objFiltro);
 };
 
+const buscarListaProducto = () => {
+  let valor = buscarProducto.value;
+  let filasTabla = document.getElementsByClassName("filas");
+  console.log(filasTabla);
+  for (let index = 0; index < filasTabla.length; index++) {
+    let claseFilas = filasTabla[index].className;
+    let valorEnFila = claseFilas.split(" ");
+    console.log(valorEnFila[1]);
+    if (valorEnFila[1].indexOf(valor) > -1) {
+      console.log("Se encontro");
+      filasTabla[index].style.display = "initial";
+    } else {
+      console.log("No se encontro");
+      filasTabla[index].style.display = "none";
+    }
+  }
+};
+
 const obtenerFecha = (formato) => {
   let nuevaFecha = Date.now();
   const fechaHoy = new Date(nuevaFecha);
@@ -112,7 +130,7 @@ ipcRenderer.on("historial_de_productos", (event, results) => {
   let plantilla = "";
   productos.forEach((element) => {
     plantilla += `
-    <tr class = 'filas'>
+    <tr class = 'filas ${element.producto_nombre}'>
     <td style="min-width: 60px; max-width: 60px; width: 60px">${
       element.producto_id
     }</td>

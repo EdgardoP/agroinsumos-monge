@@ -200,6 +200,7 @@ const confirmarEntradas = async () => {
   obtenerNombreProductos();
   autocomplete(salidaProductoNombre, listaDeProductosNombre);
   autocomplete(salidaLoteProductoFk, listaDeProductosId);
+  window.location.reload();
 };
 
 let cantidad_filas_ingresadas = 0;

@@ -188,7 +188,7 @@
               name="salida_tipo_pago"
               id="salida_tipo_pago"
               style="width: 15vh"
-              tabindex="4"
+              tabindex="3"
             >
               <option value="-1">Seleccione</option>
               <option value="Contado">Contado</option>
@@ -206,7 +206,7 @@
               name="cliente_salida"
               id="cliente_salida"
               style="width: 15vh"
-              tabindex="4"
+              tabindex="-1"
               disabled
             >
               <option value="0">Ninguno</option>
@@ -220,14 +220,14 @@
         <div class="flexColumn">
           <button
             onclick="agregarSalidaLista();event.preventDefault()"
-            tabindex="5"
+            tabindex="4"
             id="btnAceptar"
             class="boton colorSecundario"
           >
             ACEPTAR
           </button>
           <button
-            tabindex="6"
+            tabindex="-1"
             id="btnLimpiar"
             class="boton colorAmarillo"
             onclick="limpiarTextos();event.preventDefault();"
@@ -237,7 +237,7 @@
         </div>
         <div class="flexColumn">
           <button
-            tabindex="6"
+            tabindex="-1"
             id="btnLimpiar"
             class="boton colorPrimario"
             onclick=" location.href='#modal_asociar_cliente'; event.preventDefault()"
@@ -290,7 +290,7 @@
     <div class="flexRow">
       <button
         style="margin-right: 10px"
-        tabindex="6"
+        tabindex="-1"
         id="btnLimpiar"
         class="boton colorAmarillo"
         onclick="limpiarTextos()"
@@ -299,7 +299,7 @@
       </button>
       <button
         onclick="confirmarEntradas();event.preventDefault()"
-        tabindex="5"
+        tabindex="-1"
         id="btnAceptar"
         class="boton colorSecundario"
       >
