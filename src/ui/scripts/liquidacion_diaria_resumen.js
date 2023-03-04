@@ -80,10 +80,24 @@ const fechaPalabras = (fecha) => {
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
-  var wb = XLSX.utils.table_to_book(elt, { sheet: "Libro 1" });
+  var ws = XLSX.utils.table_to_sheet(elt);
+  var elt2 = document.getElementById("exportable_table2");
+  var ws2 = XLSX.utils.table_to_sheet(elt2);
+  var elt3 = document.getElementById("exportable_table3");
+  var ws3 = XLSX.utils.table_to_sheet(elt3);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Ventas de Contado");
+  XLSX.utils.book_append_sheet(wb, ws2, "Ventas de Credito");
+  XLSX.utils.book_append_sheet(wb, ws3, "Ventas de Deposito");
+  window.location.href = "#modal_excel";
   return dl
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
-    : XLSX.writeFile(wb, fn || `../SalidaNo.` + (type || "xlsx"));
+    : XLSX.writeFile(
+        wb,
+        fn ||
+          `../LIQUIDACION DIARIA-${fechaPalabras(fechaMostrar)}.` +
+            (type || "xlsx")
+      );
 }
 
 const obtenerFecha = (formato) => {

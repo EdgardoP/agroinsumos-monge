@@ -144,6 +144,7 @@
                 <div class="imagenInput">
                   <img src="icons/pencil.png" alt="" />
                   <input
+                    onkeyup="soloNumeros(this)"
                     style="width: 13vh"
                     type="text"
                     name="producto_valor_unitario_compra"
@@ -160,6 +161,7 @@
                 <div class="imagenInput">
                   <img src="icons/pencil.png" alt="" />
                   <input
+                    onkeyup="soloNumeros(this)"
                     style="width: 13vh"
                     type="text"
                     name="producto_valor_unitario_venta"
@@ -194,7 +196,7 @@
                   tabindex="-1"
                   id="btnModalNuevoProducto"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevoProducto(),entradaIndexadaDefault(),event.preventDefault()"
+                  onclick="validarNuevoProducto(),entradaIndexadaDefault(),event.preventDefault()"
                 >
                   REGISTRAR Y AÑADIR UNIDADES
                 </button>
@@ -398,6 +400,7 @@
                   id="nuevo_lote_producto_actual_nombre"
                   class="estiloInputLogin"
                   tabindex="-1"
+                  readonly
                 />
               </div>
             </div>
@@ -414,6 +417,7 @@
                   id="nuevo_lote_producto_actual_presentacion"
                   class="estiloInputLogin"
                   tabindex="-1"
+                  readonly
                 />
               </div>
             </div>
@@ -430,6 +434,7 @@
                   id="nuevo_lote_producto_actual_valor_compra"
                   class="estiloInputLogin"
                   tabindex="-1"
+                  readonly
                 />
               </div>
             </div>
@@ -446,6 +451,7 @@
                   id="nuevo_lote_producto_actual_valor_venta"
                   class="estiloInputLogin"
                   tabindex="-1"
+                  readonly
                 />
               </div>
             </div>
@@ -463,6 +469,7 @@
                 <div class="imagenInput">
                   <img src="icons/pencil.png" alt="" />
                   <input
+                    onkeyup="soloNumeros(this)"
                     style="width: 16vh"
                     type="text"
                     name="nuevo_lote_producto_nuevo_valor_compra"
@@ -479,6 +486,7 @@
                 <div class="imagenInput">
                   <img src="icons/pencil.png" alt="" />
                   <input
+                    onkeyup="soloNumeros(this)"
                     style="width: 16vh"
                     type="text"
                     name="nuevo_lote_producto_nuevo_valor_venta"
@@ -513,7 +521,7 @@
                   tabindex="-1"
                   id="modalBtnNuevoLote"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevoLote(),entradaIndexadaDefault(),event.preventDefault()"
+                  onclick="validarIngresarNuevoLote(),entradaIndexadaDefault(),event.preventDefault()"
                 >
                   REGISTRAR NUEVO LOTE
                 </button>

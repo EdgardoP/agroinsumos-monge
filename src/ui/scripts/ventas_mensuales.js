@@ -85,6 +85,7 @@ function ExportExcel(type, fn, dl) {
   var elt5 = document.getElementById("exportable_table5");
   var ws5 = XLSX.utils.table_to_sheet(elt5);
   var wb = XLSX.utils.book_new();
+  window.location.href = "#modal_excel";
   XLSX.utils.book_append_sheet(wb, ws, "Ventas al Contado");
   XLSX.utils.book_append_sheet(wb, ws2, "Ventas al Contado Libra Saco");
   XLSX.utils.book_append_sheet(wb, ws3, "Ventas al Credito");

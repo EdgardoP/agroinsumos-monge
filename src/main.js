@@ -738,6 +738,7 @@ const historialSalidas = (id) => {
     if (error) {
       console.log(error);
     } else {
+      console.log(results);
       crearVerSalida();
       ventanaSalida.webContents.once("did-finish-load", function () {
         ventanaSalida.webContents.send(

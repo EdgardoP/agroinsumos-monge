@@ -16,9 +16,7 @@ btnImprimir.addEventListener("click", () => {
 let fechaActual = document.getElementById("fechaActual");
 let tablaEntradas = document.getElementById("tablaEntradas");
 let numeroSerie = document.getElementById("numeroSerie");
-document.addEventListener("DOMContentLoaded", function () {
-  fechaActual.innerHTML = obtenerFecha("YYYY/MM/DD");
-});
+document.addEventListener("DOMContentLoaded", function () {});
 
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
@@ -82,6 +80,7 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
   let totalOtrosGastos = 0;
   let totalSubTotales = 0;
   listado.forEach((element, index, array) => {
+    fechaActual.innerHTML = convertirFecha(element.entradas_fecha);
     let otrosGastos = parseInt(element.entrada_otros_gastos);
     let subtotal = parseInt(element.sub_total);
     totalOtrosGastos += otrosGastos;

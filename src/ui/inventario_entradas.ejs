@@ -3,7 +3,7 @@
 <div class="contenedorDashboard">
   <h3>Inventario / Entradas de Productos al Inventario</h3>
 </div>
-<div class="contenedorDashboard">
+<div class="contenedorDashboard" style="overflow-x: inherit">
   <form action="" class="flexRow">
     <div class="flexColumn">
       <div class="flexRow">
@@ -49,6 +49,7 @@
               id="entrada_lote_producto_fk"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -195,6 +196,7 @@
               id="entrada_proveedor"
               class="estiloInputLogin"
               tabindex="-1"
+              readonly
             />
           </div>
         </div>
@@ -203,6 +205,7 @@
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
+              onkeyup="soloNumeros(this)"
               style="width: 13vh"
               type="text"
               name="entrada_cantidad_ingresar"
@@ -217,6 +220,7 @@
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
+              onkeyup="soloNumeros(this)"
               style="width: 14vh"
               type="text"
               name="entrada_otros_gastos"
@@ -257,16 +261,16 @@
           >
             NUEVO PRODUCTO
           </button>
-          <button
+          <!-- <button
             onclick="location.href='#modal_nuevo_derivado';limpiarIndexacion();entradaIndexNuevoDerivado(); event.preventDefault()"
             tabindex="-1"
             id="btnNuevoDerivado"
             class="boton colorSecundario"
           >
             NUEVO DERIVADO
-          </button>
+          </button> -->
           <button
-            onclick=" entradaIndexNuevoLote();location.href='#modal_nuevo_lote'; event.preventDefault()"
+            onclick=" entradaIndexNuevoLote();validarArrastarNuevoLote(); event.preventDefault()"
             tabindex="-1"
             id="btnNuevoDerivado"
             class="boton colorPrimario"
@@ -276,7 +280,7 @@
         </div>
         <div class="flexColumn">
           <button
-            onclick="agregarEntradaLista();event.preventDefault()"
+            onclick="validar();event.preventDefault()"
             tabindex="-1"
             id="btnAceptar"
             class="boton colorSecundario"
@@ -349,7 +353,7 @@
         id="btnLimpiar"
         class="boton colorAmarillo"
         tabindex="-1"
-        onclick="limpiarTextos()"
+        onclick="location.reload();limpiarTextos()"
       >
         CANCELAR
       </button>

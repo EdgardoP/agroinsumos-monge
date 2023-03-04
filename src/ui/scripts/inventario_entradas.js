@@ -421,8 +421,195 @@ const confirmarEntradas = async () => {
   window.location.reload();
 };
 
+const validarIngresarNuevoLote = () => {
+  if (
+    nuevoLoteProductoNuevoValorCompra.value > 0 &&
+    nuevoLoteProductoNuevoValorVenta.value > 0 &&
+    nuevoLoteProductoNuevoFechaVencimiento.value != ""
+  ) {
+    nuevoLote();
+  } else {
+    if (nuevoLoteProductoNuevoValorCompra.value <= 0) {
+      nuevoLoteProductoNuevoValorCompra.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nuevoLoteProductoNuevoValorCompra.parentNode.style.boxShadow = "none";
+    }
+    if (nuevoLoteProductoNuevoValorVenta.value <= 0) {
+      nuevoLoteProductoNuevoValorVenta.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nuevoLoteProductoNuevoValorVenta.parentNode.style.boxShadow = "none";
+    }
+    if (entradaProductoNombre.value == "") {
+      entradaProductoNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      entradaProductoNombre.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
+const validarArrastarNuevoLote = () => {
+  if (entradaProductoNombre.value == "") {
+    entradaProductoNombre.parentNode.style.boxShadow =
+      "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+  } else {
+    location.href = "#modal_nuevo_lote";
+    entradaProductoNombre.parentNode.style.boxShadow = "none";
+  }
+};
+
+const validarNuevoProducto = () => {
+  if (
+    productoNombre.value != "" &&
+    productoDescripcion.value != "" &&
+    productoProveedorFk.value != "0" &&
+    productoColor.value != "-1" &&
+    productoPresentacion.value != "-1" &&
+    productoCategoriaFk.value != "0" &&
+    producto_valor_unitario_compra.value > 0 &&
+    producto_valor_unitario_venta.value > 0 &&
+    productoFechaVencimiento.value != ""
+  ) {
+    nuevoProducto();
+  } else {
+    if (productoNombre.value == "") {
+      productoNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoNombre.parentNode.style.boxShadow = "none";
+    }
+    if (productoDescripcion.value == "") {
+      productoDescripcion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoDescripcion.parentNode.style.boxShadow = "none";
+    }
+    if (productoProveedorFk.value == "0") {
+      productoProveedorFk.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoProveedorFk.parentNode.style.boxShadow = "none";
+    }
+    if (productoColor.value == "-1") {
+      productoColor.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoColor.parentNode.style.boxShadow = "none";
+    }
+    if (productoPresentacion.value == "-1") {
+      productoPresentacion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoPresentacion.parentNode.style.boxShadow = "none";
+    }
+    if (productoCategoriaFk.value == "0") {
+      productoCategoriaFk.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoCategoriaFk.parentNode.style.boxShadow = "none";
+    }
+    if (producto_valor_unitario_compra.value <= 0) {
+      producto_valor_unitario_compra.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      producto_valor_unitario_compra.parentNode.style.boxShadow = "none";
+    }
+    if (producto_valor_unitario_venta.value <= 0) {
+      producto_valor_unitario_venta.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      producto_valor_unitario_venta.parentNode.style.boxShadow = "none";
+    }
+    if (productoFechaVencimiento.value == "") {
+      productoFechaVencimiento.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoFechaVencimiento.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
+const validar = () => {
+  if (
+    entradaLoteProductoFk.value != "" &&
+    entradaProductoNombre.value != "" &&
+    entradaStockActual.value > -1 &&
+    entradaCantidadIngresar.value > 0 &&
+    entradaOtrosGastos.value > -1 &&
+    entradaTipoPago.value != "-1"
+  ) {
+    agregarEntradaLista();
+  } else {
+    if (entradaLoteProductoFk.value == "") {
+      entradaLoteProductoFk.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      entradaLoteProductoFk.parentNode.style.boxShadow = "none";
+    }
+
+    if (entradaProductoNombre.value == "") {
+      entradaProductoNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      entradaProductoNombre.parentNode.style.boxShadow = "none";
+    }
+    if (entradaStockActual.value < 0) {
+      entradaStockActual.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      entradaStockActual.parentNode.style.boxShadow = "none";
+    }
+    if (
+      entradaCantidadIngresar.value <= 0 ||
+      entradaCantidadIngresar.value == ""
+    ) {
+      entradaCantidadIngresar.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      entradaCantidadIngresar.parentNode.style.boxShadow = "none";
+    }
+    if (entradaOtrosGastos.value < 0 || entradaOtrosGastos.value == "") {
+      entradaOtrosGastos.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      entradaOtrosGastos.parentNode.style.boxShadow = "none";
+    }
+    if (entradaTipoPago.value == "-1") {
+      entradaTipoPago.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      entradaTipoPago.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
+function soloLetras(obj) {
+  obj.value = obj.value.replace(/[0-9]/g, "");
+}
+
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/\D/g, "");
+}
+
 let cantidad_filas_ingresadas = 0;
 const agregarEntradaLista = () => {
+  productoNombre.parentNode.style.boxShadow = "none";
+  productoDescripcion.parentNode.style.boxShadow = "none";
+  productoProveedorFk.parentNode.style.boxShadow = "none";
+  productoColor.parentNode.style.boxShadow = "none";
+  productoPresentacion.parentNode.style.boxShadow = "none";
+  productoCategoriaFk.parentNode.style.boxShadow = "none";
+  producto_valor_unitario_compra.parentNode.style.boxShadow = "none";
+  producto_valor_unitario_venta.parentNode.style.boxShadow = "none";
+  productoFechaVencimiento.parentNode.style.boxShadow = "none";
+  entradaLoteProductoFk.parentNode.style.boxShadow = "none";
+  entradaProductoNombre.parentNode.style.boxShadow = "none";
+  entradaStockActual.parentNode.style.boxShadow = "none";
+  entradaCantidadIngresar.parentNode.style.boxShadow = "none";
+  entradaOtrosGastos.parentNode.style.boxShadow = "none";
+  entradaTipoPago.parentNode.style.boxShadow = "none";
   cantidad_filas_ingresadas++;
   let plantilla = "";
   let elementoTabla = listaDeProductosRaw.find(

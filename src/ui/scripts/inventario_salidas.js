@@ -1,6 +1,7 @@
 const { ipcRenderer } = require("electron");
 
 //Inputs del dashboard entradas
+let btnAsociarCliente = document.getElementById("btnAsociarCliente");
 let salidaProductoNombre = document.getElementById("salida_producto_nombre");
 let salidaProductoDescripcion = document.getElementById(
   "salida_producto_descripcion"
@@ -41,6 +42,14 @@ document.addEventListener("DOMContentLoaded", function () {
   obtenerClientes();
   salidaProductoNombre.focus();
 });
+
+function soloLetras(obj) {
+  obj.value = obj.value.replace(/[0-9]/g, "");
+}
+
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/\D/g, "");
+}
 
 //Funcion para obtener la fecha del sistema
 const obtenerFecha = (formato) => {
@@ -203,9 +212,104 @@ const confirmarEntradas = async () => {
   window.location.reload();
 };
 
+const validarCliente = () => {
+  if (
+    clienteNombre.value != "" &&
+    clienteApellido.value != "" &&
+    clienteReferencia.value != ""
+  ) {
+    nuevoCliente();
+  } else {
+    if (clienteNombre.value == "") {
+      clienteNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      clienteNombre.parentNode.style.boxShadow = "none";
+    }
+    if (clienteApellido.value == "") {
+      clienteApellido.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      clienteApellido.parentNode.style.boxShadow = "none";
+    }
+    if (clienteReferencia.value == "") {
+      clienteReferencia.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      clienteReferencia.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
+const validar = () => {
+  if (
+    salidaLoteProductoFk.value != "" &&
+    salidaProductoNombre.value != "" &&
+    salidaStockActual.value > 0 &&
+    salidaCantidad.value > 0 &&
+    salidaTipoPago.value != "-1"
+  ) {
+    if (salidaTipoPago.value == "Credito") {
+      clienteSalida.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+      btnAsociarCliente.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 10px 10px";
+      if (clienteSalida.value != "0") {
+        salidaTipoPago.parentNode.style.boxShadow = "none";
+        btnAsociarCliente.style.boxShadow = "none";
+        agregarSalidaLista();
+      }
+    } else {
+      salidaTipoPago.parentNode.style.boxShadow = "none";
+      btnAsociarCliente.style.boxShadow = "none";
+      agregarSalidaLista();
+    }
+  } else {
+    if (salidaLoteProductoFk.value == "") {
+      salidaLoteProductoFk.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      salidaLoteProductoFk.parentNode.style.boxShadow = "none";
+    }
+    if (salidaProductoNombre.value == "") {
+      salidaProductoNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      salidaProductoNombre.parentNode.style.boxShadow = "none";
+    }
+    if (salidaStockActual.value <= 0) {
+      salidaStockActual.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      salidaStockActual.parentNode.style.boxShadow = "none";
+    }
+    if (salidaCantidad.value <= 0 || salidaCantidad.value == "") {
+      salidaCantidad.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      salidaCantidad.parentNode.style.boxShadow = "none";
+    }
+    if (salidaTipoPago.value == "-1") {
+      salidaTipoPago.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      salidaTipoPago.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
 let cantidad_filas_ingresadas = 0;
 
 const agregarSalidaLista = () => {
+  salidaLoteProductoFk.parentNode.style.boxShadow = "none";
+  salidaProductoNombre.parentNode.style.boxShadow = "none";
+  salidaStockActual.parentNode.style.boxShadow = "none";
+  salidaCantidad.parentNode.style.boxShadow = "none";
+  salidaTipoPago.parentNode.style.boxShadow = "none";
+  salidaTipoPago.parentNode.style.boxShadow = "none";
+  salidaTipoPago.parentNode.style.boxShadow = "none";
+  btnAsociarCliente.style.boxShadow = "none";
+  clienteSalida.parentNode.style.boxShadow = "none";
   // console.log(filasElementos[0]);
 
   cantidad_filas_ingresadas++;
@@ -414,6 +518,7 @@ const limpiarTextos = () => {
 };
 
 const nuevoCliente = async () => {
+  location.href = "#modal_asociar_cliente";
   let fecha = salidaFecha.value;
   const obj = {
     cliente_nombre: clienteNombre.value,
