@@ -17,6 +17,7 @@ let loteCantidad = document.getElementById("loteCantidad");
 let tablaEntradas = document.getElementById("tablaEntradas");
 
 document.addEventListener("DOMContentLoaded", function () {
+  productoNombre.focus();
   obtenerCategorias();
   obtenerProveedores();
 });
@@ -53,6 +54,68 @@ const convertirFecha = (fecha) => {
   return fechaAnioMesDia;
 };
 
+function soloLetras(obj) {
+  obj.value = obj.value.replace(/[0-9]/g, "");
+}
+
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/[^0-9,.]/g, "");
+}
+
+const validarNuevoProducto = () => {
+  if (
+    productoNombre.value != "" &&
+    productoDescripcion.value != "" &&
+    productoProveedor.value != "0" &&
+    productoColor.value != "0" &&
+    productoCategoria.value != "0" &&
+    lotePresentacion.value != "0" &&
+    productoFechaVencimiento.value != "" &&
+    loteValorUnitarioCompra.value != "" &&
+    loteValorUnitarioVenta.value != "" &&
+    loteCantidad.value != ""
+  ) {
+    agregarFilasProductos();
+  } else {
+    if (productoNombre.value == "") {
+      productoNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoNombre.parentNode.style.boxShadow = "none";
+    }
+    if (productoDescripcion.value == "") {
+      productoDescripcion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoDescripcion.parentNode.style.boxShadow = "none";
+    }
+
+    if (productoProveedor.value == "0") {
+      productoProveedor.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoProveedor.parentNode.style.boxShadow = "none";
+    }
+    if (productoColor.value == "0") {
+      productoColor.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoColor.parentNode.style.boxShadow = "none";
+    }
+    if (productoCategoria.value == "0") {
+      productoCategoria.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoCategoria.parentNode.style.boxShadow = "none";
+    }
+    if (lotePresentacion.value == "0") {
+      lotePresentacion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      lotePresentacion.parentNode.style.boxShadow = "none";
+    }
+  }
+};
 //Funcion para cargar las categorias de la base de datos
 const obtenerCategorias = async () => {
   await ipcRenderer.invoke("obtenerCategorias");

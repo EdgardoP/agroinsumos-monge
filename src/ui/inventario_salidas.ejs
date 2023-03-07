@@ -43,6 +43,7 @@
           <div class="imagenInput autocomplete">
             <img src="icons/pencil.png" alt="" />
             <input
+              onkeyup="soloNumeros(this)"
               style="width: 4vh"
               type="text"
               name="salida_lote_producto_fk"
@@ -176,6 +177,7 @@
               id="salida_cantidad"
               class="estiloInputLogin"
               tabindex="2"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -240,7 +242,7 @@
             tabindex="-1"
             id="btnAsociarCliente"
             class="boton colorPrimario"
-            onclick=" location.href='#modal_asociar_cliente'; event.preventDefault()"
+            onclick=" quitarColorError();location.href='#modal_asociar_cliente'; event.preventDefault()"
           >
             ASOCIAR VENTA A UN CLIENTE
           </button>
@@ -293,7 +295,7 @@
         tabindex="-1"
         id="btnLimpiar"
         class="boton colorAmarillo"
-        onclick="limpiarTextos()"
+        onclick="location.reload();limpiarTextos()"
       >
         CANCELAR
       </button>

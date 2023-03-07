@@ -17,8 +17,8 @@ const cargarEntradas = async () => {
   );
 };
 
-function formatDinero(numero) {
-  return numero.toLocaleString();
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/[^0-9,.]/g, "");
 }
 
 const convertirFecha = (fecha) => {

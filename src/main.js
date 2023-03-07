@@ -698,6 +698,7 @@ const historialEntradas = (id) => {
   db.query(query, [id], (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("No existe este Registro", "Intentalo de nuevo");
     } else {
       crearVerEntrada();
       ventanaEntrada.webContents.once("did-finish-load", function () {

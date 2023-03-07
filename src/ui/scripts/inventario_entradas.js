@@ -219,6 +219,8 @@ const convertirFecha = (fecha) => {
 const eliminarFila = () => {
   let index = event.target.parentNode.parentNode.parentNode.parentNode;
   index.remove();
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
 };
 
 const modificarFila = () => {
@@ -245,6 +247,7 @@ const modificarFila = () => {
   entradaOtrosGastos.value = otrosGastos;
   entradaTipoPago.value = tipoPago;
   index.remove();
+  agregarColorFilas(filasElementos);
 };
 //Funcion para cargar las categorias de la base de datos
 const obtenerCategorias = async () => {
@@ -398,7 +401,9 @@ const confirmarEntradas = async () => {
     datosEntradas.push(filasElementos[index].children[7].innerHTML);
     datosEntradas.push(filasElementos[index].children[6].innerHTML);
     datosEntradas.push(filasElementos[index].children[10].innerHTML);
-    datosEntradas.push(filasElementos[index].children[9].innerHTML);
+    datosEntradas.push(
+      parseInt(filasElementos[index].children[9].innerHTML).toFixed(2)
+    );
     datosEntradas.push(1);
     datosEntradas.push(idDocumento);
     entradas.push(datosEntradas);
@@ -409,16 +414,27 @@ const confirmarEntradas = async () => {
     // console.log(loteModificar);
     valoresModificar.push(loteModificar);
   }
-  await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
-  await ipcRenderer.invoke("insertarMultiplesEntradas", entradas);
+  if (valoresModificar.length > 0 && entradas.length > 0) {
+    await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
+    await ipcRenderer.invoke("insertarMultiplesEntradas", entradas);
 
-  listaDeProductosRaw = [];
-  listaDeProductosNombre = [];
-  listaDeProductosId = [];
-  obtenerNombreProductos();
-  autocomplete(entradaProductoNombre, listaDeProductosNombre);
-  autocomplete(entradaLoteProductoFk, listaDeProductosId);
-  window.location.reload();
+    listaDeProductosRaw = [];
+    listaDeProductosNombre = [];
+    listaDeProductosId = [];
+    obtenerNombreProductos();
+    autocomplete(entradaProductoNombre, listaDeProductosNombre);
+    autocomplete(entradaLoteProductoFk, listaDeProductosId);
+    window.location.reload();
+  } else {
+    console.log("No has agregado nada aun");
+    tablaEntradas.parentNode.parentNode.classList.add("tablaTransicion");
+    tablaEntradas.parentNode.parentNode.style.backgroundColor = "#d0393996";
+    setTimeout(() => {
+      tablaEntradas.parentNode.parentNode.style.backgroundColor = "#fff";
+    }, "1000");
+
+    // tablaEntradas.style.backgroundColor = "white";
+  }
 };
 
 const validarIngresarNuevoLote = () => {
@@ -540,7 +556,12 @@ const validar = () => {
     entradaOtrosGastos.value > -1 &&
     entradaTipoPago.value != "-1"
   ) {
-    agregarEntradaLista();
+    if (entradaOtrosGastos.value == "") {
+      entradaOtrosGastos.value = 0.0;
+      agregarEntradaLista();
+    } else {
+      agregarEntradaLista();
+    }
   } else {
     if (entradaLoteProductoFk.value == "") {
       entradaLoteProductoFk.parentNode.style.boxShadow =
@@ -590,11 +611,10 @@ function soloLetras(obj) {
 }
 
 function soloNumeros(obj) {
-  obj.value = obj.value.replace(/\D/g, "");
+  obj.value = obj.value.replace(/[^0-9,.]/g, "");
 }
 
-let cantidad_filas_ingresadas = 0;
-const agregarEntradaLista = () => {
+const quitarColorError = () => {
   productoNombre.parentNode.style.boxShadow = "none";
   productoDescripcion.parentNode.style.boxShadow = "none";
   productoProveedorFk.parentNode.style.boxShadow = "none";
@@ -610,6 +630,11 @@ const agregarEntradaLista = () => {
   entradaCantidadIngresar.parentNode.style.boxShadow = "none";
   entradaOtrosGastos.parentNode.style.boxShadow = "none";
   entradaTipoPago.parentNode.style.boxShadow = "none";
+};
+
+let cantidad_filas_ingresadas = 0;
+const agregarEntradaLista = () => {
+  quitarColorError();
   cantidad_filas_ingresadas++;
   let plantilla = "";
   let elementoTabla = listaDeProductosRaw.find(
@@ -639,14 +664,17 @@ const agregarEntradaLista = () => {
     <td style="min-width: 120px; max-width: 120px; width: 120px">${subtotal}</td>
     <td style="min-width: 120px; max-width: 120px; width: 120px">
           <div>
-            <button id = ${cantidad_filas_ingresadas} 
+            <button 
+            tabindex="-1"
+            id = ${cantidad_filas_ingresadas} 
               onclick="modificarFila();event.preventDefault()"
               class="accionesBoton colorSecundario">
               <img id = ${cantidad_filas_ingresadas}
-              src="icons/edit-button.png" alt="" />
-              
+              src="icons/edit-button.png" alt="" 
+              />
             </button>
             <button 
+              tabindex="-1"
               id = ${cantidad_filas_ingresadas} 
               onclick="eliminarFila();event.preventDefault()"
               class="btnEliminarFila accionesBoton colorRojo">
@@ -657,6 +685,20 @@ const agregarEntradaLista = () => {
   </tr>`;
   tablaEntradas.innerHTML += plantilla;
   limpiarTextos();
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
+};
+
+const agregarColorFilas = (filas) => {
+  for (let index = 0; index < filas.length; index++) {
+    filas[index].classList.remove("filasColor");
+  }
+
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
 };
 
 //Funcion de autompletado
@@ -706,14 +748,18 @@ function autocomplete(inp, arr) {
           )}`;
           entrada_proveedor.value =
             listaDeProductosRaw[indice].proveedor_nombre;
-          entradaValorUnitarioCompra.value =
-            listaDeProductosRaw[indice].lote_valor_unitario_compra;
-          nuevoLoteProductoActualValorVenta.value =
-            listaDeProductosRaw[indice].lote_valor_unitario_venta;
-          nuevoLoteProductoActualValorCompra.value =
-            listaDeProductosRaw[indice].lote_valor_unitario_compra;
-          entradaValorUnitarioVenta.value =
-            listaDeProductosRaw[indice].lote_valor_unitario_venta;
+          entradaValorUnitarioCompra.value = parseInt(
+            listaDeProductosRaw[indice].lote_valor_unitario_compra
+          ).toFixed(2);
+          nuevoLoteProductoActualValorVenta.value = parseInt(
+            listaDeProductosRaw[indice].lote_valor_unitario_venta
+          ).toFixed(2);
+          nuevoLoteProductoActualValorCompra.value = parseInt(
+            listaDeProductosRaw[indice].lote_valor_unitario_compra
+          ).toFixed(2);
+          entradaValorUnitarioVenta.value = parseInt(
+            listaDeProductosRaw[indice].lote_valor_unitario_venta
+          ).toFixed(2);
           entradaProductoNombre.value =
             listaDeProductosRaw[indice].producto_nombre;
           productoDerivarNombre.value =
@@ -769,6 +815,7 @@ function autocomplete(inp, arr) {
 }
 
 const limpiarTextos = () => {
+  quitarColorError();
   entradaProductoNombre.focus();
   entradaLoteProductoFk.value = "";
   entradaLoteFk.value = "";
@@ -783,8 +830,8 @@ const limpiarTextos = () => {
   entradaTipoPago.value = "-1";
   productoNombre.value = "";
   productoDescripcion.value = "";
-  productoProveedorFk.value = "-1";
-  productoColor.value = "";
+  productoProveedorFk.value = "0";
+  productoColor.value = "-1";
   productoPresentacion.value = "-1";
   productoCategoriaFk.value = "0";
   producto_valor_unitario_compra.value = "";

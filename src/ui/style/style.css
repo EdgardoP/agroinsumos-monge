@@ -111,6 +111,11 @@ body {
   width: 250px;
 }
 
+.estiloInputLogin:focus{
+  background-color: #75abb968;
+}
+
+
 .imagenInput{
   display: flex;
   flex-direction: row;
@@ -146,6 +151,15 @@ body {
   font-size: 13px;
   font-weight: bolder;
   color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.boton:focus {
+  background-color: #1d421a;
+}
+.boton:hover {
+  filter: brightness(120%);
 }
 
 .cajaMenu{
@@ -211,7 +225,7 @@ body {
 }
 
 .estiloTabla{
-  /* width: 100%; */
+  width: 100%;
   border-collapse: collapse;
   font-size: 15px;
 }
@@ -226,7 +240,6 @@ body {
   max-height: 46vh;
   height: 46vh;
   overflow-y: scroll;
-  
 }
 
 /* .estiloTabla thead{
@@ -369,3 +382,14 @@ body {
   padding: 4px;
   margin-top: -1px;
 }
+
+.filasColor{
+  background-color: #83a1b94a;
+}
+
+.tablaTransicion{
+  transition-property: background-color;
+  transition-duration:  2s;
+  /* background-color: #d0393996; */
+}
+

@@ -18,7 +18,6 @@
               id="entrada_id"
               class="estiloInputLogin"
               tabindex="-1"
-              readonly
             />
           </div>
         </div>
@@ -33,6 +32,7 @@
               id="entrada_fecha"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeypress="event.preventDefault()"
             />
           </div>
         </div>
@@ -50,6 +50,7 @@
               class="estiloInputLogin"
               tabindex="-1"
               onkeyup="soloNumeros(this)"
+              onkeypress="event.preventDefault()"
             />
           </div>
         </div>
@@ -64,6 +65,7 @@
               id="entrada_lote_fk"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeypress="event.preventDefault()"
               readonly
             />
           </div>
@@ -96,6 +98,7 @@
               class="estiloInputLogin"
               tabindex="-1"
               readonly
+              onkeypress="event.preventDefault()"
             />
           </div>
         </div>
@@ -112,6 +115,7 @@
               id="entrada_lote_presentacion"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeypress="event.preventDefault()"
               readonly
             />
           </div>
@@ -129,6 +133,7 @@
               id="entrada_stock_actual"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeypress="event.preventDefault()"
               readonly
             />
           </div>
@@ -146,6 +151,7 @@
               id="entrada_valor_unitario_compra"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeypress="event.preventDefault()"
               readonly
             />
           </div>
@@ -163,6 +169,7 @@
               id="entrada_valor_unitario_venta"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeypress="event.preventDefault()"
               readonly
             />
           </div>
@@ -179,6 +186,7 @@
               name="entrada_lote_fecha_vencimiento"
               id="entrada_lote_fecha_vencimiento"
               class="estiloInputLogin"
+              onkeypress="event.preventDefault()"
               tabindex="-1"
             />
           </div>
@@ -197,6 +205,7 @@
               class="estiloInputLogin"
               tabindex="-1"
               readonly
+              onkeypress="event.preventDefault()"
             />
           </div>
         </div>
@@ -227,6 +236,7 @@
               id="entrada_otros_gastos"
               class="estiloInputLogin"
               tabindex="-1"
+              value="0.00"
             />
           </div>
         </div>
@@ -254,7 +264,7 @@
       <div class="flexColumn space-around">
         <div class="flexColumn">
           <button
-            onclick="location.href='#modal_nuevo_producto';limpiarIndexacion();entradaIndexNuevoProducto();event.preventDefault()"
+            onclick="location.href='#modal_nuevo_producto';quitarColorError();limpiarIndexacion();entradaIndexNuevoProducto();event.preventDefault()"
             tabindex="-1"
             id="btnNuevoProducto"
             class="boton colorSecundario"
@@ -270,7 +280,7 @@
             NUEVO DERIVADO
           </button> -->
           <button
-            onclick=" entradaIndexNuevoLote();validarArrastarNuevoLote(); event.preventDefault()"
+            onclick=" quitarColorError();entradaIndexNuevoLote();validarArrastarNuevoLote(); event.preventDefault()"
             tabindex="-1"
             id="btnNuevoDerivado"
             class="boton colorPrimario"

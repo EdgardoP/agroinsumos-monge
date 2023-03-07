@@ -48,9 +48,8 @@ function soloLetras(obj) {
 }
 
 function soloNumeros(obj) {
-  obj.value = obj.value.replace(/\D/g, "");
+  obj.value = obj.value.replace(/[^0-9,.]/g, "");
 }
-
 //Funcion para obtener la fecha del sistema
 const obtenerFecha = (formato) => {
   let nuevaFecha = Date.now();
@@ -89,6 +88,8 @@ const eliminarFila = () => {
   let index = event.target.parentNode.parentNode.parentNode.parentNode;
   index.remove();
   salidaProductoNombre.focus();
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
 };
 
 const modificarFila = () => {
@@ -115,6 +116,7 @@ const modificarFila = () => {
     elementoTabla.lote_fecha_vencimiento
   );
   index.remove();
+  agregarColorFilas(filasElementos);
 };
 //Funcion para obtener los nombres de los productos de la base de datos
 const obtenerNombreProductos = async () => {
@@ -200,16 +202,25 @@ const confirmarEntradas = async () => {
     console.log(loteModificar);
     valoresModificar.push(loteModificar);
   }
-  await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
-  await ipcRenderer.invoke("insertarMultiplesSalidas", salidas);
+  if (valoresModificar.length > 0 && salidas.length > 0) {
+    await ipcRenderer.invoke("modificarMultiplesLotes", valoresModificar);
+    await ipcRenderer.invoke("insertarMultiplesSalidas", salidas);
 
-  listaDeProductosRaw = [];
-  listaDeProductosNombre = [];
-  listaDeProductosId = [];
-  obtenerNombreProductos();
-  autocomplete(salidaProductoNombre, listaDeProductosNombre);
-  autocomplete(salidaLoteProductoFk, listaDeProductosId);
-  window.location.reload();
+    listaDeProductosRaw = [];
+    listaDeProductosNombre = [];
+    listaDeProductosId = [];
+    obtenerNombreProductos();
+    autocomplete(salidaProductoNombre, listaDeProductosNombre);
+    autocomplete(salidaLoteProductoFk, listaDeProductosId);
+    window.location.reload();
+  } else {
+    console.log("No has agregado nada aun");
+    tablaSalidas.parentNode.parentNode.classList.add("tablaTransicion");
+    tablaSalidas.parentNode.parentNode.style.backgroundColor = "#d0393996";
+    setTimeout(() => {
+      tablaSalidas.parentNode.parentNode.style.backgroundColor = "#fff";
+    }, "1000");
+  }
 };
 
 const validarCliente = () => {
@@ -298,9 +309,24 @@ const validar = () => {
   }
 };
 
+const quitarColorError = () => {
+  clienteNombre.parentNode.style.boxShadow = "none";
+  clienteApellido.parentNode.style.boxShadow = "none";
+  clienteReferencia.parentNode.style.boxShadow = "none";
+  salidaTipoPago.parentNode.style.boxShadow = "none";
+  btnAsociarCliente.style.boxShadow = "none";
+  salidaTipoPago.parentNode.style.boxShadow = "none";
+  salidaLoteProductoFk.parentNode.style.boxShadow = "none";
+  salidaProductoNombre.parentNode.style.boxShadow = "none";
+  salidaStockActual.parentNode.style.boxShadow = "none";
+  salidaCantidad.parentNode.style.boxShadow = "none";
+  salidaTipoPago.parentNode.style.boxShadow = "none";
+};
+
 let cantidad_filas_ingresadas = 0;
 
 const agregarSalidaLista = () => {
+  quitarColorError();
   salidaLoteProductoFk.parentNode.style.boxShadow = "none";
   salidaProductoNombre.parentNode.style.boxShadow = "none";
   salidaStockActual.parentNode.style.boxShadow = "none";
@@ -366,7 +392,9 @@ const agregarSalidaLista = () => {
       <td style="min-width: 120px; max-width: 120px; width: 120px">${subtotal}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">
             <div>
-              <button id = ${cantidad_filas_ingresadas}
+              <button 
+              tabindex="-1"
+              id = ${cantidad_filas_ingresadas}
                 onclick="modificarFila();event.preventDefault()"
                 class="accionesBoton colorSecundario">
                 <img id = ${cantidad_filas_ingresadas}
@@ -374,7 +402,8 @@ const agregarSalidaLista = () => {
 
               </button>
               <button
-                id = ${cantidad_filas_ingresadas}
+              tabindex="-1"  
+              id = ${cantidad_filas_ingresadas}
                 onclick="eliminarFila();event.preventDefault()"
                 class="btnEliminarFila accionesBoton colorRojo">
                 <img id = ${cantidad_filas_ingresadas} src="icons/cancel.png" alt="" />
@@ -382,10 +411,24 @@ const agregarSalidaLista = () => {
             </div>
       </td>
     </tr>`;
+    tablaSalidas.innerHTML += plantilla;
     limpiarTextos();
+    let filasElementos = document.getElementsByClassName("filasElementos");
+    agregarColorFilas(filasElementos);
   }
-  tablaSalidas.innerHTML += plantilla;
   // limpiarTextos();
+};
+
+const agregarColorFilas = (filas) => {
+  for (let index = 0; index < filas.length; index++) {
+    filas[index].classList.remove("filasColor");
+  }
+
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
 };
 
 //Funcion de autompletado
@@ -433,8 +476,9 @@ function autocomplete(inp, arr) {
             salidaFechaVencimiento.value = `${convertirFecha(
               listaDeProductosRaw[indice].lote_fecha_vencimiento
             )}`;
-            salidaValorUnitarioVenta.value =
-              listaDeProductosRaw[indice].lote_valor_unitario_venta;
+            salidaValorUnitarioVenta.value = parseInt(
+              listaDeProductosRaw[indice].lote_valor_unitario_venta
+            ).toFixed(2);
             salidaProductoNombre.value =
               listaDeProductosRaw[indice].producto_nombre;
             closeAllLists();
@@ -504,6 +548,7 @@ ipcRenderer.on("lista_de_clientes", (event, results) => {
 });
 
 const limpiarTextos = () => {
+  quitarColorError();
   salidaProductoNombre.focus();
   salidaLoteProductoFk.value = "";
   salidaLoteFk.value = "";

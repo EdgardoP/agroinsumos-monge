@@ -101,10 +101,10 @@ ipcRenderer.on("documento_historial_salida", (event, results, id) => {
       L.${element.lote_valor_unitario_venta}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      L.${element.salida_cantidad}
+      ${element.salida_cantidad}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      L.${element.salida_tipo_pago}
+      ${element.salida_tipo_pago}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
       L.${element.sub_total}

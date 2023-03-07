@@ -11,6 +11,7 @@
         <div class="autocomplete imagenInput">
           <img src="icons/pencil.png" alt="" />
           <input
+            onkeyup="soloNumeros(this)"
             style="width: 40vh"
             type="text"
             name="buscarSalida"
@@ -21,7 +22,7 @@
         </div>
       </div>
       <button
-        onclick="location.href='#modal_nueva_categoria'; event.preventDefault()"
+        onclick="buscarDocumento();event.preventDefault()"
         class="accionesBoton colorSecundario"
       >
         <img src="icons/lupa.png" alt="" />
