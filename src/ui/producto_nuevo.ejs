@@ -4,7 +4,7 @@
   <h3>Productos / Ingresar Nuevos Productos</h3>
 </div>
 <div class="contenedorDashboard">
-  <form action="#" class="flexRow">
+  <div class="flexRow">
     <div class="flexColumn">
       <div class="flexRow" style="align-items: center">
         <div class="cajaInput">
@@ -163,7 +163,7 @@
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
-              onkeypress="soloNumeros(this)"
+              onkeyup="soloNumeros(this)"
               style="width: 15vh"
               type="text"
               name="loteCantidad"
@@ -178,7 +178,12 @@
     <div class="botonesDashboard">
       <div class="flexColumn space-around">
         <div class="flexColumn">
-          <button tabindex="-1" id="btnAceptar" class="boton colorAmarillo">
+          <button
+            onclick="limpiarTextos()"
+            tabindex="-1"
+            id="btnAceptar"
+            class="boton colorAmarillo"
+          >
             LIMPIAR
           </button>
         </div>
@@ -194,7 +199,7 @@
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 <div class="contenedorDashboard">
   <table class="estiloTabla">

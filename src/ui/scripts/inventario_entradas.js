@@ -611,7 +611,7 @@ function soloLetras(obj) {
 }
 
 function soloNumeros(obj) {
-  obj.value = obj.value.replace(/[^0-9,.]/g, "");
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
 }
 
 const quitarColorError = () => {

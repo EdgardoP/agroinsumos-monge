@@ -59,9 +59,21 @@ function soloLetras(obj) {
 }
 
 function soloNumeros(obj) {
-  obj.value = obj.value.replace(/[^0-9,.]/g, "");
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
 }
 
+const quitarColorError = () => {
+  productoNombre.parentNode.style.boxShadow = "none";
+  productoDescripcion.parentNode.style.boxShadow = "none";
+  productoProveedor.parentNode.style.boxShadow = "none";
+  productoColor.parentNode.style.boxShadow = "none";
+  productoCategoria.parentNode.style.boxShadow = "none";
+  lotePresentacion.parentNode.style.boxShadow = "none";
+  productoFechaVencimiento.parentNode.style.boxShadow = "none";
+  loteValorUnitarioCompra.parentNode.style.boxShadow = "none";
+  loteValorUnitarioVenta.parentNode.style.boxShadow = "none";
+  loteCantidad.parentNode.style.boxShadow = "none";
+};
 const validarNuevoProducto = () => {
   if (
     productoNombre.value != "" &&
@@ -69,7 +81,7 @@ const validarNuevoProducto = () => {
     productoProveedor.value != "0" &&
     productoColor.value != "0" &&
     productoCategoria.value != "0" &&
-    lotePresentacion.value != "0" &&
+    lotePresentacion.value != "-1" &&
     productoFechaVencimiento.value != "" &&
     loteValorUnitarioCompra.value != "" &&
     loteValorUnitarioVenta.value != "" &&
@@ -108,11 +120,35 @@ const validarNuevoProducto = () => {
     } else {
       productoCategoria.parentNode.style.boxShadow = "none";
     }
-    if (lotePresentacion.value == "0") {
+    if (lotePresentacion.value == "-1") {
       lotePresentacion.parentNode.style.boxShadow =
         "rgba(255, 0, 0, 0.563) 3px 2px 5px";
     } else {
       lotePresentacion.parentNode.style.boxShadow = "none";
+    }
+    if (productoFechaVencimiento.value == "") {
+      productoFechaVencimiento.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoFechaVencimiento.parentNode.style.boxShadow = "none";
+    }
+    if (loteValorUnitarioCompra.value == "") {
+      loteValorUnitarioCompra.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      loteValorUnitarioCompra.parentNode.style.boxShadow = "none";
+    }
+    if (loteValorUnitarioVenta.value == "") {
+      loteValorUnitarioVenta.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      loteValorUnitarioVenta.parentNode.style.boxShadow = "none";
+    }
+    if (loteCantidad.value == "") {
+      loteCantidad.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      loteCantidad.parentNode.style.boxShadow = "none";
     }
   }
 };
@@ -207,6 +243,7 @@ const agregarFilasProductos = async () => {
 };
 
 const limpiarTextos = () => {
+  quitarColorError();
   productoNombre.value = "";
   productoDescripcion.value = "";
   productoProveedor.value = "0";
@@ -248,38 +285,49 @@ const modificarFila = () => {
 
 const nuevoProducto = async () => {
   let filasElementos = document.getElementsByClassName("filasElementos");
-  for (let index = 0; index < filasElementos.length; index++) {
-    let filasDatos = {};
-    let datos = [];
-    let filasLote = [];
-    let lote = [];
-    let nombreP = filasElementos[index].children[1].innerHTML.trim();
-    let presentacionP = filasElementos[index].children[2].innerHTML.trim();
-    let descripcionP = filasElementos[index].children[3].innerHTML.trim();
-    let fechaVencimientoP = filasElementos[index].children[4].innerHTML.trim();
-    let categoriaP = filasElementos[index].children[5].innerHTML.trim();
-    let colorP = filasElementos[index].children[6].innerHTML.trim();
-    let proveedorP = filasElementos[index].children[7].innerHTML.trim();
-    let valorCompra = filasElementos[index].children[8].innerHTML.trim();
-    let valorVenta = filasElementos[index].children[9].innerHTML.trim();
-    let cantidadP = filasElementos[index].children[10].innerHTML.trim();
-    let fechaHoy = obtenerFecha("YYYY/MM/DD");
-    filasDatos = {
-      producto_nombre: nombreP,
-      producto_descripcion: descripcionP,
-      producto_proveedor_fk: proveedorP,
-      producto_color: colorP,
-      producto_categoria_fk: categoriaP,
-    };
-    filasLote = {
-      lote_cantidad: cantidadP,
-      lote_valor_unitario_compra: valorCompra,
-      lote_valor_unitario_venta: valorVenta,
-      lote_presentacion: presentacionP,
-      lote_ultima_actualizacion: fechaHoy,
-      lote_fecha_vencimiento: fechaVencimientoP,
-    };
-    await ipcRenderer.invoke("nuevoProductoMultiple", filasDatos, filasLote);
+  if (filasElementos.length === 0) {
+    console.log("No has agregado nada aun");
+    tablaEntradas.parentNode.parentNode.classList.add("tablaTransicion");
+    tablaEntradas.parentNode.parentNode.style.backgroundColor = "#d0393996";
+    setTimeout(() => {
+      tablaEntradas.parentNode.parentNode.style.backgroundColor = "#fff";
+    }, "1000");
+  } else {
+    for (let index = 0; index < filasElementos.length; index++) {
+      let filasDatos = {};
+      let datos = [];
+      let filasLote = [];
+      let lote = [];
+      let nombreP = filasElementos[index].children[1].innerHTML.trim();
+      let presentacionP = filasElementos[index].children[2].innerHTML.trim();
+      let descripcionP = filasElementos[index].children[3].innerHTML.trim();
+      let fechaVencimientoP =
+        filasElementos[index].children[4].innerHTML.trim();
+      let categoriaP = filasElementos[index].children[5].innerHTML.trim();
+      let colorP = filasElementos[index].children[6].innerHTML.trim();
+      let proveedorP = filasElementos[index].children[7].innerHTML.trim();
+      let valorCompra = filasElementos[index].children[8].innerHTML.trim();
+      let valorVenta = filasElementos[index].children[9].innerHTML.trim();
+      let cantidadP = filasElementos[index].children[10].innerHTML.trim();
+      let fechaHoy = obtenerFecha("YYYY/MM/DD");
+      filasDatos = {
+        producto_nombre: nombreP,
+        producto_descripcion: descripcionP,
+        producto_proveedor_fk: proveedorP,
+        producto_color: colorP,
+        producto_categoria_fk: categoriaP,
+      };
+      filasLote = {
+        lote_cantidad: cantidadP,
+        lote_valor_unitario_compra: valorCompra,
+        lote_valor_unitario_venta: valorVenta,
+        lote_presentacion: presentacionP,
+        lote_ultima_actualizacion: fechaHoy,
+        lote_fecha_vencimiento: fechaVencimientoP,
+        lote_estado: "Activo",
+      };
+      await ipcRenderer.invoke("nuevoProductoMultiple", filasDatos, filasLote);
+    }
   }
 };
 

@@ -48,7 +48,7 @@ function soloLetras(obj) {
 }
 
 function soloNumeros(obj) {
-  obj.value = obj.value.replace(/[^0-9,.]/g, "");
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
 }
 //Funcion para obtener la fecha del sistema
 const obtenerFecha = (formato) => {

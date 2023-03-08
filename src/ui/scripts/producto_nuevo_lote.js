@@ -105,6 +105,21 @@ const agregarFilasProductos = async () => {
   limpiarTextos();
 };
 
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
+}
+
+const validar = () => {
+  if (
+    idProducto.value != "" &&
+    productoNombre.value != "" &&
+    loteValorUnitarioCompra.value != "" &&
+    (loteValorUnitarioVenta.value != productoFechaVencimiento) != "" &&
+    loteCantidad.value != ""
+  ) {
+  }
+};
+
 const limpiarTextos = () => {
   idProducto.value = "";
   productoNombre.value = "";

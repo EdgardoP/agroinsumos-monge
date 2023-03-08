@@ -224,8 +224,13 @@ const modificarProducto = (obj) => {
   db.query(query, (error, results, productos) => {
     if (error) {
       console.log(error);
+      notificacion(
+        "Ha ocurrido un error",
+        "No se ha podido actualizar este producto"
+      );
     } else {
       console.log(results);
+      notificacion("Actualizacion Exitosa", "Se ha modificado un producto");
     }
   });
 };

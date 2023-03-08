@@ -98,7 +98,7 @@ ipcRenderer.on("documento_historial_salida", (event, results, id) => {
       ${element.lote_presentacion}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      L.${element.lote_valor_unitario_venta}
+      L.${parseInt(element.lote_valor_unitario_venta).toFixed(2)}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
       ${element.salida_cantidad}
@@ -107,7 +107,7 @@ ipcRenderer.on("documento_historial_salida", (event, results, id) => {
       ${element.salida_tipo_pago}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      L.${element.sub_total}
+      L.${parseInt(element.sub_total).toFixed(2)}
       </td>
     </tr>`;
   });
@@ -121,9 +121,9 @@ ipcRenderer.on("documento_historial_salida", (event, results, id) => {
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px">Total:</td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong>L. ${formatDinero(
+    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong>L. ${parseInt(
       totalSubTotales
-    )}</strong></td>
+    ).toFixed(2)}</strong></td>
     </tr>
     `;
 });

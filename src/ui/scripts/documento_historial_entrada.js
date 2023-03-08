@@ -100,7 +100,7 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
       ${element.lote_presentacion}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      ${element.lote_valor_unitario_compra}
+      L. ${parseInt(element.lote_valor_unitario_compra).toFixed(2)}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
       ${element.entrada_cantidad_ingresar}
@@ -109,10 +109,10 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
       ${element.entrada_tipo_pago}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      ${element.entrada_otros_gastos}
+      L. ${parseInt(element.entrada_otros_gastos).toFixed(2)}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      ${element.sub_total}
+      L. ${parseInt(element.sub_total).toFixed(2)}
       </td>
     </tr>`;
   });
@@ -126,8 +126,12 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong> L. ${totalOtrosGastos} </strong></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong>L. ${totalSubTotales}</strong></td>
+    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong> L. ${parseInt(
+      totalOtrosGastos
+    ).toFixed(2)} </strong></td>
+    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong>L. ${parseInt(
+      totalSubTotales
+    ).toFixed(2)}</strong></td>
     </tr>
     <tr class = "filas">
     <td style="min-width: 20px; max-width: 20px; width: 20px"></td>
@@ -138,9 +142,9 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px">Total:</td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"> <strong>L. ${formatDinero(
+    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"> <strong>L. ${parseInt(
       totalOtrosGastos + totalSubTotales
-    )}</strong></td>
+    ).toFixed(2)}</strong></td>
     </tr>
     `;
   //   tablaEntradas.innerHTML += plantillaTotales;

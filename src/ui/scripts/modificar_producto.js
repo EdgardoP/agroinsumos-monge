@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   obtenerCategorias();
   autocomplete(productoNombre, listaDeProductosNombre);
   autocomplete(idProducto, listaDeProductosId);
+  productoNombre.focus();
 });
 
 let listaDeProductosRaw = [];
@@ -36,13 +37,11 @@ ipcRenderer.on("informacion_productos", (event, results) => {
         " " +
         element.producto_nombre +
         " " +
-        element.lote_presentacion +
-        " L." +
-        element.lote_valor_unitario_venta +
-        " Stock: " +
-        element.lote_cantidad
+        element.producto_descripcion
     );
-    listaDeProductosNombre.push(element.producto_nombre + " ");
+    listaDeProductosNombre.push(
+      element.producto_nombre + " " + element.producto_descripcion + " "
+    );
   });
 });
 
@@ -52,6 +51,7 @@ const limpiarTextos = () => {
   productoDescripcion.value = "";
   productoColor.value = "%";
   producto_categoria.value = "0";
+  quitarColorError();
 };
 
 let listaDeCategoriasRaw = [];
@@ -148,7 +148,66 @@ function autocomplete(inp, arr) {
     closeAllLists(e.target);
   });
 }
+const validar = () => {
+  if (
+    idProducto.value != "" &&
+    productoNombre.value != "" &&
+    productoDescripcion.value != "" &&
+    producto_proveedor_fk.value != "%" &&
+    productoColor.value != "%" &&
+    producto_categoria.value != "0"
+  ) {
+    quitarColorError();
+    modificarProducto();
+    limpiarTextos();
+  } else {
+    if (idProducto.value == "") {
+      idProducto.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      idProducto.parentNode.style.boxShadow = "none";
+    }
+    if (productoNombre.value == "") {
+      productoNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoNombre.parentNode.style.boxShadow = "none";
+    }
+    if (productoDescripcion.value == "") {
+      productoDescripcion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoDescripcion.parentNode.style.boxShadow = "none";
+    }
+    if (producto_proveedor_fk.value == "%") {
+      producto_proveedor_fk.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      producto_proveedor_fk.parentNode.style.boxShadow = "none";
+    }
+    if (productoColor.value == "%") {
+      productoColor.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      productoColor.parentNode.style.boxShadow = "none";
+    }
+    if (producto_categoria.value == "0") {
+      producto_categoria.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      producto_categoria.parentNode.style.boxShadow = "none";
+    }
+  }
+};
 
+const quitarColorError = () => {
+  idProducto.parentNode.style.boxShadow = "none";
+  productoNombre.parentNode.style.boxShadow = "none";
+  productoDescripcion.parentNode.style.boxShadow = "none";
+  producto_proveedor_fk.parentNode.style.boxShadow = "none";
+  productoColor.parentNode.style.boxShadow = "none";
+  producto_categoria.parentNode.style.boxShadow = "none";
+};
 const modificarProducto = async () => {
   let obj = {
     producto_id: idProducto.value,

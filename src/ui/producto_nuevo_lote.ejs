@@ -17,7 +17,8 @@
               name="idProducto"
               id="idProducto"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="1"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -31,7 +32,7 @@
               name="productoNombre"
               id="productoNombre"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="2"
             />
           </div>
         </div>
@@ -46,6 +47,7 @@
               id="productoDescripcion"
               class="estiloInputLogin"
               tabindex="-1"
+              disabled
             />
           </div>
         </div>
@@ -59,6 +61,7 @@
               id="lotePresentacion"
               style="width: 15vh"
               tabindex="4"
+              disabled
             >
               <option value="-1">Seleccione</option>
               <option value="Caja">Caja</option>
@@ -81,7 +84,8 @@
               name="loteValorUnitarioCompra"
               id="loteValorUnitarioCompra"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="3"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -95,7 +99,8 @@
               name="loteValorUnitarioVenta"
               id="loteValorUnitarioVenta"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="4"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -109,7 +114,7 @@
               name="productoFechaVencimiento"
               id="productoFechaVencimiento"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="5"
             />
           </div>
         </div>
@@ -123,7 +128,8 @@
               name="loteCantidad"
               id="loteCantidad"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="6"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -133,7 +139,7 @@
       <div class="flexColumn space-around">
         <div class="flexColumn">
           <button
-            tabindex="5"
+            tabindex="-1"
             id="btnAceptar"
             class="boton colorAmarillo"
             onclick="limpiarTextos();event.preventDefault()"
@@ -144,7 +150,7 @@
         <div class="flexColumn">
           <button
             onclick="agregarFilasProductos();event.preventDefault()"
-            tabindex="5"
+            tabindex="7"
             id="btnAceptar"
             class="boton colorSecundario"
           >
@@ -197,7 +203,7 @@
     <div class="flexRow">
       <button
         style="margin-right: 10px"
-        tabindex="6"
+        tabindex="-1"
         id="btnLimpiar"
         class="boton colorAmarillo"
         onclick="limpiarTextos()"
@@ -206,7 +212,7 @@
       </button>
       <button
         onclick="nuevoLote();event.preventDefault()"
-        tabindex="5"
+        tabindex="-1"
         id="btnAceptar"
         class="boton colorSecundario"
       >

@@ -4,7 +4,7 @@
   <h3>Productos / Derivar un producto</h3>
 </div>
 <div class="contenedorDashboard" style="overflow-x: inherit">
-  <form action="" class="flexRow">
+  <div class="flexRow">
     <div class="flexColumn">
       <div class="flexRow" style="align-items: center">
         <div class="cajaInput autocomplete">
@@ -17,7 +17,8 @@
               name="productoId"
               id="productoId"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="1"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -31,7 +32,7 @@
               name="productoNombre"
               id="productoNombre"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="2"
             />
           </div>
         </div>
@@ -46,6 +47,7 @@
               id="loteId"
               class="estiloInputLogin"
               tabindex="-1"
+              readonly
             />
           </div>
         </div>
@@ -60,6 +62,7 @@
               id="productoDescripcion"
               class="estiloInputLogin"
               tabindex="-1"
+              readonly
             />
           </div>
         </div>
@@ -74,6 +77,7 @@
               id="productoFechaVencimiento"
               class="estiloInputLogin"
               tabindex="-1"
+              readonly
             />
           </div>
         </div>
@@ -88,13 +92,20 @@
               name="productoPresentacion"
               id="productoPresentacion"
               style="width: 15vh"
-              tabindex="4"
+              tabindex="-1"
             >
               <option value="-1">Seleccione</option>
-              <option value="Caja">Caja</option>
-              <option value="Botella">Botella</option>
+              <option value="Unidad">Unidad</option>
               <option value="Saco">Saco</option>
               <option value="Libra">Libra</option>
+              <option value="Caja">Caja</option>
+              <option value="Frasco">Frasco</option>
+              <option value="Botella">Botella</option>
+              <option value="Bolsa">Bolsa</option>
+              <option value="Lata">Lata</option>
+              <option value="Jeringa">Jeringa</option>
+              <option value="mL(Mililitros)">mL(Mililitros)</option>
+              <option value="Tabletas">Tabletas</option>
               <option value="Otro">Otro</option>
             </select>
           </div>
@@ -112,6 +123,7 @@
               id="productoValorUnitarioCompra"
               class="estiloInputLogin"
               tabindex="-1"
+              readonly
             />
           </div>
         </div>
@@ -126,6 +138,7 @@
               id="productoValorUnitarioVenta"
               class="estiloInputLogin"
               tabindex="-1"
+              readonly
             />
           </div>
         </div>
@@ -134,21 +147,23 @@
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
+              onfocus="evaluarStock(this.value)"
               style="width: 15vh"
               type="text"
               name="productoCantidad"
               id="productoCantidad"
               class="estiloInputLogin"
               tabindex="-1"
+              readonly
             />
           </div>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 <div class="contenedorDashboard">
-  <form action="" class="flexRow">
+  <div action="" class="flexRow">
     <div class="flexColumn">
       <div class="flexRow" style="align-items: center">
         <div class="cajaInput">
@@ -161,8 +176,8 @@
               name="cantidadRestar"
               id="cantidadRestar"
               class="estiloInputLogin"
-              tabindex="-1"
-              onkeyup="restarCantidad(this.value)"
+              tabindex="3"
+              onkeyup="restarCantidad(this.value);soloNumeros(this)"
             />
           </div>
         </div>
@@ -176,8 +191,8 @@
               name="cantidadDerivado"
               id="cantidadDerivado"
               class="estiloInputLogin"
-              tabindex="-1"
-              onkeyup="calcularValorCompra(this.value)"
+              tabindex="4"
+              onkeyup="calcularValorCompra(this.value);soloNumeros(this)"
             />
           </div>
         </div>
@@ -190,13 +205,20 @@
               name="nuevaPresentacion"
               id="nuevaPresentacion"
               style="width: 15vh"
-              tabindex="4"
+              tabindex="5"
             >
               <option value="-1">Seleccione</option>
-              <option value="Caja">Caja</option>
-              <option value="Botella">Botella</option>
+              <option value="Unidad">Unidad</option>
               <option value="Saco">Saco</option>
               <option value="Libra">Libra</option>
+              <option value="Caja">Caja</option>
+              <option value="Frasco">Frasco</option>
+              <option value="Botella">Botella</option>
+              <option value="Bolsa">Bolsa</option>
+              <option value="Lata">Lata</option>
+              <option value="Jeringa">Jeringa</option>
+              <option value="mL(Mililitros)">mL(Mililitros)</option>
+              <option value="Tabletas">Tabletas</option>
               <option value="Otro">Otro</option>
             </select>
           </div>
@@ -212,6 +234,7 @@
               id="derivadoValorCompra"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -225,7 +248,8 @@
               name="derivadoValorVenta"
               id="derivadoValorVenta"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="6"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -236,15 +260,15 @@
         <div class="flexColumn">
           <button
             onclick="limpiar();event.preventDefault()"
-            tabindex="5"
+            tabindex="-1"
             id="btnAceptar"
             class="boton colorAmarillo"
           >
             LIMPIAR
           </button>
           <button
-            onclick="agregarFilasDerivados();event.preventDefault()"
-            tabindex="5"
+            onclick="validar();event.preventDefault()"
+            tabindex="7"
             id="btnAceptar"
             class="boton colorSecundario"
           >
@@ -253,7 +277,7 @@
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 <div class="contenedorDashboard">
   <table class="estiloTabla">
@@ -299,16 +323,16 @@
     <div class="flexRow">
       <button
         style="margin-right: 10px"
-        tabindex="6"
+        tabindex="-1"
         id="btnLimpiar"
         class="boton colorAmarillo"
-        onclick="limpiarTextos()"
+        onclick="location.reload();"
       >
         CANCELAR
       </button>
       <button
         onclick="nuevoDerivado();event.preventDefault()"
-        tabindex="5"
+        tabindex="-1"
         id="btnAceptar"
         class="boton colorSecundario"
       >
@@ -317,5 +341,6 @@
     </div>
   </div>
 </div>
+<%- include('./partials/modal_inventario_salida.ejs') %>
 <script src="scripts/producto_derivado.js"></script>
 <%- include('./partials/footer.ejs') %>

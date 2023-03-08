@@ -18,7 +18,7 @@ const cargarEntradas = async () => {
 };
 
 function soloNumeros(obj) {
-  obj.value = obj.value.replace(/[^0-9,.]/g, "");
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
 }
 
 const convertirFecha = (fecha) => {
@@ -60,7 +60,7 @@ ipcRenderer.on("historial_entradas", (event, results) => {
   documentos.forEach((element, index, array) => {
     i++;
     plantilla += `
-    <tr>
+    <tr class = "filasElementos">
       <td style="max-width: 25vh; min-width: 25vh; width: 25vh">${i}</td>
       <td style="max-width: 25vh; min-width: 25vh; width: 25vh"><strong>${
         element.numero_serie
@@ -83,4 +83,18 @@ ipcRenderer.on("historial_entradas", (event, results) => {
     </tr>`;
   });
   tablaEntradas.innerHTML += plantilla;
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
 });
+
+const agregarColorFilas = (filas) => {
+  for (let index = 0; index < filas.length; index++) {
+    filas[index].classList.remove("filasColor");
+  }
+
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
+};

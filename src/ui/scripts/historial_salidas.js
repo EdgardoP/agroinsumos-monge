@@ -52,7 +52,7 @@ const filtrarDocumentos = async () => {
 };
 
 function soloNumeros(obj) {
-  obj.value = obj.value.replace(/[^0-9,.]/g, "");
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
 }
 
 let i = 0;
