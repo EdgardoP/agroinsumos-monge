@@ -73,6 +73,62 @@ const nuevoProveedor = async () => {
   window.location.reload();
 };
 
+const buscarListaProveedores = () => {
+  let valor = buscarProveedor.value;
+  let filasTabla = document.getElementsByClassName("filas");
+  // console.log(filasTabla);
+  for (let index = 0; index < filasTabla.length; index++) {
+    let claseFilas = filasTabla[index].className;
+    let valorEnFila = claseFilas.split(" ");
+    let regex = new RegExp(valor, "i");
+    let busqueda = valorEnFila.filter((element) => regex.test(element));
+    if (busqueda.length > 0) {
+      filasTabla[index].style.display = "initial";
+    } else {
+      filasTabla[index].style.display = "none";
+    }
+    console.log(busqueda);
+  }
+};
+
+const limpiar = () => {
+  nuevo_proveedor_nombre.value = "";
+  nuevo_proveedor_numero.value = "";
+};
+
+function soloLetras(obj) {
+  obj.value = obj.value.replace(/[0-9]/g, "");
+}
+
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
+}
+
+const validar = () => {
+  if (
+    nuevo_proveedor_nombre.value != "" &&
+    nuevo_proveedor_numero.value != ""
+  ) {
+    nuevoProveedor();
+
+    location.href = "#modal_nuevo_producto";
+  } else {
+    if (nuevo_proveedor_nombre.value == "") {
+      nuevo_proveedor_nombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nuevo_proveedor_nombre.parentNode.style.boxShadow = "none";
+    }
+
+    if (nuevo_proveedor_numero.value == "") {
+      nuevo_proveedor_numero.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nuevo_proveedor_numero.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
 const obtenerProveedores = async () => {
   await ipcRenderer.invoke("obtenerProveedores");
 };
@@ -119,7 +175,7 @@ ipcRenderer.on("documentos_historial_proveedores", (event, results) => {
   documentos.forEach((element, index, array) => {
     i++;
     plantilla += `
-    <tr>
+    <tr class = "filas ${element.proveedor_nombre} filasElementos">
       <td style="max-width: 10vh; min-width: 10vh; width: 10vh">${i}</td>
       <td style="max-width: 10vh; min-width: 10vh; width: 10vh">${
         element.proveedor_id
@@ -166,4 +222,23 @@ ipcRenderer.on("documentos_historial_proveedores", (event, results) => {
     </tr>`;
   });
   tablaEntradas.innerHTML += plantilla;
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
 });
+
+const agregarColorFilas = (filas, fila, cantidad) => {
+  console.log(cantidad);
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
+
+  if (cantidad <= 0) {
+    fila.children[6].classList.add("filasColorAgotado");
+  }
+
+  if (cantidad <= 10 && cantidad > 0) {
+    fila.children[6].classList.add("filasColorPocasExistencias");
+  }
+};

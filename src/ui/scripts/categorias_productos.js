@@ -58,6 +58,43 @@ const modificarCategoria = (id) => {
   categoria_descripcion.value = element.categoria_descripcion;
 };
 
+function soloLetras(obj) {
+  obj.value = obj.value.replace(/[0-9]/g, "");
+}
+
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
+}
+
+const validarModificar = () => {
+  if (
+    categoria_id.value != "" &&
+    categoria_nombre.value != "" &&
+    categoria_descripcion.value != ""
+  ) {
+    guardarModificarCategoria();
+    quitarColorError();
+  } else {
+    if (categoria_id.value == "") {
+      categoria_id.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      categoria_id.parentNode.style.boxShadow = "none";
+    }
+    if (categoria_nombre.value == "") {
+      categoria_nombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      categoria_nombre.parentNode.style.boxShadow = "none";
+    }
+    if (categoria_descripcion.value == "") {
+      categoria_descripcion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      categoria_descripcion.parentNode.style.boxShadow = "none";
+    }
+  }
+};
 const guardarModificarCategoria = async () => {
   let obj = {
     categoria_id: categoria_id.value,
@@ -65,10 +102,12 @@ const guardarModificarCategoria = async () => {
     categoria_descripcion: categoria_descripcion.value,
   };
   await ipcRenderer.invoke("modificarCategoria", obj);
+  location.reload();
 };
 
 const eliminarCategoria = async (id) => {
   await ipcRenderer.invoke("eliminarCategoria", id);
+  location.reload();
 };
 
 const limpiar = () => {
@@ -77,12 +116,48 @@ const limpiar = () => {
   categoria_descripcion.value = "";
 };
 
+const quitarColorError = () => {
+  categoria_id.parentNode.style.boxShadow = "none";
+  categoria_nombre.parentNode.style.boxShadow = "none";
+  categoria_descripcion.parentNode.style.boxShadow = "none";
+};
+const validar = () => {
+  if (
+    categoria_id.value == "" &&
+    categoria_nombre.value != "" &&
+    categoria_descripcion.value != ""
+  ) {
+    nuevaCategoria();
+    quitarColorError();
+  } else {
+    if (categoria_id.value != "") {
+      categoria_id.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      categoria_id.parentNode.style.boxShadow = "none";
+    }
+    if (categoria_nombre.value == "") {
+      categoria_nombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      categoria_nombre.parentNode.style.boxShadow = "none";
+    }
+    if (categoria_descripcion.value == "") {
+      categoria_descripcion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      categoria_descripcion.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
 const nuevaCategoria = async () => {
   const obj = {
     categoria_nombre: categoria_nombre.value,
     categoria_descripcion: categoria_descripcion.value,
   };
   await ipcRenderer.invoke("nuevaCategoria", obj);
+  location.reload();
 };
 
 let i = 0;

@@ -19,6 +19,7 @@
                     id="nuevo_proveedor_nombre"
                     class="estiloInputLogin"
                     tabindex="-1"
+                    onkeyup="soloLetras()"
                   />
                 </div>
               </div>
@@ -33,6 +34,7 @@
                     id="nuevo_proveedor_numero"
                     class="estiloInputLogin"
                     tabindex="-1"
+                    onkeyup="soloNumeros()"
                   />
                 </div>
               </div>
@@ -45,7 +47,7 @@
                   tabindex="-1"
                   id="btnNuevoLote"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevoProveedor() ;location.href= '#modal_nuevo_producto';event.preventDefault()"
+                  onclick="validar() ;event.preventDefault()"
                 >
                   REGISTRAR NUEVO PROVEEDOR
                 </button>

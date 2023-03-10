@@ -70,6 +70,50 @@ function formatDinero(numero) {
   return numero.toLocaleString();
 }
 
+const limpiar = () => {
+  detallesAportacion.value = "";
+  formaPago.value = "-1";
+  cantidadAporte.value = "";
+  quitarColorError();
+};
+
+const quitarColorError = () => {
+  detallesAportacion.parentNode.style.boxShadow = "none";
+  formaPago.parentNode.style.boxShadow = "none";
+  cantidadAporte.parentNode.style.boxShadow = "none";
+};
+
+const validar = () => {
+  if (
+    detallesAportacion.value != "" &&
+    formaPago.value != "-1" &&
+    cantidadAporte.value != ""
+  ) {
+    nuevaAportacion();
+    limpiar();
+    location.href = "#";
+  } else {
+    if (detallesAportacion.value == "") {
+      detallesAportacion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      detallesAportacion.parentNode.style.boxShadow = "none";
+    }
+    if (formaPago.value == "-1") {
+      formaPago.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      formaPago.parentNode.style.boxShadow = "none";
+    }
+    if (cantidadAporte.value == "") {
+      cantidadAporte.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      cantidadAporte.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
 const nuevaAportacion = async () => {
   let saldoAnterior = parseInt(saldoActual.innerHTML);
   console.log(saldoAnterior);
@@ -87,8 +131,25 @@ const nuevaAportacion = async () => {
     historial_proveedor_tipo_aportacion: formaPago.value,
   };
   console.log(obj);
-  // await ipcRenderer.invoke("modificarMultiplesLotes", obj);
+  await ipcRenderer.invoke("insertarAportacionProveedor", obj);
+  let fechaInicial = "1999-01-01";
+  let fechaFinal = "2050-01-01";
+  await ipcRenderer.invoke(
+    "historial_proveedor",
+    idProveedor,
+    fechaInicial,
+    fechaFinal
+  );
+  window.location = "proveedores_historial_documento.ejs";
 };
+
+function soloLetras(obj) {
+  obj.value = obj.value.replace(/[0-9]/g, "");
+}
+
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
+}
 
 const visualizarDocumento = async () => {
   let fechaUno = fechaInicial.value;
@@ -119,7 +180,7 @@ const renderizar = () => {
         element.historial_proveedor_saldo_nuevo
       )}`;
       plantilla += `
-        <tr>
+        <tr class = "filasElementos">
             <td style="max-width: 5vh; min-width: 5vh; width: 5vh">${index}</td>
             <td style="max-width: 10vh; min-width: 10vh; width: 10vh">
               ${convertirFecha(element.historial_proveedor_fecha)}
@@ -142,7 +203,26 @@ const renderizar = () => {
           </tr>`;
     });
     tablaEntradas.innerHTML += plantilla;
+    let filasElementos = document.getElementsByClassName("filasElementos");
+    agregarColorFilas(filasElementos);
   });
+};
+
+const agregarColorFilas = (filas, fila, cantidad) => {
+  console.log(cantidad);
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
+
+  if (cantidad <= 0) {
+    fila.children[6].classList.add("filasColorAgotado");
+  }
+
+  if (cantidad <= 10 && cantidad > 0) {
+    fila.children[6].classList.add("filasColorPocasExistencias");
+  }
 };
 
 var XLSX = require("xlsx");

@@ -17,7 +17,7 @@
               name="desdeLaFecha"
               id="desdeLaFecha"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="1"
             />
           </div>
         </div>
@@ -31,7 +31,7 @@
               name="hastaLaFecha"
               id="hastaLaFecha"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="2"
             />
           </div>
         </div>
@@ -45,7 +45,7 @@
               name="nombreEmpleado"
               id="nombreEmpleado"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="3"
             />
           </div>
         </div>
@@ -59,7 +59,8 @@
               name="sueldoBase"
               id="sueldoBase"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="4"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -75,7 +76,8 @@
               name="horasExtra"
               id="horasExtra"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="5"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -89,7 +91,8 @@
               name="bonificaciones"
               id="bonificaciones"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="6"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -103,7 +106,8 @@
               name="deducciones"
               id="deducciones"
               class="estiloInputLogin"
-              tabindex="-1"
+              tabindex="7"
+              onkeyup="soloNumeros(this)"
             />
           </div>
         </div>
@@ -112,14 +116,19 @@
     <div class="botonesDashboard">
       <div class="flexColumn space-around">
         <div class="flexColumn">
-          <button tabindex="5" id="btnAceptar" class="boton colorAmarillo">
+          <button
+            onclick="limpiarTextos();event.preventDefault()"
+            tabindex="-1"
+            id="btnAceptar"
+            class="boton colorAmarillo"
+          >
             LIMPIAR
           </button>
         </div>
         <div class="flexColumn">
           <button
-            onclick="agregarFilasProductos();event.preventDefault()"
-            tabindex="5"
+            onclick="validar();event.preventDefault()"
+            tabindex="8"
             id="btnAceptar"
             class="boton colorSecundario"
           >
@@ -171,7 +180,7 @@
     <div class="flexRow">
       <button
         style="margin-right: 10px"
-        tabindex="6"
+        tabindex="-1"
         id="btnLimpiar"
         class="boton colorAmarillo"
         onclick="limpiarTextos()"
@@ -180,7 +189,7 @@
       </button>
       <button
         onclick="nuevoProducto();event.preventDefault()"
-        tabindex="5"
+        tabindex="-1"
         id="btnAceptar"
         class="boton colorSecundario"
       >

@@ -64,10 +64,17 @@
               disabled
             >
               <option value="-1">Seleccione</option>
-              <option value="Caja">Caja</option>
-              <option value="Botella">Botella</option>
+              <option value="Unidad">Unidad</option>
               <option value="Saco">Saco</option>
               <option value="Libra">Libra</option>
+              <option value="Caja">Caja</option>
+              <option value="Frasco">Frasco</option>
+              <option value="Botella">Botella</option>
+              <option value="Bolsa">Bolsa</option>
+              <option value="Lata">Lata</option>
+              <option value="Jeringa">Jeringa</option>
+              <option value="mL(Mililitros)">mL(Mililitros)</option>
+              <option value="Tabletas">Tabletas</option>
               <option value="Otro">Otro</option>
             </select>
           </div>
@@ -149,7 +156,7 @@
         </div>
         <div class="flexColumn">
           <button
-            onclick="agregarFilasProductos();event.preventDefault()"
+            onclick="validar();event.preventDefault()"
             tabindex="7"
             id="btnAceptar"
             class="boton colorSecundario"

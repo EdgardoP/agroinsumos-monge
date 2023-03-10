@@ -50,6 +50,7 @@
                     id="cantidad_aportacion"
                     class="estiloInputLogin"
                     tabindex="-1"
+                    onkeyup="soloNumeros(this)"
                   />
                 </div>
               </div>
@@ -62,7 +63,7 @@
                   tabindex="-1"
                   id="btnNuevoLote"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevaAportacion();location.href= '#modal_nuevo_producto';event.preventDefault()"
+                  onclick="validar();event.preventDefault()"
                 >
                   REGISTRAR NUEVO APORTE
                 </button>
@@ -70,7 +71,7 @@
                   tabindex="-1"
                   id="btnLimpiar"
                   class="boton colorRojo modal__close"
-                  onclick="location.href= '#modal_nuevo_producto';event.preventDefault()"
+                  onclick="location.href= '#';event.preventDefault()"
                 >
                   CANCELAR
                 </button>

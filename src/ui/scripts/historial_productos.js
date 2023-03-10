@@ -82,18 +82,18 @@ const filtroProductos = (parametro, seleccion) => {
 const buscarListaProducto = () => {
   let valor = buscarProducto.value;
   let filasTabla = document.getElementsByClassName("filas");
-  console.log(filasTabla);
+  // console.log(filasTabla);
   for (let index = 0; index < filasTabla.length; index++) {
     let claseFilas = filasTabla[index].className;
     let valorEnFila = claseFilas.split(" ");
-    console.log(valorEnFila[1]);
-    if (valorEnFila[1].indexOf(valor) > -1) {
-      console.log("Se encontro");
-      filasTabla[index].style.display = "initial";
+    let regex = new RegExp(valor, "i");
+    let busqueda = valorEnFila.filter((element) => regex.test(element));
+    if (busqueda.length > 0) {
+      filasTabla[index].style.display = "";
     } else {
-      console.log("No se encontro");
       filasTabla[index].style.display = "none";
     }
+    console.log(busqueda);
   }
 };
 
@@ -130,7 +130,7 @@ ipcRenderer.on("historial_de_productos", (event, results) => {
   let plantilla = "";
   productos.forEach((element) => {
     plantilla += `
-    <tr class = 'filas ${element.producto_nombre}'>
+    <tr class = 'filas ${element.producto_nombre} filasElementos' >
     <td style="min-width: 60px; max-width: 60px; width: 60px">${
       element.producto_id
     }</td>
@@ -171,6 +171,11 @@ ipcRenderer.on("historial_de_productos", (event, results) => {
   </tr>`;
     tablaEntradas.innerHTML = plantilla;
   });
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  for (let index = 0; index < filasElementos.length; index++) {
+    let cantidad = parseInt(filasElementos[index].children[6].innerHTML);
+    agregarColorFilas(filasElementos, filasElementos[index], cantidad);
+  }
   console.log(results);
 });
 
@@ -315,3 +320,20 @@ function autocomplete(inp, arr) {
     closeAllLists(e.target);
   });
 }
+
+const agregarColorFilas = (filas, fila, cantidad) => {
+  console.log(cantidad);
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
+
+  if (cantidad <= 0) {
+    fila.children[6].classList.add("filasColorAgotado");
+  }
+
+  if (cantidad <= 10 && cantidad > 0) {
+    fila.children[6].classList.add("filasColorPocasExistencias");
+  }
+};

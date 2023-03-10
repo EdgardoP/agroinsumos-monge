@@ -1,20 +1,5 @@
 const { ipcRenderer } = require("electron");
 
-// let productoNombre = document.getElementById("productoNombre");
-// let productoDescripcion = document.getElementById("productoDescripcion");
-// let productoProveedor = document.getElementById("productoProveedor");
-// let productoColor = document.getElementById("productoColor");
-// let productoCategoria = document.getElementById("productoCategoria");
-// let lotePresentacion = document.getElementById("lotePresentacion");
-// let productoFechaVencimiento = document.getElementById(
-//   "productoFechaVencimiento"
-// );
-// let loteValorUnitarioCompra = document.getElementById(
-//   "loteValorUnitarioCompra"
-// );
-// let loteValorUnitarioVenta = document.getElementById("loteValorUnitarioVenta");
-// let loteCantidad = document.getElementById("loteCantidad");
-// let tablaEntradas = document.getElementById("tablaEntradas");
 let idDocumento = Math.random() * (9999 - 1) + 1;
 let desdeLaFecha = document.getElementById("desdeLaFecha");
 let hastaLaFecha = document.getElementById("hastaLaFecha");
@@ -23,10 +8,7 @@ let sueldoBase = document.getElementById("sueldoBase");
 let horasExtra = document.getElementById("horasExtra");
 let bonificaciones = document.getElementById("bonificaciones");
 let deducciones = document.getElementById("deducciones");
-document.addEventListener("DOMContentLoaded", function () {
-  //   obtenerCategorias();
-  //   obtenerProveedores();
-});
+document.addEventListener("DOMContentLoaded", function () {});
 //Funcion para obtener la fecha del sistema
 const obtenerFecha = (formato) => {
   let nuevaFecha = Date.now();
@@ -60,89 +42,70 @@ const convertirFecha = (fecha) => {
   return fechaAnioMesDia;
 };
 
-//Funcion para cargar las categorias de la base de datos
-// const obtenerCategorias = async () => {
-//   await ipcRenderer.invoke("obtenerCategorias");
-// };
-
-// let listaDeCategoriasRaw = [];
-// ipcRenderer.on("lista_de_categorias", (event, results) => {
-//   let plantilla = "";
-//   listaDeCategoriasRaw = results[0];
-//   listaDeCategoriasRaw.forEach((element) => {
-//     plantilla += `<option value = ${element.categoria_id} > ${element.categoria_nombre}</option>`;
-//   });
-//   let nullOption = `<option value = 0>Seleccione</option>`;
-//   productoCategoria.innerHTML = nullOption + plantilla;
-// });
-
-// const obtenerProveedores = async () => {
-//   await ipcRenderer.invoke("obtenerProveedores");
-// };
-
-// let listaDeProveedoresRaw = [];
-// ipcRenderer.on("lista_de_proveedores", (event, results) => {
-//   let plantilla = "";
-//   listaDeProveedoresRaw = results[0];
-//   listaDeProveedoresRaw.forEach((element) => {
-//     plantilla += `<option value = ${element.proveedor_id} > ${element.proveedor_nombre}</option>`;
-//   });
-//   let nullOption = `<option value = 0>Seleccione</option>`;
-//   productoProveedor.innerHTML = nullOption + plantilla;
-// });
-
-// let cantidad_filas_ingresadas = 0;
 const agregarFilasProductos = async () => {
   let plantilla = "";
   plantilla += `
     <tr class = "filasElementos">
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
+        <td style="min-width: 160px; max-width: 160px; width: 160px">
           ${desdeLaFecha.value}
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
+        </td>
+        <td style="min-width: 160px; max-width: 160px; width: 160px">
           ${hastaLaFecha.value}
-        </th>
-        <th style="min-width: 260px; max-width: 260px; width: 260px">
+        </td>
+        <td style="min-width: 260px; max-width: 260px; width: 260px">
         ${nombreEmpleado.value}
-        </th>
-        <th style="min-width: 100px; max-width: 100px; width: 160px">
+        </td>
+        <td style="min-width: 160px; max-width: 160px; width: 160px">
           ${sueldoBase.value}
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
+        </td>
+        <td style="min-width: 160px; max-width: 160px; width: 160px">
           ${horasExtra.value}
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
+        </td>
+        <td style="min-width: 160px; max-width: 160px; width: 160px">
           ${bonificaciones.value}
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
+        </td>
+        <td style="min-width: 160px; max-width: 160px; width: 160px">
           ${deducciones.value}
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
+        </td>
+        <td style="min-width: 160px; max-width: 160px; width: 160px">
           ${
             parseInt(sueldoBase.value) +
             parseInt(bonificaciones.value) -
             parseInt(deducciones.value)
           }
-        </th>
+        </td>
         <td style="min-width: 130px; max-width: 130px; width: 130px">
-            <div>
+              <div>
                 <button 
-                    onclick="modificarFila();event.preventDefault()"
-                    class="accionesBoton colorSecundario">
-                    <img 
-                    src="icons/edit-button.png" alt="" />
-                    
+                  onclick="modificarFila();event.preventDefault()"
+                  class="accionesBoton colorSecundario">
+                  <img 
+                  src="icons/edit-button.png" alt="" />
                 </button>
                 <button 
-                    onclick="eliminarFila();event.preventDefault()"
-                    class="btnEliminarFila accionesBoton colorRojo">
-                    <img src="icons/cancel.png" alt="" />
+                  onclick="eliminarFila();event.preventDefault()"
+                  class="btnEliminarFila accionesBoton colorRojo">
+                  <img src="icons/cancel.png" alt="" />
                 </button>
-            </div>
+              </div>
         </td>
     </tr>`;
   tablaEntradas.innerHTML += plantilla;
   limpiarTextos();
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
+};
+
+const agregarColorFilas = (filas) => {
+  for (let index = 0; index < filas.length; index++) {
+    filas[index].classList.remove("filasColor");
+  }
+
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
 };
 
 const limpiarTextos = () => {
@@ -152,6 +115,7 @@ const limpiarTextos = () => {
   bonificaciones.value = "";
   deducciones.value = "";
   nombreEmpleado.focus();
+  quitarColorError();
 };
 
 const modificarFila = () => {
@@ -173,49 +137,125 @@ const modificarFila = () => {
   bonificaciones.value = bonificacionesP;
   deducciones.value = deduccionesP;
   index.remove();
+  agregarColorFilas(filasElementos);
+};
+
+const validar = () => {
+  if (
+    desdeLaFecha.value != "" &&
+    hastaLaFecha.value != "" &&
+    nombreEmpleado.value != "" &&
+    sueldoBase.value != "" &&
+    horasExtra.value != "" &&
+    bonificaciones.value != "" &&
+    deducciones.value != ""
+  ) {
+    agregarFilasProductos();
+    limpiarTextos();
+  } else {
+    if (desdeLaFecha.value == "") {
+      desdeLaFecha.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      desdeLaFecha.parentNode.style.boxShadow = "none";
+    }
+    if (hastaLaFecha.value == "") {
+      hastaLaFecha.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      hastaLaFecha.parentNode.style.boxShadow = "none";
+    }
+    if (nombreEmpleado.value == "") {
+      nombreEmpleado.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nombreEmpleado.parentNode.style.boxShadow = "none";
+    }
+    if (sueldoBase.value == "") {
+      sueldoBase.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      sueldoBase.parentNode.style.boxShadow = "none";
+    }
+    if (horasExtra.value == "") {
+      horasExtra.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      horasExtra.parentNode.style.boxShadow = "none";
+    }
+    if (bonificaciones.value == "") {
+      bonificaciones.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      bonificaciones.parentNode.style.boxShadow = "none";
+    }
+    if (deducciones.value == "") {
+      deducciones.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      deducciones.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
+const quitarColorError = () => {
+  desdeLaFecha.parentNode.style.boxShadow = "none";
+  hastaLaFecha.parentNode.style.boxShadow = "none";
+  nombreEmpleado.parentNode.style.boxShadow = "none";
+  sueldoBase.parentNode.style.boxShadow = "none";
+  horasExtra.parentNode.style.boxShadow = "none";
+  bonificaciones.parentNode.style.boxShadow = "none";
+  deducciones.parentNode.style.boxShadow = "none";
 };
 
 const nuevoProducto = async () => {
   let filasElementos = document.getElementsByClassName("filasElementos");
-  for (let index = 0; index < filasElementos.length; index++) {
-    let filasDatos = {};
-    // let datos = [];
-    let filasLote = [];
-    // let lote = [];
-    // let nombreP = filasElementos[index].children[1].innerHTML.trim();
-    // let presentacionP = filasElementos[index].children[2].innerHTML.trim();
-    // let descripcionP = filasElementos[index].children[3].innerHTML.trim();
-    // let fechaVencimientoP = filasElementos[index].children[4].innerHTML.trim();
-    // let categoriaP = filasElementos[index].children[5].innerHTML.trim();
-    // let colorP = filasElementos[index].children[6].innerHTML.trim();
-    // let proveedorP = filasElementos[index].children[7].innerHTML.trim();
-    // let valorCompra = filasElementos[index].children[8].innerHTML.trim();
-    // let valorVenta = filasElementos[index].children[9].innerHTML.trim();
-    // let cantidadP = filasElementos[index].children[10].innerHTML.trim();
-    let desdeLaFechaP = filasElementos[index].children[0].innerHTML.trim();
-    let hastaLaFechaP = filasElementos[index].children[1].innerHTML.trim();
-    let nombreEmp = filasElementos[index].children[2].innerHTML.trim();
-    let sueldoP = filasElementos[index].children[3].innerHTML.trim();
-    let horasExtraP = filasElementos[index].children[4].innerHTML.trim();
-    let bonificacionesP = filasElementos[index].children[5].innerHTML.trim();
-    let deduccionesP = filasElementos[index].children[6].innerHTML.trim();
+  if (filasElementos.length > 0) {
+    for (let index = 0; index < filasElementos.length; index++) {
+      let filasDatos = {};
+      let filasLote = [];
+      let desdeLaFechaP = filasElementos[index].children[0].innerHTML.trim();
+      let hastaLaFechaP = filasElementos[index].children[1].innerHTML.trim();
+      let nombreEmp = filasElementos[index].children[2].innerHTML.trim();
+      let sueldoP = filasElementos[index].children[3].innerHTML.trim();
+      let horasExtraP = filasElementos[index].children[4].innerHTML.trim();
+      let bonificacionesP = filasElementos[index].children[5].innerHTML.trim();
+      let deduccionesP = filasElementos[index].children[6].innerHTML.trim();
 
-    filasDatos = {
-      planilla_fecha_ini: desdeLaFechaP,
-      planilla_fecha_fin: hastaLaFechaP,
-      planilla_sueldo_base: sueldoP,
-      planilla_horas_extras: horasExtraP,
-      planilla_bonificaciones: bonificacionesP,
-      planilla_deducciones: deduccionesP,
-      planilla_usuario_fk: 1,
-      planilla_nombre_empleado: nombreEmp,
-      planilla_codigo: idDocumento,
-    };
-    await ipcRenderer.invoke("insertar_nueva_planilla", filasDatos);
+      filasDatos = {
+        planilla_fecha_ini: desdeLaFechaP,
+        planilla_fecha_fin: hastaLaFechaP,
+        planilla_sueldo_base: sueldoP,
+        planilla_horas_extras: horasExtraP,
+        planilla_bonificaciones: bonificacionesP,
+        planilla_deducciones: deduccionesP,
+        planilla_usuario_fk: 1,
+        planilla_nombre_empleado: nombreEmp,
+        planilla_codigo: idDocumento,
+      };
+      await ipcRenderer.invoke("insertar_nueva_planilla", filasDatos);
+    }
+  } else {
+    console.log("No has agregado nada aun");
+    tablaEntradas.parentNode.parentNode.classList.add("tablaTransicion");
+    tablaEntradas.parentNode.parentNode.style.backgroundColor = "#d0393996";
+    setTimeout(() => {
+      tablaEntradas.parentNode.parentNode.style.backgroundColor = "#fff";
+    }, "1000");
   }
 };
 
 const eliminarFila = () => {
   let index = event.target.parentNode.parentNode.parentNode.parentNode;
   index.remove();
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
 };
+
+function soloLetras(obj) {
+  obj.value = obj.value.replace(/[0-9]/g, "");
+}
+
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
+}

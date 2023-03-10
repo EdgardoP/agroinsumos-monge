@@ -1,6 +1,6 @@
 const { ipcRenderer } = require("electron");
 
-let buscarProveedor = document.getElementById("buscarProveedor");
+let buscarCliente = document.getElementById("buscarCliente");
 let tablaEntradas = document.getElementById("tablaEntradas");
 let clienteNombre = document.getElementById("cliente_nombre");
 let clienteApellido = document.getElementById("cliente_apellido");
@@ -66,6 +66,74 @@ const obtenerFecha = (formato) => {
   return formato === "YYYY/MM/DD" ? fechaAnioMesDia : fechaDiaMesAnio;
 };
 
+const buscarListaCliente = () => {
+  let valor = buscarCliente.value;
+  let filasTabla = document.getElementsByClassName("filas");
+  // console.log(filasTabla);
+  for (let index = 0; index < filasTabla.length; index++) {
+    let claseFilas = filasTabla[index].className;
+    let valorEnFila = claseFilas.split(" ");
+    let regex = new RegExp(valor, "i");
+    let busqueda = valorEnFila.filter((element) => regex.test(element));
+    if (busqueda.length > 0) {
+      filasTabla[index].style.display = "initial";
+    } else {
+      filasTabla[index].style.display = "none";
+    }
+    console.log(busqueda);
+  }
+};
+
+function soloLetras(obj) {
+  obj.value = obj.value.replace(/[0-9]/g, "");
+}
+
+function soloNumeros(obj) {
+  obj.value = obj.value.replace(/[^0-9.]/g, "");
+}
+
+const quitarColorError = () => {
+  clienteNombre.parentNode.style.boxShadow = "none";
+  clienteApellido.parentNode.style.boxShadow = "none";
+  clienteReferencia.parentNode.style.boxShadow = "none";
+};
+
+const limpiar = () => {
+  quitarColorError();
+  clienteNombre.value = "";
+  clienteApellido.value = "";
+  clienteReferencia.value = "";
+};
+
+const validar = () => {
+  if (
+    clienteNombre.value != "" &&
+    clienteApellido.value != "" &&
+    clienteReferencia.value != ""
+  ) {
+    nuevoCliente();
+  } else {
+    if (clienteNombre.value == "") {
+      clienteNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      clienteNombre.parentNode.style.boxShadow = "none";
+    }
+    if (clienteApellido.value == "") {
+      clienteApellido.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      clienteApellido.parentNode.style.boxShadow = "none";
+    }
+    if (clienteReferencia.value == "") {
+      clienteReferencia.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      clienteReferencia.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
 const nuevoCliente = async () => {
   let fecha = obtenerFecha("YYYY/MM/DD");
   const obj = {
@@ -126,7 +194,9 @@ ipcRenderer.on("documentos_historial_clientes", (event, results) => {
   documentos.forEach((element, index, array) => {
     i++;
     plantilla += `
-    <tr>
+    <tr class = "filas ${element.cliente_nombre}${
+      element.cliente_apellido
+    }  filasElementos">
       <td style="max-width: 10vh; min-width: 10vh; width: 10vh">${i}</td>
       <td style="max-width: 10vh; min-width: 10vh; width: 10vh">${
         element.cliente_id
@@ -163,16 +233,28 @@ ipcRenderer.on("documentos_historial_clientes", (event, results) => {
           >
             MODIFICAR
           </button>
-          <button
-            id = ${element.cliente_id}
-            onclick="event.preventDefault()"
-            class="botonListado colorRojo"
-          >
-            INACTIVAR
-          </button>
         </div>
       </td>
     </tr>`;
   });
   tablaEntradas.innerHTML += plantilla;
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
 });
+
+const agregarColorFilas = (filas, fila, cantidad) => {
+  console.log(cantidad);
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
+
+  if (cantidad <= 0) {
+    fila.children[6].classList.add("filasColorAgotado");
+  }
+
+  if (cantidad <= 10 && cantidad > 0) {
+    fila.children[6].classList.add("filasColorPocasExistencias");
+  }
+};

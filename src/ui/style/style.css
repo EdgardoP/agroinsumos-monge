@@ -384,7 +384,17 @@ body {
 }
 
 .filasColor{
-  background-color: #83a1b94a;
+  background-color: #18c5152c;
+}
+
+.filasColorAgotado{
+  background-color: #ff0000ce;
+  color: #fff;
+}
+
+.filasColorPocasExistencias{
+  background-color: #ffee00;
+  color: #000;
 }
 
 .tablaTransicion{

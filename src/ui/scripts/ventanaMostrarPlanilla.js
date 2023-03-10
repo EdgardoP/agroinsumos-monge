@@ -2,11 +2,11 @@ const { ipcRenderer } = require("electron");
 
 let btnImprimir = document.getElementById("btnImprimir");
 let cuerpoTablaPlanilla = document.getElementById("cuerpoTablaPlanilla");
-
+let tituloDesdeHasta = document.getElementById("tituloDesdeHasta");
 btnImprimir.addEventListener("click", () => {
   let opt = {
     margin: 1,
-    filename: `REPORTE_PLANILLA_${obtenerFecha("")}`,
+    filename: `PLANILLA ${tituloDesdeHasta.innerHTML}`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 2, scrollY: 0 },
     jsPDF: { format: "a3", unit: "in", orientation: "landscape" },
@@ -17,8 +17,9 @@ btnImprimir.addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", function () {});
 
-const fechaPalabras = (fecha) => {
-  switch (fecha) {
+const fechaPalabras = (fechaIni, fechaFin, fechaMes, fechaAnio) => {
+  let mes;
+  switch (fechaMes) {
     case "01":
       mes = "ENERO";
       break;
@@ -59,7 +60,8 @@ const fechaPalabras = (fecha) => {
       mes = "ERROR";
       break;
   }
-  let fechaNueva = `${mes} DEL `;
+  let fechaNueva = `CORRESPONDIENTE DEL ${fechaIni} DE ${mes} AL ${fechaFin} DEL ${fechaAnio}`;
+  // console.log(fechaNueva);
   return fechaNueva;
 };
 
@@ -95,7 +97,7 @@ const obtenerFecha = (formato) => {
 
 const convertirFecha = (fecha) => {
   let fechaParse = new Date(fecha),
-    mes = ("0" + (fechaParse.getMontd() + 1)).slice(-2),
+    mes = ("0" + (fechaParse.getMonth() + 1)).slice(-2),
     dia = ("0" + fechaParse.getDate()).slice(-2);
   let fechaDiaMesAnio = (fechaOrdenada = [
     dia,
@@ -105,16 +107,39 @@ const convertirFecha = (fecha) => {
   return fechaDiaMesAnio;
 };
 
-let mes;
 let anio;
+let primerFecha;
+let segundaFecha;
+const dividirFecha = (fecha, fecha2) => {
+  let arr = fecha.split("/");
+  let arrDia = arr[0];
+  let arrMes = arr[1];
+  let arrAnio = arr[2];
+
+  let arr2 = fecha2.split("/");
+  let arr2Dia = arr2[0];
+  let arr2Mes = arr2[1];
+  let arr2Anio = arr2[2];
+  tituloDesdeHasta.innerHTML = `${fechaPalabras(
+    arrDia,
+    arr2Dia,
+    arrMes,
+    arrAnio
+  )}`;
+};
+
 ipcRenderer.on("documento_planilla", (event, results, id) => {
-  let productos;
   let plantilla = "";
   let totalSueldos = 0;
   let totalNetos = 0;
-  productos = results[0];
-  console.log(results);
-  productos.forEach((element, index, array) => {
+  let documentos = results[0];
+
+  documentos.forEach((element, index, array) => {
+    console.log(element);
+    let fechaUno = convertirFecha(element.planilla_fecha_ini);
+    let fechaDos = convertirFecha(element.planilla_fecha_fin);
+    dividirFecha(fechaUno, fechaDos);
+    // console.log(convertirFecha(element.planilla_fecha_fin));
     let sueldo_base = parseInt(element.planilla_sueldo_base);
     totalSueldos += sueldo_base;
     let bono = parseInt(element.planilla_bonificaciones);
@@ -122,17 +147,16 @@ ipcRenderer.on("documento_planilla", (event, results, id) => {
     let totalNeto = sueldo_base - deducciones + bono;
     totalNetos += totalNeto;
     plantilla += `
-    <tr>
+    <tr style = "text-align:right">
       <td>${index}</td>
       <td>${element.planilla_nombre_empleado}</td>
-      <td style = "text-align:right">L. ${sueldo_base.toFixed(2)}</td>
-      <td style = "text-align:right">${element.planilla_horas_extras}</td>
-      <td style = "text-align:right">L. ${bono.toFixed(2)}</td>
-      <td style = "text-align:right">L.  ${deducciones.toFixed(2)}</td>
-      <td style = "text-align:right">L. ${totalNeto.toFixed(2)}</td>
-      <td style = "text-align:right"></td>
-    <tr>
-    `;
+      <td>L. ${sueldo_base.toFixed(2)}</td>
+      <td>${element.planilla_horas_extras}</td>
+      <td>L. ${bono.toFixed(2)}</td>
+      <td>L. ${deducciones.toFixed(2)}</td>
+      <td>L. ${totalNeto.toFixed(2)}</td>
+      <td></td>
+    </tr>`;
   });
   plantilla += `
     <tr style = "text-align:right">
@@ -143,8 +167,7 @@ ipcRenderer.on("documento_planilla", (event, results, id) => {
       <td></td>
       <td></td>
       <td>L. ${totalNetos.toFixed(2)}</td>
-      <td style = "text-align:right"></td>
-    </tr>
-  `;
+      <td></td>
+    </tr>`;
   cuerpoTablaPlanilla.innerHTML += plantilla;
 });

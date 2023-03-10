@@ -31,15 +31,7 @@ const convertirFecha = (fecha) => {
 
 const visualizarPlanilla = async (id) => {
   await ipcRenderer.invoke("mostrar_planilla_documento", id);
-  // window.location = "documento_historial_salida.ejs";
 };
-
-// const filtrarDocumentos = async () => {
-//   let fechaUno = fecha_inicial_salida.value;
-//   let fechaDos = fecha_final_salida.value;
-//   await ipcRenderer.invoke("cargar_historial_salidas", fechaUno, fechaDos);
-//   tablaEntradas.innerHTML = "";
-// };
 
 let i = 0;
 ipcRenderer.on("historial_planillas", (event, results) => {
@@ -49,7 +41,7 @@ ipcRenderer.on("historial_planillas", (event, results) => {
   documentos.forEach((element, index, array) => {
     i++;
     plantilla += `
-    <tr>
+    <tr class = "filasElementos">
       <td style="max-width: 25vh; min-width: 25vh; width: 25vh">${i}</td>
       <td style="max-width: 25vh; min-width: 25vh; width: 25vh">${convertirFecha(
         element.planilla_fecha_ini
@@ -72,4 +64,23 @@ ipcRenderer.on("historial_planillas", (event, results) => {
     </tr>`;
   });
   tablaEntradas.innerHTML += plantilla;
+  let filasElementos = document.getElementsByClassName("filasElementos");
+  agregarColorFilas(filasElementos);
 });
+
+const agregarColorFilas = (filas, fila, cantidad) => {
+  console.log(cantidad);
+  for (let index = 0; index < filas.length; index++) {
+    if (index % 2 == 0) {
+      filas[index].classList.add("filasColor");
+    }
+  }
+
+  if (cantidad <= 0) {
+    fila.children[6].classList.add("filasColorAgotado");
+  }
+
+  if (cantidad <= 10 && cantidad > 0) {
+    fila.children[6].classList.add("filasColorPocasExistencias");
+  }
+};

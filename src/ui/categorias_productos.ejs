@@ -19,7 +19,7 @@
           id="categoria_id"
           class="estiloInputLogin"
           tabindex="-1"
-          readonly
+          onkeyup="soloNumeros(this)"
         />
       </div>
     </div>
@@ -55,7 +55,7 @@
   <div>
     <button
       id="${element.cliente_id}"
-      onclick="nuevaCategoria(); event.preventDefault()"
+      onclick="validar(); event.preventDefault()"
       class="boton colorSecundario"
       style="margin-right: 20px"
     >
@@ -63,7 +63,7 @@
     </button>
     <button
       id="${element.cliente_id}"
-      onclick="guardarModificarCategoria();event.preventDefault()"
+      onclick="validarModificar();event.preventDefault()"
       class="boton colorAmarillo"
       style="margin-right: 20px"
     >
