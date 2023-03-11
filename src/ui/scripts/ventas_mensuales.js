@@ -72,6 +72,10 @@ const fechaPalabras = (fecha) => {
   return fechaNueva;
 };
 
+const homeDir = require("os").homedir();
+const desktopDir = `${homeDir}/Desktop/`;
+console.log(desktopDir);
+
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
@@ -96,7 +100,7 @@ function ExportExcel(type, fn, dl) {
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
     : XLSX.writeFile(
         wb,
-        fn || `../VENTAS-MENSUALES-${tituloLibro}.` + (type || "xlsx")
+        fn || `${desktopDir}VENTAS-MENSUALES-${tituloLibro}.` + (type || "xlsx")
       );
 }
 

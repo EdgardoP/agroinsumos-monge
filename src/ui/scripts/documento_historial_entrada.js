@@ -18,8 +18,14 @@ let tablaEntradas = document.getElementById("tablaEntradas");
 let numeroSerie = document.getElementById("numeroSerie");
 document.addEventListener("DOMContentLoaded", function () {});
 
+const homeDir = require("os").homedir();
+const desktopDir = `${homeDir}/Desktop/`;
+console.log(desktopDir);
+
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
+  let arr = fechaActual.innerHTML.split("/");
+  console.log(arr);
   console.log(numeroSerie.innerHTML);
   var elt = document.getElementById("exportable_table");
   var wb = XLSX.utils.table_to_book(elt, { sheet: "Libro 1" });
@@ -29,7 +35,7 @@ function ExportExcel(type, fn, dl) {
     : XLSX.writeFile(
         wb,
         fn ||
-          `../EntradaNo-${numeroSerie.innerHTML}-${fechaActual.innerHTML}.` +
+          `${desktopDir}Entrada-Fecha-${arr[0]}-${arr[1]}-${arr[2]}.` +
             (type || "xlsx")
       );
 }

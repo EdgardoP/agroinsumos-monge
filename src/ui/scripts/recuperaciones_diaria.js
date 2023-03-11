@@ -79,6 +79,10 @@ const fechaPalabras = (fecha) => {
   return fechaNueva;
 };
 
+const homeDir = require("os").homedir();
+const desktopDir = `${homeDir}/Desktop/`;
+console.log(desktopDir);
+
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("tablaFinanzas");
@@ -89,7 +93,7 @@ function ExportExcel(type, fn, dl) {
     : XLSX.writeFile(
         wb,
         fn ||
-          `../RECUPERACIONES_FECHA_${fechaPalabras(fechaMostrar)}.` +
+          `${desktopDir}RECUPERACIONES_FECHA_${fechaPalabras(fechaMostrar)}.` +
             (type || "xlsx")
       );
 }

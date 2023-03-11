@@ -65,6 +65,10 @@ const fechaPalabras = (fechaIni, fechaFin, fechaMes, fechaAnio) => {
   return fechaNueva;
 };
 
+const homeDir = require("os").homedir();
+const desktopDir = `${homeDir}/Desktop/`;
+console.log(desktopDir);
+
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
@@ -72,7 +76,10 @@ function ExportExcel(type, fn, dl) {
   window.location.href = "#modal_excel";
   return dl
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
-    : XLSX.writeFile(wb, fn || `../PLANILLA-NUEVA.` + (type || "xlsx"));
+    : XLSX.writeFile(
+        wb,
+        fn || `${desktopDir}PLANILLA-NUEVA.` + (type || "xlsx")
+      );
 }
 
 const obtenerFecha = (formato) => {

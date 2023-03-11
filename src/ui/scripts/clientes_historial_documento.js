@@ -220,6 +220,10 @@ const agregarColorFilas = (filas, fila, cantidad) => {
   }
 };
 
+const homeDir = require("os").homedir();
+const desktopDir = `${homeDir}/Desktop/`;
+console.log(desktopDir);
+
 var XLSX = require("xlsx");
 function ExportExcel(type, fn, dl) {
   var elt = document.getElementById("exportable_table");
@@ -230,6 +234,7 @@ function ExportExcel(type, fn, dl) {
     : XLSX.writeFile(
         wb,
         fn ||
-          `../Estado de Cuenta ${nombreCliente.innerHTML}.` + (type || "xlsx")
+          `${desktopDir}Estado de Cuenta ${nombreCliente.innerHTML}.` +
+            (type || "xlsx")
       );
 }
