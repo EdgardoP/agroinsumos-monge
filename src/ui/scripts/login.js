@@ -3,7 +3,6 @@ const { ipcRenderer } = require("electron");
 let usuario_nombre = document.getElementById("usuario_nombre");
 let usuario_contraseña = document.getElementById("usuario_contraseña");
 let btnLogin = document.getElementById("btnLogin");
-let btnOlvideContraseña = document.getElementById("btnOlvideContraseña");
 
 btnLogin.addEventListener("click", () => {
   const obj = {
@@ -12,3 +11,7 @@ btnLogin.addEventListener("click", () => {
   };
   ipcRenderer.invoke("iniciarSesion", obj);
 });
+
+const cerrarVentana = async () => {
+  await ipcRenderer.invoke("cerrarVentanaLogin");
+};

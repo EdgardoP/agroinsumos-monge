@@ -215,6 +215,52 @@ const convertirFecha = (fecha) => {
   return fechaAnioMesDia;
 };
 
+const validarNuevoProveedor = () => {
+  if (nuevoProveedorNombre.value != "" && nuevoProveedorNumero.value != "") {
+    nuevoProveedor();
+    location.href = "#modal_nuevo_producto";
+    nuevoProveedorNombre.parentNode.style.boxShadow = "none";
+    nuevoProveedorNumero.parentNode.style.boxShadow = "none";
+  } else {
+    if (nuevoProveedorNombre.value == "") {
+      nuevoProveedorNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nuevoProveedorNombre.parentNode.style.boxShadow = "none";
+    }
+    if (nuevoProveedorNumero.value == "") {
+      nuevoProveedorNumero.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nuevoProveedorNumero.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
+const validarNuevaCategoria = () => {
+  if (
+    nuevaCategoriaNombre.value != "" &&
+    nuevaCategoriaDescripcion.value != ""
+  ) {
+    nuevaCategoria();
+    location.href = "#modal_nuevo_producto";
+    nuevaCategoriaNombre.parentNode.style.boxShadow = "none";
+    nuevaCategoriaDescripcion.parentNode.style.boxShadow = "none";
+  } else {
+    if (nuevaCategoriaNombre.value == "") {
+      nuevaCategoriaNombre.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nuevaCategoriaNombre.parentNode.style.boxShadow = "none";
+    }
+    if (nuevaCategoriaDescripcion.value == "") {
+      nuevaCategoriaDescripcion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      nuevaCategoriaDescripcion.parentNode.style.boxShadow = "none";
+    }
+  }
+};
 //Funcion para eliminar las filas
 const eliminarFila = () => {
   let index = event.target.parentNode.parentNode.parentNode.parentNode;

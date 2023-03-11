@@ -576,6 +576,7 @@
                     id="nuevo_proveedor_numero"
                     class="estiloInputLogin"
                     tabindex="-1"
+                    onkeyup="soloNumeros(this)"
                   />
                 </div>
               </div>
@@ -588,7 +589,7 @@
                   tabindex="-1"
                   id="btnNuevoLote"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevoProveedor() ;location.href= '#modal_nuevo_producto';event.preventDefault()"
+                  onclick="validarNuevoProveedor() ;event.preventDefault()"
                 >
                   REGISTRAR NUEVO PROVEEDOR
                 </button>
@@ -659,7 +660,7 @@
                   tabindex="-1"
                   id="btnNuevoLote"
                   class="boton colorSecundario modal__close"
-                  onclick="nuevaCategoria();location.href= '#modal_nuevo_producto';event.preventDefault()"
+                  onclick="validarNuevaCategoria();event.preventDefault()"
                 >
                   REGISTRAR NUEVA CATEGORIA
                 </button>

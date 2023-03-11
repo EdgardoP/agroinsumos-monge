@@ -173,6 +173,10 @@ ipcMain.handle("cerrarVentana", (event) => {
   ventanaPrincipal.close();
 });
 
+ipcMain.handle("cerrarVentanaLogin", (event) => {
+  ventanaLogin.close();
+});
+
 ipcMain.handle("maximizarVentana", (event) => {
   ventanaPrincipal.maximize();
 });
