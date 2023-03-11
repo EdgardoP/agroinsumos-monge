@@ -209,14 +209,6 @@ ipcRenderer.on("documentos_historial_proveedores", (event, results) => {
           style="margin-right: 20px"
         >
           MODIFICAR
-        </button>
-          <button
-            id = ${element.proveedor_id}
-            onclick="event.preventDefault()"
-            class="botonListado colorRojo"
-          >
-            INACTIVAR
-          </button>
         </div>
       </td>
     </tr>`;

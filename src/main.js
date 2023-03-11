@@ -258,7 +258,10 @@ ipcMain.handle("obtenerNombreProductos", (event) => {
 const listaProductos = (obj) => {
   db.query("call lista_de_productos()", (error, results, productos) => {
     if (error) {
-      // console.log("No se cargaron los productos");
+      notificacion(
+        "Ha ocurrido un error",
+        "No se ha podido cargar los productos este producto"
+      );
     } else {
       ventanaPrincipal.webContents.send("lista_de_productos", results);
     }
@@ -378,6 +381,7 @@ const nuevoLote = (obj) => {
   db.query(query, obj, (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Lote");
       ventanaPrincipal.webContents.send("lote_id", results.insertId);
@@ -399,6 +403,7 @@ const modificarMultiplesLotes = (obj) => {
   console.log(querys);
   db.query(querys, (error, results, fields) => {
     if (error) {
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
       console.log(error);
     } else {
       console.log(results);
@@ -512,6 +517,7 @@ const nuevoProveedor = (obj, fecha) => {
   db.query(query, obj, (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       let idProveedor = results.insertId;
       let objInicializar = {
@@ -541,8 +547,10 @@ const modificarProveedor = (obj) => {
   db.query(query, (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       console.log(results);
+      notificacion("Proceso Exitoso", "Se ha modificado un proveedor");
     }
   });
 };
@@ -556,6 +564,7 @@ const insertarAportacionProveedor = (obj) => {
   const query = "INSERT INTO historial_proveedores SET ?";
   db.query(query, obj, (error, results, fields) => {
     if (error) {
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
       console.log(error);
     } else {
       notificacion(
@@ -589,8 +598,13 @@ const insertarHistorialProveedor = (obj) => {
     (error, results, fields) => {
       if (error) {
         console.log(error);
+        notificacion("Transaccion Fallida", "Ha ocurrido un error");
       } else {
         console.log(results);
+        notificacion(
+          "Transaccion Exitosa",
+          "Se ha ingresado una nueva aportacion"
+        );
       }
     }
   );
@@ -619,6 +633,7 @@ const nuevaCategoria = (obj) => {
   db.query(query, obj, (error, results, fields) => {
     if (error) {
       // console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       notificacion("Transaccion exitosa", "Se ha ingresado un nueva Categoria");
     }
@@ -637,6 +652,7 @@ const modificarCategoria = (obj) => {
   db.query(query, (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       console.log(results);
       notificacion("Transaccion exitosa", "Se ha modificado una Categoria");
@@ -680,6 +696,7 @@ const insertarMultiplesEntradas = (obj) => {
   db.query(query, [obj], (error, results, fields) => {
     if (error) {
       // console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       notificacion(
         "Transaccion Exitosa",
@@ -786,6 +803,7 @@ const insertarMultiplesSalidas = (obj) => {
   db.query(query, [obj], (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       notificacion(
         "Transaccion Exitosa",
@@ -875,6 +893,7 @@ const aportacionesDelDia = (fecha) => {
   db.query(query, (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       console.log(results);
       // ventanaPrincipal.webContents.send("aportaciones_del_dia", results);
@@ -898,6 +917,7 @@ const salidasDelDia = (fecha) => {
   db.query(query, (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       console.log(results);
       ventanaLiquidacionDiaria.webContents.once("did-finish-load", function () {
@@ -937,8 +957,13 @@ const insertarHistorialCliente = (obj) => {
     (error, results, fields) => {
       if (error) {
         console.log(error);
+        notificacion("Transaccion Fallida", "Ha ocurrido un error");
       } else {
         console.log(results);
+        notificacion(
+          "Transaccion Exitosa",
+          "Se ha ingresado una nueva aportacion"
+        );
       }
     }
   );
@@ -972,8 +997,10 @@ const modificarCliente = (obj) => {
   db.query(query, (error, results, proveedores) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       console.log(results);
+      notificacion("Transaccion Exitosa", "Se ha modificado un cliente");
     }
   });
 };
@@ -989,6 +1016,7 @@ const nuevoCliente = (obj, fecha) => {
   db.query(query, obj, (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       console.log(results);
       let idCliente = results.insertId;
@@ -1134,6 +1162,7 @@ const insertarNuevaPlanilla = (obj) => {
   db.query(query, obj, (error, results, fields) => {
     if (error) {
       console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
       notificacion("Transaccion exitosa", "Se ha ingresado una nueva planilla");
     }
