@@ -15,7 +15,7 @@ let cuerpoResumenMes = document.getElementById("cuerpoResumenMes");
 btnImprimir.addEventListener("click", () => {
   let opt = {
     margin: 1,
-    filename: `REPORTE VENTAS_MENSUALES}`,
+    filename: `REPORTE VENTAS_MENSUALES`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 2, scrollY: 0 },
     jsPDF: { format: "a3", unit: "in", orientation: "portrait" },

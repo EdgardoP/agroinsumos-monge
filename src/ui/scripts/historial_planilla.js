@@ -1,4 +1,4 @@
-const { ipcRenderer } = require("electron");
+// const { ipcRenderer } = require("electron");
 
 let buscarEntrada = document.getElementById("buscarEntrada");
 let tablaEntradas = document.getElementById("tablaSalidas");

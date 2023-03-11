@@ -64,13 +64,18 @@
 	width: 100%;
 	justify-content: right;
 	background-color: var(--colorPrimario);
-	-webkit-app-region:drag;
+	/* -webkit-app-region:drag; */
+	z-index: 9999;
+  }
+
+  .drag{
+		-webkit-app-region:drag;
   }
   
   .botonesFrame{
 	display: flex;
 	flex-direction: row;
-	padding: 12px;
+	padding: 6px;
   }
 
 

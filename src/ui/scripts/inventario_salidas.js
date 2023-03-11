@@ -1,4 +1,4 @@
-const { ipcRenderer } = require("electron");
+// const { ipcRenderer } = require("electron");
 
 //Inputs del dashboard entradas
 let btnAsociarCliente = document.getElementById("btnAsociarCliente");

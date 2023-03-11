@@ -169,6 +169,18 @@ ipcMain.handle("iniciarSesion", (event, obj) => {
   iniciarSesion(obj);
 });
 
+ipcMain.handle("cerrarVentana", (event) => {
+  ventanaPrincipal.close();
+});
+
+ipcMain.handle("maximizarVentana", (event) => {
+  ventanaPrincipal.maximize();
+});
+
+ipcMain.handle("minimizarVentana", (event) => {
+  ventanaPrincipal.minimize();
+});
+
 // Login
 
 const iniciarSesion = (obj) => {

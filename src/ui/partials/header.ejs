@@ -12,15 +12,17 @@
   </head>
   <body class="cuerpoPantalla colorFondoDashboard">
     <div class="frameVentana">
+      <div class="drag" style="width: 100%;"></div>
       <div class="botonesFrame">
-        <div>
-          <p>Max</p>
+        <div class="botonVentana">
+          <button onclick="minimizarVentana()">
+            <img onclick="minimizarVentana()" src="icons/minimize.png" alt=""></button>
         </div>
-        <div>
-          <p>Min</p>
+        <div class="botonVentana">
+          <button onclick="maximizarVentana()" ><img onclick="maximizarVentana()" src="icons/squares.png" alt=""></button>
         </div>
-        <div>
-          <p>Close</p>
+        <div class="botonVentana">
+          <button onclick="cerrarVentana()" ><img onclick="cerrarVentana()" src="icons/close.png" alt=""></button>
         </div>
       </div>
     </div>
@@ -28,7 +30,7 @@
       <ul>
         <li>
           <h3 style="background-color: #313c48">
-            <a tabindex="-1" href="#"
+            <a tabindex="-1" href="index.ejs"
               ><div>
                 <img src="icons/empresaIconBlanco.png" alt="icono" />Agroinsumos
                 Monge

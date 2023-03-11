@@ -1,4 +1,4 @@
-const { ipcRenderer } = require("electron");
+// const { ipcRenderer } = require("electron");
 
 let idDocumento = Math.random() * (9999 - 1) + 1;
 let desdeLaFecha = document.getElementById("desdeLaFecha");

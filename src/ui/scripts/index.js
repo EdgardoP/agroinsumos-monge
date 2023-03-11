@@ -1,3 +1,5 @@
+const { ipcRenderer } = require("electron");
+
 var $ = (jQuery = require("jquery"));
 $(document).ready(function () {
   $("#accordian a").click(function () {
@@ -22,3 +24,15 @@ $(document).ready(function () {
 
 let height = $(window).height();
 $("#cajaDashboard").height(height);
+
+const cerrarVentana = async () => {
+  await ipcRenderer.invoke("cerrarVentana");
+};
+
+const maximizarVentana = async () => {
+  await ipcRenderer.invoke("maximizarVentana");
+};
+
+const minimizarVentana = async () => {
+  await ipcRenderer.invoke("minimizarVentana");
+};

@@ -1,4 +1,4 @@
-const { ipcRenderer } = require("electron");
+// const { ipcRenderer } = require("electron");
 
 let idProducto = document.getElementById("idProducto");
 let productoNombre = document.getElementById("productoNombre");

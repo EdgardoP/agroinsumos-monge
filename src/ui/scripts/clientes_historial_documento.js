@@ -1,4 +1,4 @@
-const { ipcRenderer } = require("electron");
+// const { ipcRenderer } = require("electron");
 // const { TableToExcel } = require("table2excel");
 
 let idCliente;
