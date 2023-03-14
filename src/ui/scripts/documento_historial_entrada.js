@@ -85,12 +85,15 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
   let plantilla = "";
   let totalOtrosGastos = 0;
   let totalSubTotales = 0;
+  let totalTotal = 0;
   listado.forEach((element, index, array) => {
     fechaActual.innerHTML = convertirFecha(element.entradas_fecha);
-    let otrosGastos = parseInt(element.entrada_otros_gastos);
-    let subtotal = parseInt(element.sub_total);
+    let otrosGastos = parseFloat(element.entrada_otros_gastos);
+    let subtotal = parseFloat(element.sub_total);
     totalOtrosGastos += otrosGastos;
     totalSubTotales += subtotal;
+    totalTotal = parseFloat(totalOtrosGastos + totalSubTotales).toFixed(2);
+    console.log(totalSubTotales);
     plantilla += `
     <tr class = "filas">
       <td style="min-width: 20px; max-width: 20px; width: 20px">${
@@ -106,7 +109,7 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
       ${element.lote_presentacion}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      L. ${parseInt(element.lote_valor_unitario_compra).toFixed(2)}
+      L. ${parseFloat(element.lote_valor_unitario_compra).toFixed(2)}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
       ${element.entrada_cantidad_ingresar}
@@ -115,10 +118,10 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
       ${element.entrada_tipo_pago}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      L. ${parseInt(element.entrada_otros_gastos).toFixed(2)}
+      L. ${parseFloat(element.entrada_otros_gastos).toFixed(2)}
       </td>
       <td style="min-width: 130px; max-width: 130px; width: 130px">
-      L. ${parseInt(element.sub_total).toFixed(2)}
+      L. ${parseFloat(element.sub_total).toFixed(2)}
       </td>
     </tr>`;
   });
@@ -132,10 +135,10 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong> L. ${parseInt(
+    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong> L. ${parseFloat(
       totalOtrosGastos
     ).toFixed(2)} </strong></td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong>L. ${parseInt(
+    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"><strong>L. ${parseFloat(
       totalSubTotales
     ).toFixed(2)}</strong></td>
     </tr>
@@ -148,8 +151,8 @@ ipcRenderer.on("documento_historial_entrada", (event, results, id) => {
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px"></td>
     <td style="min-width: 130px; max-width: 130px; width: 130px">Total:</td>
-    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"> <strong>L. ${parseInt(
-      totalOtrosGastos + totalSubTotales
+    <td style="min-width: 130px; max-width: 130px; width: 130px;background-color: rgb(138, 138, 138); color: #fff"> <strong>L. ${parseFloat(
+      totalTotal
     ).toFixed(2)}</strong></td>
     </tr>
     `;

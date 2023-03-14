@@ -421,13 +421,16 @@ const confirmarEntradas = async () => {
   for (let index = 0; index < filasElementos.length; index++) {
     let datosEntradas = [];
     if (filasElementos[index].children[10].innerHTML === "Credito") {
-      let cantidadProducto = parseInt(
+      let cantidadProducto = parseFloat(
         filasElementos[index].children[6].innerHTML
-      );
-      let cantidadPrecioVenta = parseInt(
+      ).toFixed(2);
+      let cantidadPrecioVenta = parseFloat(
         filasElementos[index].children[5].innerHTML
-      );
-      let totalInversion = cantidadProducto * cantidadPrecioVenta;
+      ).toFixed(2);
+      let totalInversion = parseFloat(
+        cantidadProducto * cantidadPrecioVenta
+      ).toFixed(2);
+      console.log(totalInversion);
       datosHistorialProveedor = {
         historial_proveedor_fk: filasElementos[index].id,
         historial_proveedor_fecha: entradaFecha.value,
@@ -436,6 +439,7 @@ const confirmarEntradas = async () => {
         historial_proveedor_tipo_pago:
           filasElementos[index].children[10].innerHTML,
       };
+      console.log(datosHistorialProveedor);
       // nuevoHistorialProveedor.push(datosHistorialProveedor);
       await ipcRenderer.invoke(
         "insertarHistorialProveedor",
@@ -690,24 +694,38 @@ const agregarEntradaLista = () => {
   let stockAntiguo = parseInt(entradaStockActual.value);
   let nuevoIngreso = parseFloat(entradaCantidadIngresar.value);
   let nuevoStock = stockAntiguo + nuevoIngreso;
-  let otrosGastos = parseInt(entradaOtrosGastos.value);
-  let valorUnitCompra = parseInt(entradaValorUnitarioCompra.value);
+  let otrosGastos = parseFloat(entradaOtrosGastos.value).toFixed(2);
+  let valorUnitCompra = parseFloat(entradaValorUnitarioCompra.value).toFixed(2);
   let subtotal = nuevoIngreso * valorUnitCompra + otrosGastos;
   // console.log(elementoTabla);
   plantilla += `
   <tr id = "${idProveedor}" class = "filasElementos">
     <td style="min-width: 20px; max-width: 20px; width: 20px;">${cantidad_filas_ingresadas}</td>
-    <td style="min-width: 80px; max-width: 80px; width: 80px">${elementoTabla.producto_id}</td>
-    <td style="min-width: 60px; max-width: 60px; width: 60px">${elementoTabla.lote_id}</td>
-    <td style="min-width: 200px; max-width: 200px; width: 200px">${elementoTabla.producto_nombre}</td>
-    <td style="min-width: 120px; max-width: 120px; width: 120px">${elementoTabla.lote_presentacion}</td>
-    <td style="min-width: 120px; max-width: 120px; width: 120px">${elementoTabla.lote_valor_unitario_compra}</td>
+    <td style="min-width: 80px; max-width: 80px; width: 80px">${
+      elementoTabla.producto_id
+    }</td>
+    <td style="min-width: 60px; max-width: 60px; width: 60px">${
+      elementoTabla.lote_id
+    }</td>
+    <td style="min-width: 200px; max-width: 200px; width: 200px">${
+      elementoTabla.producto_nombre
+    }</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${
+      elementoTabla.lote_presentacion
+    }</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${
+      elementoTabla.lote_valor_unitario_compra
+    }</td>
     <td style="min-width: 120px; max-width: 120px; width: 120px">${nuevoIngreso}</td>
     <td style="min-width: 120px; max-width: 120px; width: 120px">${stockAntiguo}</td>
     <td style="min-width: 120px; max-width: 120px; width: 120px">${nuevoStock}</td>
     <td style="min-width: 120px; max-width: 120px; width: 120px">${otrosGastos}</td>
-    <td style="min-width: 120px; max-width: 120px; width: 120px">${entradaTipoPago.value}</td>
-    <td style="min-width: 120px; max-width: 120px; width: 120px">${subtotal}</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${
+      entradaTipoPago.value
+    }</td>
+    <td style="min-width: 120px; max-width: 120px; width: 120px">${parseFloat(
+      subtotal
+    ).toFixed(2)}</td>
     <td style="min-width: 120px; max-width: 120px; width: 120px">
           <div>
             <button 
@@ -794,16 +812,16 @@ function autocomplete(inp, arr) {
           )}`;
           entrada_proveedor.value =
             listaDeProductosRaw[indice].proveedor_nombre;
-          entradaValorUnitarioCompra.value = parseInt(
+          entradaValorUnitarioCompra.value = parseFloat(
             listaDeProductosRaw[indice].lote_valor_unitario_compra
           ).toFixed(2);
-          nuevoLoteProductoActualValorVenta.value = parseInt(
+          nuevoLoteProductoActualValorVenta.value = parseFloat(
             listaDeProductosRaw[indice].lote_valor_unitario_venta
           ).toFixed(2);
-          nuevoLoteProductoActualValorCompra.value = parseInt(
+          nuevoLoteProductoActualValorCompra.value = parseFloat(
             listaDeProductosRaw[indice].lote_valor_unitario_compra
           ).toFixed(2);
-          entradaValorUnitarioVenta.value = parseInt(
+          entradaValorUnitarioVenta.value = parseFloat(
             listaDeProductosRaw[indice].lote_valor_unitario_venta
           ).toFixed(2);
           entradaProductoNombre.value =

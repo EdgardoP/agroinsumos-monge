@@ -115,9 +115,9 @@ const quitarColorError = () => {
 };
 
 const nuevaAportacion = async () => {
-  let saldoAnterior = parseInt(saldoActual.innerHTML);
+  let saldoAnterior = parseFloat(saldoActual.innerHTML).toFixed(2);
   console.log(saldoAnterior);
-  let saldoAporte = parseInt(cantidadAporte.value);
+  let saldoAporte = parseFloat(cantidadAporte.value).toFixed(2);
   console.log(saldoAporte);
 
   let saldoNuevo = saldoAnterior - saldoAporte;
@@ -125,9 +125,12 @@ const nuevaAportacion = async () => {
     historial_cliente_fk: idCliente,
     historial_cliente_fecha: fechaActual,
     historial_cliente_detalle: detallesAportacion.value,
-    historial_cliente_saldo_anterior: saldoActual.innerHTML,
-    historial_cliente_aportacion: parseInt(cantidadAporte.value) * -1,
-    historial_cliente_saldo_nuevo: saldoNuevo,
+    historial_cliente_saldo_anterior: parseFloat(saldoActual.innerHTML).toFixed(
+      2
+    ),
+    historial_cliente_aportacion:
+      parseFloat(cantidadAporte.value).toFixed(2) * -1,
+    historial_cliente_saldo_nuevo: parseFloat(saldoNuevo).toFixed(2),
     historial_cliente_tipo_aportacion: formaPago.value,
   };
   console.log(obj);
@@ -171,9 +174,9 @@ const renderizar = () => {
       )}`;
       nombreCliente.innerHTML = `${element.cliente_nombre} ${element.cliente_apellido}`;
       referenciaCliente.innerHTML = `${element.cliente_referencia}`;
-      saldoActual.innerHTML = `${formatDinero(
+      saldoActual.innerHTML = `${parseFloat(
         element.historial_cliente_saldo_nuevo
-      )}`;
+      ).toFixed(2)}`;
       plantilla += `
       <tr class = "filasElementos">
           <td style="max-width: 5vh; min-width: 5vh; width: 5vh">${index}</td>
@@ -184,13 +187,13 @@ const renderizar = () => {
             ${element.historial_cliente_detalle}
           </td>
           <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-           L. ${formatDinero(element.historial_cliente_saldo_anterior)}
+           L. ${parseFloat(element.historial_cliente_saldo_anterior).toFixed(2)}
           </td>
           <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-           L. ${formatDinero(element.historial_cliente_aportacion)}
+           L. ${parseFloat(element.historial_cliente_aportacion).toFixed(2)}
           </td>
           <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-           L. ${formatDinero(element.historial_cliente_saldo_nuevo)}
+           L. ${parseFloat(element.historial_cliente_saldo_nuevo).toFixed(2)}
           </td>
           <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
             ${element.historial_cliente_tipo_aportacion}

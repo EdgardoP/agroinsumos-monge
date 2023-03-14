@@ -51,6 +51,7 @@ const ventasMensuales = async () => {
   await ipcRenderer.invoke("ventasMensualesContado", anio, mes);
   await ipcRenderer.invoke("ventasMensualesCredito", anio, mes);
   await ipcRenderer.invoke("salariosDelMes", anio, mes);
+  await ipcRenderer.invoke("gastosDelMes", anio, mes);
 };
 
 // const aportacionesDelDia = async () => {

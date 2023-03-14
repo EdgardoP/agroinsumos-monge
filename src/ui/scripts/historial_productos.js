@@ -137,7 +137,7 @@ ipcRenderer.on("historial_de_productos", (event, results) => {
     <td style="min-width: 60px; max-width: 60px; width: 60px">${
       element.lote_id
     }</td>
-    <td style="min-width: 250px; max-width: 250px; width: 250px">${
+    <td style="min-width: 230px; max-width: 230px; width: 230px">${
       element.producto_nombre
     }
     </td>

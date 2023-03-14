@@ -1,9 +1,9 @@
 <%- include('./partials/header.ejs') %>
 <link rel="stylesheet" href="style/style.css" />
-<div class="contenedorDashboard">
+<div class="contenedorDashboard" style="overflow-x: inherit; width: 85%">
   <h3>Inventario / Historial de Productos</h3>
 </div>
-<div class="contenedorDashboard" style="overflow-x: inherit">
+<div class="contenedorDashboard" style="overflow-x: inherit; width: 85%">
   <div class="flexRow">
     <div class="flexRow" style="align-items: center">
       <div class="cajaInput">
@@ -84,10 +84,17 @@
             tabindex="-1"
           >
             <option value="%">Seleccione</option>
-            <option value="Caja">Caja</option>
-            <option value="Botella">Botella</option>
+            <option value="Unidad">Unidad</option>
             <option value="Saco">Saco</option>
             <option value="Libra">Libra</option>
+            <option value="Caja">Caja</option>
+            <option value="Frasco">Frasco</option>
+            <option value="Botella">Botella</option>
+            <option value="Bolsa">Bolsa</option>
+            <option value="Lata">Lata</option>
+            <option value="Jeringa">Jeringa</option>
+            <option value="mL(Mililitros)">mL(Mililitros)</option>
+            <option value="Tabletas">Tabletas</option>
             <option value="Otro">Otro</option>
           </select>
         </div>
@@ -120,13 +127,13 @@
     </div>
   </div>
 </div>
-<div class="contenedorDashboard">
+<div class="contenedorDashboard" style="width: 85%">
   <table class="estiloTabla">
     <thead>
       <tr>
         <th style="min-width: 60px; max-width: 60px; width: 60px">ID</th>
         <th style="min-width: 60px; max-width: 60px; width: 60px">Nº Lote</th>
-        <th style="min-width: 250px; max-width: 250px; width: 250px">
+        <th style="min-width: 230px; max-width: 230px; width: 230px">
           Producto
         </th>
         <th style="min-width: 150px; max-width: 150px; width: 150px">

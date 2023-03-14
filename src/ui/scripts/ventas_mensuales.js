@@ -149,8 +149,14 @@ let totalProductosContadoLibraSaco = 0;
 let totalGeneralUtilidadContado = 0;
 let totalUtilidadContadoNormal = 0;
 let totalUtilidadContadoLibraSaco = 0;
-
+let totalGastos = 0;
 let tituloLibro;
+
+// ipcRenderer.on("gastosDelMes", (event, results, anio, mes) => {
+//   totalGastos =  results[0][0].total_gastos
+//   console.log(totalGastos);
+// })
+
 ipcRenderer.on("ventas_mensuales_contado", (event, results, anio, mes) => {
   let ventas = results[0];
   mesActual = mes;
@@ -167,10 +173,10 @@ ipcRenderer.on("ventas_mensuales_contado", (event, results, anio, mes) => {
   let plantillaVentasContado = "";
   let plantillaVentasContadoLibraSaco = "";
   ventas.forEach((element) => {
-    let venta = parseInt(element.total_ventas);
-    let compra = parseInt(element.costo_total_compras);
-    let cantidadProductos = parseInt(element.cantidad_producto);
-    let utilidad = parseInt(element.utilidad_bruta);
+    let venta = element.total_ventas;
+    let compra = element.costo_total_compras;
+    let cantidadProductos = element.cantidad_producto;
+    let utilidad = element.utilidad_bruta;
     totalGeneralVentasContado += venta;
     totalGeneralComprasContado += compra;
     totalGeneralUtilidadContado += utilidad;
@@ -188,19 +194,19 @@ ipcRenderer.on("ventas_mensuales_contado", (event, results, anio, mes) => {
       <td style="width: 200px; max-width: 200px">${element.producto_nombre} ${
         element.lote_presentacion
       }</td>
-      <td style="width: 160px; max-width: 150px">${parseInt(
+      <td style="width: 160px; max-width: 150px">${parseFloat(
         element.cantidad_producto
       )}</td>
-      <td style="width: 20px; max-width: 200px">L. ${parseInt(
+      <td style="width: 20px; max-width: 200px">L. ${parseFloat(
         element.total_ventas
       ).toFixed(2)}</td>
-      <td style="width: 150px; max-width: 150px">L. ${parseInt(
+      <td style="width: 150px; max-width: 150px">L. ${parseFloat(
         element.lote_valor_unitario_venta
       ).toFixed(2)}</td>
-      <td style="width: 150px; max-width: 150px">L. ${parseInt(
+      <td style="width: 150px; max-width: 150px">L. ${parseFloat(
         element.costo_total_compras
       ).toFixed(2)}</td>
-      <td style="width: 120px; max-width: 120px">L. ${parseInt(
+      <td style="width: 120px; max-width: 120px">L. ${parseFloat(
         element.utilidad_bruta
       ).toFixed(2)}</td>
     </tr>
@@ -218,16 +224,16 @@ ipcRenderer.on("ventas_mensuales_contado", (event, results, anio, mes) => {
           <td style="width: 160px; max-width: 150px">${parseInt(
             element.cantidad_producto
           )}</td>
-          <td style="width: 20px; max-width: 200px">L. ${parseInt(
+          <td style="width: 20px; max-width: 200px">L. ${parseFloat(
             element.total_ventas
           ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+          <td style="width: 150px; max-width: 150px">L. ${parseFloat(
             element.lote_valor_unitario_venta
           ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+          <td style="width: 150px; max-width: 150px">L. ${parseFloat(
             element.costo_total_compras
           ).toFixed(2)}</td>
-          <td style="width: 120px; max-width: 120px">L. ${parseInt(
+          <td style="width: 120px; max-width: 120px">L. ${parseFloat(
             element.utilidad_bruta
           ).toFixed(2)}</td>
         </tr>
@@ -237,34 +243,38 @@ ipcRenderer.on("ventas_mensuales_contado", (event, results, anio, mes) => {
   plantillaVentasContado += `
   <tr>
       <td style="width: 200px; max-width: 200px"></td>
-      <td style="width: 160px; max-width: 150px">${totalProductosContadoNormal}</td>
-      <td style="width: 20px; max-width: 200px">L. ${totalVentasContadoNormal.toFixed(
-        2
+      <td style="width: 160px; max-width: 150px">${parseInt(
+        totalProductosContadoNormal
       )}</td>
+      <td style="width: 20px; max-width: 200px">L. ${parseFloat(
+        totalVentasContadoNormal
+      ).toFixed(2)}</td>
       <td style="width: 150px; max-width: 150px"></td>
-      <td style="width: 150px; max-width: 150px">L. ${totalComprasContadoNormal.toFixed(
-        2
-      )}</td>
-      <td style="width: 120px; max-width: 120px">L. ${totalUtilidadContadoNormal.toFixed(
-        2
-      )}</td>
+      <td style="width: 150px; max-width: 150px">L. ${parseFloat(
+        totalComprasContadoNormal
+      ).toFixed(2)}</td>
+      <td style="width: 120px; max-width: 120px">L. ${parseFloat(
+        totalUtilidadContadoNormal
+      ).toFixed(2)}</td>
   </tr>
   `;
 
   plantillaVentasContadoLibraSaco += `
   <tr>
       <td style="width: 200px; max-width: 200px"></td>
-      <td style="width: 160px; max-width: 150px">${totalProductosContadoLibraSaco}</td>
-      <td style="width: 20px; max-width: 200px">L. ${totalVentasContadoLibraSaco.toFixed(
-        2
+      <td style="width: 160px; max-width: 150px">${parseInt(
+        totalProductosContadoLibraSaco
       )}</td>
+      <td style="width: 20px; max-width: 200px">L. ${parseFloat(
+        totalVentasContadoLibraSaco
+      ).toFixed(2)}</td>
       <td style="width: 150px; max-width: 150px"></td>
-      <td style="width: 150px; max-width: 150px">L. ${totalComprasContadoLibraSaco.toFixed(
-        2
-      )}</td>
-      <td style="width: 120px; max-width: 120px">L. ${totalUtilidadContadoLibraSaco.toFixed(
-        2
-      )}</td>
+      <td style="width: 150px; max-width: 150px">L. ${parseFloat(
+        totalComprasContadoLibraSaco
+      ).toFixed(2)}</td>
+      <td style="width: 120px; max-width: 120px">L. ${parseFloat(
+        totalUtilidadContadoLibraSaco
+      ).toFixed(2)}</td>
   </tr>
   `;
   cuerpoVentasContado.innerHTML += plantillaVentasContado;
@@ -289,10 +299,10 @@ ipcRenderer.on("ventas_mensuales_credito", (event, results, anio, mes) => {
   let plantillaVentasCredito = "";
   let plantillaVentasCreditoLibraSaco = "";
   ventas.forEach((element) => {
-    let venta = parseInt(element.total_ventas);
-    let compra = parseInt(element.costo_total_compras);
+    let venta = element.total_ventas;
+    let compra = element.costo_total_compras;
     let cantidadProductos = parseInt(element.cantidad_producto);
-    let utilidad = parseInt(element.utilidad_bruta);
+    let utilidad = element.utilidad_bruta;
     totalGeneralVentasCredito += venta;
     totalGeneralComprasCredito += compra;
     totalGeneralUtilidadCredito += utilidad;
@@ -302,7 +312,7 @@ ipcRenderer.on("ventas_mensuales_credito", (event, results, anio, mes) => {
     ) {
       totalVentasCreditoLibraSaco += venta;
       totalComprasCreditoLibraSaco += compra;
-      totalProductosCreditoLibraSaco += cantidadProductos;
+      totalProductosCreditoLibraSaco += parseInt(cantidadProductos);
       totalUtilidadCreditoLibraSaco += utilidad;
       plantillaVentasCreditoLibraSaco += `
       <tr>
@@ -312,16 +322,16 @@ ipcRenderer.on("ventas_mensuales_credito", (event, results, anio, mes) => {
       <td style="width: 160px; max-width: 150px">${parseInt(
         element.cantidad_producto
       )}</td>
-      <td style="width: 20px; max-width: 200px">L. ${parseInt(
+      <td style="width: 20px; max-width: 200px">L. ${parseFloat(
         element.total_ventas
       ).toFixed(2)}</td>
-      <td style="width: 150px; max-width: 150px">L. ${parseInt(
+      <td style="width: 150px; max-width: 150px">L. ${parseFloat(
         element.lote_valor_unitario_venta
       ).toFixed(2)}</td>
-      <td style="width: 150px; max-width: 150px">L. ${parseInt(
+      <td style="width: 150px; max-width: 150px">L. ${parseFloat(
         element.costo_total_compras
       ).toFixed(2)}</td>
-      <td style="width: 120px; max-width: 120px">L. ${parseInt(
+      <td style="width: 120px; max-width: 120px">L. ${parseFloat(
         element.utilidad_bruta
       ).toFixed(2)}</td>
     </tr>
@@ -339,16 +349,16 @@ ipcRenderer.on("ventas_mensuales_credito", (event, results, anio, mes) => {
           <td style="width: 160px; max-width: 150px">${parseInt(
             element.cantidad_producto
           )}</td>
-          <td style="width: 20px; max-width: 200px">L. ${parseInt(
+          <td style="width: 20px; max-width: 200px">L. ${parseFloat(
             element.total_ventas
           ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+          <td style="width: 150px; max-width: 150px">L. ${parseFloat(
             element.lote_valor_unitario_venta
           ).toFixed(2)}</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+          <td style="width: 150px; max-width: 150px">L. ${parseFloat(
             element.costo_total_compras
           ).toFixed(2)}</td>
-          <td style="width: 120px; max-width: 120px">L. ${parseInt(
+          <td style="width: 120px; max-width: 120px">L. ${parseFloat(
             element.utilidad_bruta
           ).toFixed(2)}</td>
         </tr>
@@ -358,85 +368,124 @@ ipcRenderer.on("ventas_mensuales_credito", (event, results, anio, mes) => {
   plantillaVentasCredito += `
   <tr>
       <td style="width: 200px; max-width: 200px"></td>
-      <td style="width: 160px; max-width: 150px">${totalProductosCreditoNormal}</td>
-      <td style="width: 20px; max-width: 200px">L. ${totalVentasCreditoNormal.toFixed(
-        2
+      <td style="width: 160px; max-width: 150px">${parseInt(
+        totalProductosCreditoNormal
       )}</td>
+      <td style="width: 20px; max-width: 200px">L. ${parseFloat(
+        totalVentasCreditoNormal
+      ).toFixed(2)}</td>
       <td style="width: 150px; max-width: 150px"></td>
-      <td style="width: 150px; max-width: 150px">L. ${totalComprasCreditoNormal.toFixed(
-        2
-      )}</td>
-      <td style="width: 120px; max-width: 120px">L. ${totalUtilidadCreditoNormal.toFixed(
-        2
-      )}</td>
+      <td style="width: 150px; max-width: 150px">L. ${parseFloat(
+        totalComprasCreditoNormal
+      ).toFixed(2)}</td>
+      <td style="width: 120px; max-width: 120px">L. ${parseFloat(
+        totalUtilidadCreditoNormal
+      ).toFixed(2)}</td>
   </tr>
   `;
 
   plantillaVentasCreditoLibraSaco += `
   <tr>
       <td style="width: 200px; max-width: 200px"></td>
-      <td style="width: 160px; max-width: 150px">${totalProductosCreditoLibraSaco}</td>
-      <td style="width: 20px; max-width: 200px">L. ${totalVentasCreditoLibraSaco.toFixed(
-        2
+      <td style="width: 160px; max-width: 150px">${parseInt(
+        totalProductosCreditoLibraSaco
       )}</td>
+      <td style="width: 20px; max-width: 200px">L. ${parseFloat(
+        totalVentasCreditoLibraSaco
+      ).toFixed(2)}</td>
       <td style="width: 150px; max-width: 150px"></td>
-      <td style="width: 150px; max-width: 150px">L. ${totalComprasCreditoLibraSaco.toFixed(
-        2
-      )}</td>
-      <td style="width: 120px; max-width: 120px">L. ${totalUtilidadCreditoLibraSaco.toFixed(
-        2
-      )}</td>
+      <td style="width: 150px; max-width: 150px">L. ${parseFloat(
+        totalComprasCreditoLibraSaco
+      ).toFixed(2)}</td>
+      <td style="width: 120px; max-width: 120px">L. ${parseFloat(
+        totalUtilidadCreditoLibraSaco
+      ).toFixed(2)}</td>
   </tr>
   `;
   cuerpoVentasCredito.innerHTML += plantillaVentasCredito;
   cuerpoVentasCreditoLibraSaco.innerHTML += plantillaVentasCreditoLibraSaco;
-  let totalIngresosDelMes =
-    totalGeneralVentasContado + totalGeneralVentasCredito;
-  let totalMercaderiaCosto =
-    totalGeneralComprasContado + totalGeneralComprasCredito;
-  utilidadTotal = totalIngresosDelMes - totalMercaderiaCosto;
+  let totalIngresosDelMes = parseFloat(
+    totalGeneralVentasContado + totalGeneralVentasCredito
+  ).toFixed(2);
+  let totalMercaderiaCosto = parseFloat(
+    totalGeneralComprasContado + totalGeneralComprasCredito
+  ).toFixed(2);
+  utilidadTotal = parseFloat(
+    totalIngresosDelMes - totalMercaderiaCosto
+  ).toFixed(2);
   let plantillaCuerpoResumen = "";
   plantillaCuerpoResumen += `
         <tr>
           <td style="width: 50%;">TOTAL DE VENTAS AL CONTADO</td>
-          <td>L. ${totalGeneralVentasContado.toFixed(2)}</td>
+          <td>L. ${parseFloat(totalGeneralVentasContado).toFixed(2)}</td>
         </tr>
         <tr>
           <td style="width: 50%;">TOTAL DE VENTAS AL CREDITO</td>
-          <td>L. ${totalGeneralVentasCredito.toFixed(2)}</td>
+          <td>L. ${parseFloat(totalGeneralVentasCredito).toFixed(2)}</td>
         </tr>
         <tr>
           <td style="width: 50%;">TOTAL DE INGRESOS DEL MES</td>
-          <td>L. ${totalIngresosDelMes.toFixed(2)}</td>
+          <td>L. ${parseFloat(totalIngresosDelMes).toFixed(2)}</td>
         </tr>
         <tr>
           <td style="width: 50%;">TOTAL DE MERCADERIA AL COSTO</td>
-          <td>L. ${totalMercaderiaCosto.toFixed(2)}</td>
+          <td>L. ${parseFloat(totalMercaderiaCosto).toFixed(2)}</td>
         </tr>
         <tr>
           <td style="width: 50%;">UTILIDAD</td>
-          <td>L. ${utilidadTotal.toFixed(2)}</td>
+          <td>L. ${parseFloat(utilidadTotal).toFixed(2)}</td>
         </tr>
         
   `;
   cuerpoResumenMes.innerHTML += plantillaCuerpoResumen;
 });
 
+let totalUtilidadNetaMes;
 ipcRenderer.on("salariosDelMes", (event, results, anio, mes) => {
   let salarios = results[0];
   let totalSalarios;
   salarios.forEach((element) => {
-    totalSalarios = parseInt(element.total_salarios);
+    totalSalarios = parseFloat(element.total_salarios).toFixed(2);
+    console.log(totalSalarios);
+    if (isNaN(totalSalarios) === true) {
+      totalSalarios = 0;
+    }
   });
-  let totalUtilidadNetaMes = utilidadTotal - totalSalarios;
+  totalUtilidadNetaMes = parseFloat(utilidadTotal - totalSalarios).toFixed(2);
   let plantilla = `
   <tr>
     <td style="width: 50%;">SUELDOS Y SALARIOS</td>
-    <td>L. ${totalSalarios.toFixed(2)}</td>
+    <td>L. ${parseFloat(totalSalarios).toFixed(2)}</td>
   </tr>
+  `;
+  cuerpoResumenMes.innerHTML += plantilla;
+  // console.log(totalSalarios);
+});
+
+// ipcRenderer.on("gastosDelMes", (event, results, anio, mes) => {
+//   totalGastos =  results[0][0].total_gastos
+//   console.log(totalGastos);
+// })
+
+ipcRenderer.on("gastosDelMes", (event, results, anio, mes) => {
+  // let salarios = results[0];
+  console.log(results);
+  totalGastos = parseFloat(results[0][0].total_salarios).toFixed(2);
+  console.log(results[0][0].total_salarios);
+  if (isNaN(totalGastos) === true) {
+    totalGastos = 0;
+    console.log("No es numero");
+  }
+  console.log(totalGastos);
+  // let totalSalarios;
+  // salarios.forEach((element) => {
+  //   totalSalarios = parseFloat(element.total_salarios).toFixed(2);
+  // });
+  totalUtilidadNetaMes -= totalGastos;
+  let plantilla = `
   <tr>
     <td style="width: 50%;">GASTOS DE CAJA</td>
-    <td></td>
+    <td>L. ${parseFloat(totalGastos).toFixed(2)}</td>
   </tr>
   <tr>
     <td style="width: 50%;">PERDIDAS</td>
@@ -444,7 +493,7 @@ ipcRenderer.on("salariosDelMes", (event, results, anio, mes) => {
   </tr>
   <tr>
     <td style="width: 50%;">UTILIDAD NETA DEL MES</td>
-    <td>L. ${parseInt(totalUtilidadNetaMes).toFixed(2)}</td>
+    <td>L. ${parseFloat(totalUtilidadNetaMes).toFixed(2)}</td>
   </tr>
   `;
   cuerpoResumenMes.innerHTML += plantilla;

@@ -155,20 +155,23 @@ ipcRenderer.on("ventas_del_dia", (event, results, fecha) => {
   let sumaTotalVentas = 0;
   ventas.forEach((element) => {
     if (element.salida_tipo_pago === "Contado") {
-      totalContado += parseInt(element.total_venta);
+      totalContado += element.total_venta;
     }
     if (element.salida_tipo_pago === "Credito") {
-      totalCredito += parseInt(element.total_venta);
+      totalCredito += element.total_venta;
     }
     if (element.salida_tipo_pago === "Deposito") {
-      totalDeposito += parseInt(element.total_venta);
+      totalDeposito += element.total_venta;
     }
   });
-  ventasContado.value = `L. ${totalContado.toFixed(2)}`;
-  ventasCredito.value = `L. ${totalCredito.toFixed(2)}`;
-  ventasDeposito.value = `L. ${totalDeposito.toFixed(2)}`;
-  sumaTotalVentas = (totalContado + totalCredito + totalDeposito).toFixed(2);
-  totalVentas.value = `L. ${sumaTotalVentas}`;
+  ventasContado.value = `L. ${parseFloat(totalContado).toFixed(2)}`;
+  console.log(totalContado);
+  ventasCredito.value = `L. ${parseFloat(totalCredito).toFixed(2)}`;
+  console.log(totalCredito);
+  ventasDeposito.value = `L. ${parseFloat(totalDeposito).toFixed(2)}`;
+  console.log(totalDeposito);
+  sumaTotalVentas = totalContado + totalCredito + totalDeposito;
+  totalVentas.value = `L. ${parseFloat(sumaTotalVentas).toFixed(2)}`;
 });
 
 ipcRenderer.on("aportaciones_del_dia", (event, results) => {
@@ -181,23 +184,34 @@ ipcRenderer.on("aportaciones_del_dia", (event, results) => {
   let sumaDeposito = 0;
   aportaciones.forEach((element) => {
     if (element.historial_cliente_tipo_aportacion === "Contado") {
-      recuperacionesContado += parseInt(element.historial_cliente_aportacion);
+      recuperacionesContado += element.historial_cliente_aportacion;
+      console.log(recuperacionesContado);
     }
     if (element.historial_cliente_tipo_aportacion === "Deposito") {
-      recuperacionesDeposito += parseInt(element.historial_cliente_aportacion);
+      recuperacionesDeposito += element.historial_cliente_aportacion;
+      console.log(recuperacionesDeposito);
     }
   });
-  recuperacionesTotal = (
-    (recuperacionesContado + recuperacionesDeposito) *
-    -1
+  recuperacionesTotal = parseFloat(
+    (recuperacionesContado + recuperacionesDeposito) * -1
   ).toFixed(2);
-  recuperacionContado.value = `L. ${(recuperacionesContado * -1).toFixed(2)}`;
-  recuperacionDeposito.value = `L. ${(recuperacionesDeposito * -1).toFixed(2)}`;
-  totalRecuperaciones.value = `L. ${recuperacionesTotal}`;
-  sumaContado = totalContado + recuperacionesContado * -1;
-  sumaDeposito = totalDeposito + recuperacionesDeposito * -1;
-  sumaTotalContado.value = `L. ${sumaContado.toFixed(2)}`;
-  sumaTotalDeposito.value = `L. ${sumaDeposito.toFixed(2)}`;
+  recuperacionContado.value = `L. ${parseFloat(
+    recuperacionesContado * -1
+  ).toFixed(2)}`;
+  recuperacionDeposito.value = `L. ${parseFloat(
+    recuperacionesDeposito * -1
+  ).toFixed(2)}`;
+  totalRecuperaciones.value = `L. ${parseFloat(recuperacionesTotal).toFixed(
+    2
+  )}`;
+  sumaContado = parseFloat(totalContado + recuperacionesContado * -1).toFixed(
+    2
+  );
+  sumaDeposito = parseFloat(
+    totalDeposito + recuperacionesDeposito * -1
+  ).toFixed(2);
+  sumaTotalContado.value = `L. ${parseFloat(sumaContado).toFixed(2)}`;
+  sumaTotalDeposito.value = `L. ${parseFloat(sumaDeposito).toFixed(2)}`;
 });
 
 ipcRenderer.on("salidas_del_dia", (event, results) => {
@@ -215,7 +229,7 @@ ipcRenderer.on("salidas_del_dia", (event, results) => {
 
   salidas.forEach((element, index, array) => {
     if (element.salida_tipo_pago === "Credito") {
-      let total = parseInt(element.total);
+      let total = element.total;
       totalCredito += total;
       if (contarFilasCredito > 48) {
         plantillaCredito += `<div class="html2pdf__page-break"></div><br>`;
@@ -230,14 +244,16 @@ ipcRenderer.on("salidas_del_dia", (event, results) => {
           <td style="width: 400px; max-width: 400px">${
             element.producto_nombre
           }</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+          <td style="width: 150px; max-width: 150px">L. ${parseFloat(
             element.lote_valor_unitario_venta
           ).toFixed(2)}</th>
-          <td style="width: 120px; max-width: 120px">L. ${total.toFixed(2)}</td>
+          <td style="width: 120px; max-width: 120px">L. ${parseFloat(
+            total
+          ).toFixed(2)}</td>
         </tr>`;
       contarFilasCredito++;
     } else if (element.salida_tipo_pago === "Contado") {
-      let total = parseInt(element.total);
+      let total = element.total;
       totalContado += total;
       if (contarFilasContado > 48) {
         plantillaContado += `<div class="html2pdf__page-break"></div><br>`;
@@ -252,16 +268,16 @@ ipcRenderer.on("salidas_del_dia", (event, results) => {
           <td style="width: 400px; max-width: 400px">${
             element.producto_nombre
           }</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+          <td style="width: 150px; max-width: 150px">L. ${parseFloat(
             element.lote_valor_unitario_venta
           ).toFixed(2)}</th>
-          <td style="width: 120px; max-width: 120px">L. ${parseInt(
+          <td style="width: 120px; max-width: 120px">L. ${parseFloat(
             element.total
           ).toFixed(2)}</td>
         </tr>`;
       contarFilasContado++;
     } else if (element.salida_tipo_pago === "Deposito") {
-      let total = parseInt(element.total);
+      let total = element.total;
       totalDeposito += total;
       if (contarFilasDeposito > 48) {
         plantillaDeposito += `<div class="html2pdf__page-break"></div><br>`;
@@ -276,10 +292,10 @@ ipcRenderer.on("salidas_del_dia", (event, results) => {
           <td style="width: 400px; max-width: 400px">${
             element.producto_nombre
           }</td>
-          <td style="width: 150px; max-width: 150px">L. ${parseInt(
+          <td style="width: 150px; max-width: 150px">L. ${parseFloat(
             element.lote_valor_unitario_venta
           ).toFixed(2)}</th>
-          <td style="width: 120px; max-width: 120px">L. ${parseInt(
+          <td style="width: 120px; max-width: 120px">L. ${parseFloat(
             element.total
           ).toFixed(2)}</td>
         </tr>`;
@@ -292,9 +308,9 @@ ipcRenderer.on("salidas_del_dia", (event, results) => {
       <td style="width: 160px; max-width: 150px"></td>
       <td style="width: 400px; max-width: 400px"></td>
       <td style="width: 150px; max-width: 150px">TOTAL</th>
-      <td style="width: 120px; max-width: 120px"> L. ${totalCredito.toFixed(
-        2
-      )}</td>
+      <td style="width: 120px; max-width: 120px"> L. ${parseFloat(
+        totalCredito
+      ).toFixed(2)}</td>
     </tr>`;
   plantillaContado += `
     <tr>
@@ -302,9 +318,9 @@ ipcRenderer.on("salidas_del_dia", (event, results) => {
         <td style="width: 160px; max-width: 150px"></td>
         <td style="width: 400px; max-width: 400px"></td>
         <td style="width: 150px; max-width: 150px">TOTAL</th>
-        <td style="width: 120px; max-width: 120px"> L. ${totalContado.toFixed(
-          2
-        )}</td>
+        <td style="width: 120px; max-width: 120px"> L. ${parseFloat(
+          totalContado
+        ).toFixed(2)}</td>
       </tr>`;
   plantillaDeposito += `
       <tr>
@@ -312,9 +328,9 @@ ipcRenderer.on("salidas_del_dia", (event, results) => {
           <td style="width: 160px; max-width: 150px"></td>
           <td style="width: 400px; max-width: 400px"></td>
           <td style="width: 150px; max-width: 150px">TOTAL</th>
-          <td style="width: 120px; max-width: 120px"> L. ${totalDeposito.toFixed(
-            2
-          )}</td>
+          <td style="width: 120px; max-width: 120px"> L. ${parseFloat(
+            totalDeposito
+          ).toFixed(2)}</td>
         </tr>`;
   cuerpoTablaCredito.innerHTML += plantillaCredito;
   cuerpoTablaContado.innerHTML += plantillaContado;

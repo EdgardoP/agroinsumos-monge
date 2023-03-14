@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="scripts/unpkxlsx.full.min.js"></script>
+    <script src="scripts/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style/sliderMenu.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>Gastos de Caja</title>
+  </head>
+  <body style="margin: 2% 10%; background-color: #333">
+    <div style="padding: 100px 5%; background-color: #fff">
+      <div id="elementoImprimir" style="background-color: #fff">
+        <div>
+          <table id="tablaFinanzas" class="tablaFinanzas">
+            <thead>
+              <tr>
+                <th style="text-align: center" colspan="2">
+                  <h1>RECUPERACIONES MONGE</h1>
+                </th>
+              </tr>
+              <tr>
+                <th style="text-align: center" colspan="2">
+                  <h2>GASTOS DE CAJA</h2>
+                </th>
+              </tr>
+              <tr>
+                <th style="width: 400px; max-width: 400px">DETALLE DEL GASTO</th>
+                <th style="width: 120px; max-width: 120px">SUBTOTAL</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoTablaRecuperaciones"></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="flexRow" style="justify-content: space-evenly">
+          <div class="flexRow">
+            <button
+              style="margin-right: 10px"
+              tabindex="6"
+              id="btnImprimir"
+              class="boton colorPrimario"
+              onclick=""
+            >
+              GUARDAR COMO PDF
+            </button>
+            <button
+              onclick="ExportExcel('xlsx')"
+              tabindex="5"
+              id="btnAceptar"
+              class="boton colorSecundario"
+            >
+              EXPORTAR A EXCEL
+            </button>
+          </div>
+        </div>
+      </div>
+      <%- include('./partials/modal_notificacion_excel.ejs') %>
+      <script src="scripts/gastos_caja_ventana.js"></script>
+    </div>
+  </body>
+</html>

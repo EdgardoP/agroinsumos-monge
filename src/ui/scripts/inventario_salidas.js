@@ -165,18 +165,20 @@ const confirmarEntradas = async () => {
   for (let index = 0; index < filasElementos.length; index++) {
     let datosSalidas = [];
     if (filasElementos[index].children[8].innerHTML === "Credito") {
-      let cantidadProducto = parseInt(
+      let cantidadProducto = parseFloat(
         filasElementos[index].children[6].innerHTML
-      );
-      let cantidadPrecioVenta = parseInt(
+      ).toFixed(2);
+      let cantidadPrecioVenta = parseFloat(
         filasElementos[index].children[5].innerHTML
-      );
-      let totalVenta = cantidadProducto * cantidadPrecioVenta;
+      ).toFixed(2);
+      let totalVenta = parseFloat(
+        cantidadProducto * cantidadPrecioVenta
+      ).toFixed(2);
       datosHistorialCliente = {
         historial_cliente_fk: clienteSalida.value,
         historial_cliente_fecha: salidaFecha.value,
         historial_cliente_detalle: `${filasElementos[index].children[3].innerHTML} ${filasElementos[index].children[4].innerHTML} ${filasElementos[index].children[6].innerHTML} x ${filasElementos[index].children[5].innerHTML}`,
-        historial_cliente_aportacion: totalVenta,
+        historial_cliente_aportacion: parseFloat(totalVenta).toFixed(2),
         historial_cliente_tipo_pago:
           filasElementos[index].children[8].innerHTML,
         historial_cliente_usuario_fk: 1,
@@ -346,9 +348,9 @@ const agregarSalidaLista = () => {
   // console.log(elementoTabla);
   let idProveedor = elementoTabla.proveedor_id;
   let stockAntiguo = parseInt(salidaStockActual.value);
-  let valorUnitVenta = parseInt(salidaValorUnitarioVenta.value);
+  let valorUnitVenta = parseFloat(salidaValorUnitarioVenta.value).toFixed(2);
   let nuevaSalida = parseInt(salidaCantidad.value);
-  let subtotal = nuevaSalida * valorUnitVenta;
+  let subtotal = parseFloat(nuevaSalida * valorUnitVenta).toFixed(2);
   let filasElementos = document.getElementsByClassName("filasElementos");
   let valorLote = salidaLoteFk.value;
   let sumaCantidades;
@@ -377,19 +379,35 @@ const agregarSalidaLista = () => {
       location.href = "#modal_advertencia";
     }
   }
+  if (parseInt(salidaCantidad.value) > parseInt(salidaStockActual.value)) {
+    CREAR = false;
+    location.href = "#modal_advertencia";
+  }
   if (CREAR === true) {
     plantilla += `
     <tr id = "${idProveedor}" class = "filasElementos">
       <td style="min-width: 20px; max-width: 20px; width: 20px;">${cantidad_filas_ingresadas}</td>
-      <td style="min-width: 80px; max-width: 80px; width: 80px">${elementoTabla.producto_id}</td>
-      <td style="min-width: 60px; max-width: 60px; width: 60px">${elementoTabla.lote_id}</td>
-      <td style="min-width: 200px; max-width: 200px; width: 200px">${elementoTabla.producto_nombre}</td>
-      <td style="min-width: 120px; max-width: 120px; width: 120px">${elementoTabla.lote_presentacion}</td>
-      <td style="min-width: 120px; max-width: 120px; width: 120px">${elementoTabla.lote_valor_unitario_venta}</td>
+      <td style="min-width: 80px; max-width: 80px; width: 80px">${
+        elementoTabla.producto_id
+      }</td>
+      <td style="min-width: 60px; max-width: 60px; width: 60px">${
+        elementoTabla.lote_id
+      }</td>
+      <td style="min-width: 200px; max-width: 200px; width: 200px">${
+        elementoTabla.producto_nombre
+      }</td>
+      <td style="min-width: 120px; max-width: 120px; width: 120px">${
+        elementoTabla.lote_presentacion
+      }</td>
+      <td style="min-width: 120px; max-width: 120px; width: 120px">${
+        elementoTabla.lote_valor_unitario_venta
+      }</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">${nuevaSalida}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">${stockAntiguo}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">${tipoPago}</td>
-      <td style="min-width: 120px; max-width: 120px; width: 120px">${subtotal}</td>
+      <td style="min-width: 120px; max-width: 120px; width: 120px">${parseFloat(
+        subtotal
+      ).toFixed(2)}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">
             <div>
               <button 
@@ -476,7 +494,7 @@ function autocomplete(inp, arr) {
             salidaFechaVencimiento.value = `${convertirFecha(
               listaDeProductosRaw[indice].lote_fecha_vencimiento
             )}`;
-            salidaValorUnitarioVenta.value = parseInt(
+            salidaValorUnitarioVenta.value = parseFloat(
               listaDeProductosRaw[indice].lote_valor_unitario_venta
             ).toFixed(2);
             salidaProductoNombre.value =

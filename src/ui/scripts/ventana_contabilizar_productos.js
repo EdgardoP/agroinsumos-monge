@@ -124,9 +124,9 @@ ipcRenderer.on("listado_de_productos", (event, results) => {
   let totalInversion = 0;
   let totalCantidad = 0;
   productos.forEach((element) => {
-    let valorCompra = parseInt(element.lote_valor_unitario_compra);
-    let cantidad = parseInt(element.lote_cantidad);
-    let valorVenta = parseInt(element.lote_valor_unitario_venta);
+    let valorCompra = parseFloat(element.lote_valor_unitario_compra).toFixed(2);
+    let cantidad = element.lote_cantidad;
+    let valorVenta = parseFloat(element.lote_valor_unitario_venta).toFixed(2);
     let inversion = valorCompra * cantidad;
     totalCantidad += cantidad;
     totalInversion += inversion;
@@ -140,14 +140,14 @@ ipcRenderer.on("listado_de_productos", (event, results) => {
             }</td>
             <td style="width: 70px; max-width: 70px">${cantidad}</td>
             <td style="width: 140px; max-width: 140px">L. 
-            ${valorCompra.toFixed(2)}
+            ${parseFloat(valorCompra).toFixed(2)}
             </td>
-            <td style="width: 140px; max-width: 140px">L. ${valorVenta.toFixed(
-              2
-            )}</td>
-            <td style="width: 100px; max-width: 100px">L. ${inversion.toFixed(
-              2
-            )}</td>
+            <td style="width: 140px; max-width: 140px">L. ${parseFloat(
+              valorVenta
+            ).toFixed(2)}</td>
+            <td style="width: 100px; max-width: 100px">L. ${parseFloat(
+              inversion
+            ).toFixed(2)}</td>
         </tr>
     `;
   });

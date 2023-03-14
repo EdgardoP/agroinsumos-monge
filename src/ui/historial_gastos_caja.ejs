@@ -1,0 +1,23 @@
+<%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="style/style.css" />
+<div class="contenedorDashboard">
+  <h3>Finanzas / Historial de Gastos de Caja</h3>
+</div>
+<div class="contenedorDashboard">
+  <table class="estiloTabla">
+    <thead>
+      <tr>
+        <th style="min-width: 25vh; max-width: 25vh; width: 25vh">
+          Numero
+        </th>
+        <!-- <th style="min-width: 25vh; max-width: 25vh; width: 25vh">Codigo</th> -->
+        <th style="min-width: 25vh; max-width: 25vh; width: 25vh">Codigo</th>
+        <th style="min-width: 25vh; max-width: 25vh; width: 25vh">Fecha</th>
+        <th style="min-width: 25vh; max-width: 25vh; width: 25vh">Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tablaSalidas" style="max-height: 70vh; height: 70vh"></tbody>
+  </table>
+</div>
+<script src="scripts/historial_gastos_caja.js"></script>
+<%-include('./partials/footer.ejs') %>

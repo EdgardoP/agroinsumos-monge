@@ -4,9 +4,9 @@ let btnImprimir = document.getElementById("btnImprimir");
 let cuerpoTablaRecuperaciones = document.getElementById(
   "cuerpoTablaRecuperaciones"
 );
-let ventasCredito = document.getElementById("ventasCredito");
-let ventasDeposito = document.getElementById("ventasDeposito");
-let totalVentas = document.getElementById("totalVentas");
+let documentosCredito = document.getElementById("documentosCredito");
+let documentosDeposito = document.getElementById("documentosDeposito");
+let totaldocumentos = document.getElementById("totaldocumentos");
 let recuperacionContado = document.getElementById("recuperacionContado");
 let recuperacionDeposito = document.getElementById("recuperacionDeposito");
 let totalRecuperaciones = document.getElementById("totalRecuperaciones");
@@ -19,7 +19,7 @@ let cuerpoTablaDeposito = document.getElementById("cuerpoTablaDeposito");
 btnImprimir.addEventListener("click", () => {
   let opt = {
     margin: 1,
-    filename: `RECUPERACIONES_${fechaPalabras(fechaMostrar)}`,
+    filename: `GASTOS DE CAJA`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 2, scrollY: 0 },
     jsPDF: { format: "a3", unit: "in", orientation: "landscape" },
@@ -92,9 +92,7 @@ function ExportExcel(type, fn, dl) {
     ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
     : XLSX.writeFile(
         wb,
-        fn ||
-          `${desktopDir}RECUPERACIONES_FECHA_${fechaPalabras(fechaMostrar)}.` +
-            (type || "xlsx")
+        fn || `${desktopDir}GASTOS DE CAJA.` + (type || "xlsx")
       );
 }
 
@@ -132,73 +130,36 @@ const convertirFecha = (fecha) => {
 
 //class html2pdf__page-break
 
-let totalContado = 0;
-let totalDeposito = 0;
 let fechaMostrar;
-ipcRenderer.on("recuperaciones_clientes", (event, results, fecha) => {
+ipcRenderer.on("documento_gastos", (event, results, fecha) => {
+  console.log(results);
   let fechaActual = document.getElementsByClassName("fechaActual");
   fechaMostrar = fecha;
   for (let index = 0; index < fechaActual.length; index++) {
     fechaActual[index].innerHTML = fechaPalabras(fechaMostrar);
   }
   console.log(results[0]);
-  let ventas = results[0];
+  let documentos = results[0];
   let plantilla = "";
-  ventas.forEach((element) => {
-    let nombreCompleto = `${element.cliente_nombre}  ${element.cliente_apellido} `;
-    let descripcion = `${element.historial_cliente_detalle}`;
-    let aportacion = `${parseFloat(
-      element.historial_cliente_aportacion
-    ).toFixed(2)}`;
-    if (aportacion < 0) {
-      aportacion *= -1;
-    }
-    let tipoAportacion = `${element.historial_cliente_tipo_aportacion}`;
-    if (tipoAportacion === "Deposito") {
-      totalDeposito += aportacion;
-      plantilla += `
-        <tr>
-          <td style="width: 150px; max-width: 150px"></td>
-          <td style="width: 300px; max-width: 300px">${nombreCompleto.toUpperCase()}</td>
-          <td style="width: 400px; max-width: 400px">${descripcion.toUpperCase()}</td>
-          <td style="width: 120px; max-width: 120px"></td>
-          <td style="width: 120px; max-width: 120px">L. ${aportacion}</td>
-          <td style="width: 120px; max-width: 120px"></td>
-          <td style="width: 120px; max-width: 120px"></td>
-        </tr>
-        `;
-    } else if (tipoAportacion === "Contado") {
-      totalContado += aportacion;
-      plantilla += `
-        <tr>
-          <td style="width: 150px; max-width: 150px"></td>
-          <td style="width: 300px; max-width: 300px">${nombreCompleto.toUpperCase()}</td>
-          <td style="width: 400px; max-width: 400px">${descripcion.toUpperCase()}</td>
-          <td style="width: 120px; max-width: 120px"></td>
-          <td style="width: 120px; max-width: 120px"></td>
-          <td style="width: 120px; max-width: 120px">L. ${aportacion}</td>
-          <td style="width: 120px; max-width: 120px"></td>
-        </tr>
-        `;
-    }
+  let totalGastos = 0;
+  documentos.forEach((element) => {
+    totalGastos += element.gastos_cantidad;
+    plantilla += `
+    <tr>
+      <td style="width: 400px; max-width: 400px">${element.gastos_detalle}</td>
+      <td style="width: 120px; max-width: 120px">L. ${parseFloat(
+        element.gastos_cantidad
+      ).toFixed(2)}</td>
+    </tr>
+    `;
   });
-  let montoTotal = totalDeposito + totalContado;
   plantilla += `
   <tr>
-    <td style="width: 150px; max-width: 150px; border: 0px"></td>
-    <td style="width: 300px; max-width: 300px; border: 0px"></td>
-    <td style="width: 400px; max-width: 400px; border: 0px">MONTO TOTAL</td>
-    <td style="width: 120px; max-width: 120px; border: 0px"></td>
-    <td style="width: 120px; max-width: 120px;">L. ${totalDeposito.toFixed(
-      2
-    )}</td>
-    <td style="width: 120px; max-width: 120px">L. ${totalContado.toFixed(
-      2
-    )}</td>
-    <td style="width: 120px; max-width: 120px">L. ${montoTotal.toFixed(2)}</td>
+    <td style="width: 150px; max-width: 150px;">TOTAL</td>
+    <td style="width: 300px; max-width: 300px;">L. ${parseFloat(
+      totalGastos
+    ).toFixed(2)}</td>
   </tr>
   `;
   cuerpoTablaRecuperaciones.innerHTML = plantilla;
-  console.log(totalDeposito);
-  console.log(totalContado);
 });

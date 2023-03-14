@@ -81,7 +81,7 @@ body {
 }
 
 .cajaInput label{
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .cajaInput{
@@ -107,7 +107,7 @@ body {
   border: 0px;
   margin-left: 10px;
   padding: 2px;
-  font-size: 14px;
+  font-size: 13px;
   width: 250px;
 }
 
@@ -122,7 +122,7 @@ body {
   align-items: center;
   background-color: var(--colorInput);
   width: max-content;
-  padding: 7px;
+  padding: 5px;
   border-radius: 5px;
   margin-top: 7px;
 }

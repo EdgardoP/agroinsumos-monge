@@ -1,27 +1,27 @@
 <%- include('./partials/header.ejs') %>
 <link rel="stylesheet" href="style/style.css" />
-<div class="contenedorDashboard">
-  <h3>Planilla / Ingresar Nuevo Pago de Planilla</h3>
+<div class="contenedorDashboard" style="width: 90%">
+  <h3>Planilla / Ingresar Nuevos Gastos de Caja</h3>
 </div>
-<div class="contenedorDashboard" style="overflow-x: inherit; width: 87%;">
+<div class="contenedorDashboard" style="overflow-x: inherit; width: 90%">
   <form action="" class="flexRow">
     <div class="flexColumn">
       <div class="flexRow" style="align-items: center">
         <div class="cajaInput">
-          <label for="desdeLaFecha">Desde la fecha</label>
+          <label for="gasto_fecha">Fecha</label>
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
               style="width: 15vh"
               type="date"
-              name="desdeLaFecha"
-              id="desdeLaFecha"
+              name="gasto_fecha"
+              id="gasto_fecha"
               class="estiloInputLogin"
               tabindex="1"
             />
           </div>
         </div>
-        <div class="cajaInput">
+        <!-- <div class="cajaInput">
           <label for="hastaLaFecha">Hasta la fecha</label>
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
@@ -34,79 +34,32 @@
               tabindex="2"
             />
           </div>
-        </div>
+        </div> -->
         <div class="cajaInput">
-          <label for="nombreEmpleado">Nombre del Empleado</label>
+          <label for="detalleGasto">Detalle Gasto</label>
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
               style="width: 15vh"
               type="text"
-              name="nombreEmpleado"
-              id="nombreEmpleado"
+              name="detalleGasto"
+              id="detalleGasto"
               class="estiloInputLogin"
               tabindex="3"
             />
           </div>
         </div>
         <div class="cajaInput">
-          <label for="sueldoBase">Sueldo Base</label>
+          <label for="gastos_cantidad">Cantidad a Gastar:</label>
           <div class="imagenInput">
             <img src="icons/pencil.png" alt="" />
             <input
               style="width: 15vh"
               type="text"
-              name="sueldoBase"
-              id="sueldoBase"
+              name="gastos_cantidad"
+              id="gastos_cantidad"
               class="estiloInputLogin"
               tabindex="4"
-              onkeyup="soloNumeros(this)"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="flexRow" style="align-items: center">
-        <div class="cajaInput">
-          <label for="horasExtra">Horas Extra</label>
-          <div class="imagenInput">
-            <img src="icons/pencil.png" alt="" />
-            <input
-              style="width: 15vh"
-              type="text"
-              name="horasExtra"
-              id="horasExtra"
-              class="estiloInputLogin"
-              tabindex="5"
-              onkeyup="soloNumeros(this)"
-            />
-          </div>
-        </div>
-        <div class="cajaInput">
-          <label for="bonificaciones">Bonificaciones</label>
-          <div class="imagenInput">
-            <img src="icons/pencil.png" alt="" />
-            <input
-              style="width: 15vh"
-              type="text"
-              name="bonificaciones"
-              id="bonificaciones"
-              class="estiloInputLogin"
-              tabindex="6"
-              onkeyup="soloNumeros(this)"
-            />
-          </div>
-        </div>
-        <div class="cajaInput">
-          <label for="deducciones">Deducciones</label>
-          <div class="imagenInput">
-            <img src="icons/pencil.png" alt="" />
-            <input
-              style="width: 15vh"
-              type="text"
-              name="deducciones"
-              id="deducciones"
-              class="estiloInputLogin"
-              tabindex="7"
               onkeyup="soloNumeros(this)"
             />
           </div>
@@ -139,33 +92,16 @@
     </div>
   </form>
 </div>
-<div class="contenedorDashboard "style="width: 87%;height: 450px;">
+<div class="contenedorDashboard" style="width: 90%; height: 450px">
   <table class="estiloTabla">
     <thead>
       <tr>
+        <th style="min-width: 160px; max-width: 160px; width: 160px">Fecha</th>
         <th style="min-width: 160px; max-width: 160px; width: 160px">
-          Desde la Fecha
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
-          Hasta la Fecha
+          Detalle
         </th>
         <th style="min-width: 260px; max-width: 260px; width: 360px">
-          Nombre Empleado
-        </th>
-        <th style="min-width: 100px; max-width: 100px; width: 160px">
-          Sueldo Base
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
-          Horas Extra
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
-          Bonificaciones
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
-          Deducciones
-        </th>
-        <th style="min-width: 160px; max-width: 160px; width: 160px">
-          Total Neto a Pagar
+          Cantidad a Gastar
         </th>
         <th style="min-width: 130px; max-width: 130px; width: 130px">
           Acciones
@@ -198,5 +134,5 @@
     </div>
   </div>
 </div>
-<script src="scripts/nuevo_pago_planilla.js"></script>
+<script src="scripts/gastos_caja.js"></script>
 <%- include('./partials/footer.ejs') %>

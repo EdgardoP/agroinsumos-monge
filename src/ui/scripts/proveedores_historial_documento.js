@@ -115,9 +115,9 @@ const validar = () => {
 };
 
 const nuevaAportacion = async () => {
-  let saldoAnterior = parseInt(saldoActual.innerHTML);
+  let saldoAnterior = parseFloat(saldoActual.innerHTML).toFixed(2);
   console.log(saldoAnterior);
-  let saldoAporte = parseInt(cantidadAporte.value);
+  let saldoAporte = parseFloat(cantidadAporte.value).toFixed(2);
   console.log(saldoAporte);
 
   let saldoNuevo = saldoAnterior - saldoAporte;
@@ -125,9 +125,11 @@ const nuevaAportacion = async () => {
     historial_proveedor_fk: idProveedor,
     historial_proveedor_fecha: fechaActual,
     historial_proveedor_detalle: detallesAportacion.value,
-    historial_proveedor_saldo_anterior: saldoActual.innerHTML,
-    historial_proveedor_aportacion: cantidadAporte.value,
-    historial_proveedor_saldo_nuevo: saldoNuevo,
+    historial_proveedor_saldo_anterior: parseFloat(
+      saldoActual.innerHTML
+    ).toFixed(2),
+    historial_proveedor_aportacion: parseFloat(cantidadAporte.value).toFixed(2),
+    historial_proveedor_saldo_nuevo: parseFloat(saldoNuevo).toFixed(2),
     historial_proveedor_tipo_aportacion: formaPago.value,
   };
   console.log(obj);
@@ -166,6 +168,7 @@ const visualizarDocumento = async () => {
 let nombreP;
 const renderizar = () => {
   ipcRenderer.on("historial_cuentas", (event, results, id) => {
+    console.log(results);
     let datos = results[0];
     let plantilla = "";
     idProveedor = id;
@@ -189,13 +192,19 @@ const renderizar = () => {
               ${element.historial_proveedor_detalle}
             </td>
             <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-             L. ${formatDinero(element.historial_proveedor_saldo_anterior)}
+             L. ${formatDinero(
+               parseFloat(element.historial_proveedor_saldo_anterior).toFixed(2)
+             )}
             </td>
             <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-             L. ${formatDinero(element.historial_proveedor_aportacion)}
+             L. ${formatDinero(
+               parseFloat(element.historial_proveedor_aportacion).toFixed(2)
+             )}
             </td>
             <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-             L. ${formatDinero(element.historial_proveedor_saldo_nuevo)}
+             L. ${formatDinero(
+               parseFloat(element.historial_proveedor_saldo_nuevo).toFixed(2)
+             )}
             </td>
             <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
               ${element.historial_proveedor_tipo_aportacion}

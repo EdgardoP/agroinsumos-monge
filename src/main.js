@@ -139,6 +139,21 @@ function crearVentanaMostrarPlanilla() {
   ventanaMostrarPlanilla.loadFile("src/ui/ventanaMostrarPlanilla.ejs");
 }
 
+let ventanaMostrarGastos;
+function CrearVentanaMostrarGastosCaja() {
+  ventanaMostrarGastos = new BrowserWindow({
+    width: 1280,
+    height: 1400,
+    frame: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  ventanaMostrarGastos.loadFile("src/ui/gastos_caja_ventana.ejs");
+}
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
@@ -196,7 +211,7 @@ const iniciarSesion = (obj) => {
     [usuario_nombre, usuario_contraseña],
     (error, results, fields) => {
       if (error) {
-        // console.log(error);
+        console.log(error);
       }
       if (results.length > 0) {
         crearPrincipal();
@@ -585,6 +600,7 @@ const insertarHistorialProveedor = (obj) => {
   const { historial_proveedor_detalle } = obj;
   const { historial_proveedor_aportacion } = obj;
   const { historial_proveedor_tipo_pago } = obj;
+  console.log(obj);
   let query = `call insertar_historial_proveedor(?,?,?,?,?)`;
   db.query(
     query,
@@ -600,6 +616,7 @@ const insertarHistorialProveedor = (obj) => {
         console.log(error);
         notificacion("Transaccion Fallida", "Ha ocurrido un error");
       } else {
+        console.log("/////////////////////////////////////////////////////");
         console.log(results);
         notificacion(
           "Transaccion Exitosa",
@@ -1133,6 +1150,24 @@ const historialClientes = (id, fechaInicial, fechaFinal) => {
   });
 };
 
+ipcMain.handle("historial_gastos_caja", (event) => {
+  historial_gastos_caja();
+});
+
+const historial_gastos_caja = () => {
+  let query = `call historial_gastos_caja()`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaPrincipal.webContents.once("did-finish-load", function () {
+        ventanaPrincipal.webContents.send("historial_gastos_caja", results);
+      });
+      // console.log(results);
+    }
+  });
+};
+
 //Planillas
 ipcMain.handle("historial_planillas", (event) => {
   historial_planillas();
@@ -1169,6 +1204,26 @@ const insertarNuevaPlanilla = (obj) => {
   });
 };
 
+ipcMain.handle("insertar_nuevo_gasto", (event, obj) => {
+  insertar_nuevo_gasto(obj);
+});
+
+const insertar_nuevo_gasto = (obj) => {
+  // console.log(obj);
+  const query = "INSERT INTO gastos_caja SET ?";
+  db.query(query, obj, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+      notificacion("Transaccion Fallida", "Ha ocurrido un error");
+    } else {
+      notificacion(
+        "Transaccion exitosa",
+        "Se ha ingresado un nuevo Gasto de Caja"
+      );
+    }
+  });
+};
+
 ipcMain.handle("mostrar_planilla_documento", (event, id) => {
   mostrar_planilla_documento(id);
 });
@@ -1192,6 +1247,26 @@ const mostrar_planilla_documento = (id) => {
   });
 };
 
+ipcMain.handle("mostrar_gastos_caja_documento", (event, id) => {
+  mostrar_gastos_caja_documento(id);
+});
+
+const mostrar_gastos_caja_documento = (id) => {
+  const query = "call mostrar_gastos_caja_documento(?)";
+  db.query(query, [id], (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(results);
+      CrearVentanaMostrarGastosCaja();
+      ventanaMostrarGastos.webContents.once("did-finish-load", function () {
+        ventanaMostrarGastos.webContents.send("documento_gastos", results, id);
+      });
+      ventanaMostrarGastos.show();
+    }
+  });
+};
+
 ipcMain.handle("salariosDelMes", (event, anio, mes) => {
   salariosDelMes(anio, mes);
 });
@@ -1205,6 +1280,28 @@ const salariosDelMes = (anio, mes) => {
       ventanaVentasMesuales.webContents.once("did-finish-load", function () {
         ventanaVentasMesuales.webContents.send(
           "salariosDelMes",
+          results,
+          anio,
+          mes
+        );
+      });
+    }
+  });
+};
+
+ipcMain.handle("gastosDelMes", (event, anio, mes) => {
+  gastosDelMes(anio, mes);
+});
+
+const gastosDelMes = (anio, mes) => {
+  let query = `call gastosDelMes(${anio},${mes})`;
+  db.query(query, (error, results, fields) => {
+    if (error) {
+      console.log(error);
+    } else {
+      ventanaVentasMesuales.webContents.once("did-finish-load", function () {
+        ventanaVentasMesuales.webContents.send(
+          "gastosDelMes",
           results,
           anio,
           mes
