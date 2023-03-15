@@ -121,7 +121,7 @@ const nuevaAportacion = async () => {
   console.log(saldoAporte);
 
   let saldoNuevo = saldoAnterior - saldoAporte;
-  obj = {
+  let obj = {
     historial_cliente_fk: idCliente,
     historial_cliente_fecha: fechaActual,
     historial_cliente_detalle: detallesAportacion.value,
