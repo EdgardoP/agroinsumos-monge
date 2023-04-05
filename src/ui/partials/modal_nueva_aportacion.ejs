@@ -2,20 +2,32 @@
   <div class="modal__content">
     <div class="contenedorDashboard">
       <div class="contenedorDashboard">
-        <h2>Ingresar Nueva Aportacion</h2>
+        <h2>Ingresar Nueva Recuperacion</h2>
       </div>
       <div class="contenedorDashboard">
         <form action="" class="flexRow">
           <div class="flexColumn">
             <div class="flexRow">
               <div class="cajaInput">
-                <label for="detalles_aportacion"
-                  >Detalles de la Aportacion</label
-                >
+                <label for="fechaActual">Fecha</label>
                 <div class="imagenInput">
                   <img src="icons/pencil.png" alt="" />
                   <input
-                    style="width: 15vh"
+                    style="width: 10vh"
+                    type="date"
+                    name="fechaActual"
+                    id="fechaActual"
+                    class="estiloInputLogin"
+                    tabindex="-1"
+                  />
+                </div>
+              </div>
+              <div class="cajaInput">
+                <label for="detalles_aportacion">Nombre del Cliente</label>
+                <div class="imagenInput">
+                  <img src="icons/pencil.png" alt="" />
+                  <input
+                    style="width: 10vh"
                     type="text"
                     name="detalles_aportacion"
                     id="detalles_aportacion"
@@ -25,13 +37,14 @@
                 </div>
               </div>
               <div class="cajaInput">
-                <label for="forma_pago">Forma de Pago</label>
+                <label for="forma_pago">Tipo de Pago</label>
                 <div class="imagenInput">
                   <img src="icons/pencil.png" alt="" />
                   <select
                     class="estiloInputLogin"
                     name="forma_pago"
                     id="forma_pago"
+                    style="width: 10vh"
                   >
                     <option value="-1">Seleccione</option>
                     <option value="Contado">Contado</option>
@@ -40,7 +53,7 @@
                 </div>
               </div>
               <div class="cajaInput">
-                <label for="cantidad_aportacion">Cantidad a Aportar</label>
+                <label for="cantidad_aportacion">Cantidad a Recuperar</label>
                 <div class="imagenInput">
                   <img src="icons/pencil.png" alt="" />
                   <input
@@ -63,9 +76,9 @@
                   tabindex="-1"
                   id="btnNuevoLote"
                   class="boton colorSecundario modal__close"
-                  onclick="validar();event.preventDefault()"
+                  onclick="validarNuevaAportacion();event.preventDefault()"
                 >
-                  REGISTRAR NUEVO APORTE
+                  REGISTRAR NUEVA RECUPERACION
                 </button>
                 <button
                   tabindex="-1"

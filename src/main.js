@@ -386,11 +386,11 @@ const contabilizarProductos = (obj) => {
   );
 };
 
-ipcMain.handle("nuevoLote", (event, obj) => {
-  nuevoLote(obj);
+ipcMain.handle("nuevoLote", (event, obj, cod) => {
+  nuevoLote(obj, cod);
 });
 
-const nuevoLote = (obj) => {
+const nuevoLote = (obj, cod) => {
   // console.log(obj);
   const query = "INSERT INTO lotes SET ?";
   db.query(query, obj, (error, results, fields) => {
@@ -398,8 +398,12 @@ const nuevoLote = (obj) => {
       console.log(error);
       notificacion("Transaccion Fallida", "Ha ocurrido un error");
     } else {
-      notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Lote");
+      console.log(cod);
+      if (cod === undefined) {
+        notificacion("Transaccion exitosa", "Se ha ingresado un nuevo Lote");
+      }
       ventanaPrincipal.webContents.send("lote_id", results.insertId);
+      console.log(results);
     }
   });
 };

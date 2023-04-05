@@ -169,15 +169,16 @@ const renderizar = () => {
     let plantilla = "";
     idCliente = id;
     datos.forEach((element, index, array) => {
-      ultimaActualizacion.innerHTML = `<strong>Ultima Actualizacion: </strong>${convertirFecha(
-        element.historial_cliente_fecha
-      )}`;
-      nombreCliente.innerHTML = `${element.cliente_nombre} ${element.cliente_apellido}`;
-      referenciaCliente.innerHTML = `${element.cliente_referencia}`;
-      saldoActual.innerHTML = `${parseFloat(
-        element.historial_cliente_saldo_nuevo
-      ).toFixed(2)}`;
-      plantilla += `
+      // ultimaActualizacion.innerHTML = `<strong>Ultima Actualizacion: </strong>${convertirFecha(
+      //   element.historial_cliente_fecha
+      // )}`;
+      // nombreCliente.innerHTML = `${element.cliente_nombre} ${element.cliente_apellido}`;
+      // referenciaCliente.innerHTML = `${element.cliente_referencia}`;
+      // saldoActual.innerHTML = `${parseFloat(
+      //   element.historial_cliente_saldo_nuevo
+      // ).toFixed(2)}`;
+      if (element.historial_cliente_tipo_aportacion === "Credito") {
+        plantilla += `
       <tr class = "filasElementos">
           <td style="max-width: 5vh; min-width: 5vh; width: 5vh">${index}</td>
           <td style="max-width: 10vh; min-width: 10vh; width: 10vh">
@@ -187,18 +188,13 @@ const renderizar = () => {
             ${element.historial_cliente_detalle}
           </td>
           <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-           L. ${parseFloat(element.historial_cliente_saldo_anterior).toFixed(2)}
-          </td>
-          <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
            L. ${parseFloat(element.historial_cliente_aportacion).toFixed(2)}
-          </td>
-          <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
-           L. ${parseFloat(element.historial_cliente_saldo_nuevo).toFixed(2)}
           </td>
           <td style="max-width: 20vh; min-width: 20vh; width: 20vh">
             ${element.historial_cliente_tipo_aportacion}
           </td>
         </tr>`;
+      }
     });
     tablaEntradas.innerHTML += plantilla;
     let filasElementos = document.getElementsByClassName("filasElementos");

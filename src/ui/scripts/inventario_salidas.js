@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
   idDocumento = Math.random() * (9999 - 1) + 1;
   salidaId.value = idDocumento;
   obtenerNombreProductos();
-  salidaFecha.value = obtenerFecha("YYYY/MM/DD");
+  // salidaFecha.value = obtenerFecha("YYYY/MM/DD");
   autocomplete(salidaProductoNombre, listaDeProductosNombre);
   autocomplete(salidaLoteProductoFk, listaDeProductosId);
   obtenerClientes();
@@ -199,7 +199,7 @@ const confirmarEntradas = async () => {
     salidas.push(datosSalidas);
     loteModificar = {
       lote_cantidad: parseInt(filasElementos[index].children[6].innerHTML) * -1,
-      lote_id: filasElementos[index].children[2].innerHTML,
+      lote_id: filasElementos[index].id,
     };
     console.log(loteModificar);
     valoresModificar.push(loteModificar);
@@ -256,6 +256,7 @@ const validarCliente = () => {
 
 const validar = () => {
   if (
+    salidaFecha.value != "" &&
     salidaLoteProductoFk.value != "" &&
     salidaProductoNombre.value != "" &&
     salidaStockActual.value > 0 &&
@@ -278,6 +279,12 @@ const validar = () => {
       agregarSalidaLista();
     }
   } else {
+    if (salidaFecha.value == "") {
+      salidaFecha.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      salidaFecha.parentNode.style.boxShadow = "none";
+    }
     if (salidaLoteProductoFk.value == "") {
       salidaLoteProductoFk.parentNode.style.boxShadow =
         "rgba(255, 0, 0, 0.563) 3px 2px 5px";
@@ -312,6 +319,7 @@ const validar = () => {
 };
 
 const quitarColorError = () => {
+  salidaFecha.parentNode.style.boxShadow = "none";
   clienteNombre.parentNode.style.boxShadow = "none";
   clienteApellido.parentNode.style.boxShadow = "none";
   clienteReferencia.parentNode.style.boxShadow = "none";
@@ -326,66 +334,121 @@ const quitarColorError = () => {
 };
 
 let cantidad_filas_ingresadas = 0;
+// let clase;
 
-const agregarSalidaLista = () => {
-  quitarColorError();
-  salidaLoteProductoFk.parentNode.style.boxShadow = "none";
-  salidaProductoNombre.parentNode.style.boxShadow = "none";
-  salidaStockActual.parentNode.style.boxShadow = "none";
-  salidaCantidad.parentNode.style.boxShadow = "none";
-  salidaTipoPago.parentNode.style.boxShadow = "none";
-  salidaTipoPago.parentNode.style.boxShadow = "none";
-  salidaTipoPago.parentNode.style.boxShadow = "none";
-  btnAsociarCliente.style.boxShadow = "none";
-  clienteSalida.parentNode.style.boxShadow = "none";
-  // console.log(filasElementos[0]);
-
-  cantidad_filas_ingresadas++;
-  let plantilla = "";
-  let elementoTabla = listaDeProductosRaw.find(
-    (element) => element.lote_id == salidaLoteFk.value
-  );
-  // console.log(elementoTabla);
-  let idProveedor = elementoTabla.proveedor_id;
-  let stockAntiguo = parseInt(salidaStockActual.value);
-  let valorUnitVenta = parseFloat(salidaValorUnitarioVenta.value).toFixed(2);
-  let nuevaSalida = parseInt(salidaCantidad.value);
-  let subtotal = parseFloat(nuevaSalida * valorUnitVenta).toFixed(2);
-  let filasElementos = document.getElementsByClassName("filasElementos");
-  let valorLote = salidaLoteFk.value;
-  let sumaCantidades;
-  // let cantidadSalidaLista;
-  let BANDERA = false;
-  let CREAR = true;
-  let contarStock = 0;
-  let tipoPago = salidaTipoPago.value;
-  for (let index = 0; index < filasElementos.length; index++) {
-    let VALOR_LOTE_LISTA = filasElementos[index].children[2].innerHTML;
-    let VALOR_TIPO_PAGO = filasElementos[index].children[8].innerHTML;
-    let cantidadSalidaLista = parseInt(
-      filasElementos[index].children[6].innerHTML
+const agregarSalidaLista = async () => {
+  let loteId;
+  loteId = salidaLoteFk.value;
+  let nuevoLoteRaw;
+  if (precioModificado === true) {
+    // loteId = salidaLoteFk.value;
+    console.log(loteId);
+    console.log(listaDeProductosRaw);
+    let elemento = listaDeProductosRaw.find(
+      (element) => element.lote_id == loteId
     );
-    if (valorLote === VALOR_LOTE_LISTA) {
-      BANDERA = true;
-      contarStock += cantidadSalidaLista;
-      console.log(contarStock);
-    }
+    console.log(elemento);
+
+    let nuevoLote = {
+      lote_producto_fk: elemento.producto_id,
+      lote_cantidad: salidaCantidad.value,
+      lote_valor_unitario_compra: elemento.lote_valor_unitario_compra,
+      lote_valor_unitario_venta: salidaValorUnitarioVenta.value,
+      lote_presentacion: elemento.lote_presentacion,
+      lote_ultima_actualizacion: salidaFecha.value,
+      lote_fecha_vencimiento: salidaFecha.value,
+      lote_estado: "Inactivo",
+    };
+    console.log(nuevoLote);
+    await ipcRenderer.invoke("nuevoLote", nuevoLote, 2);
+    ipcRenderer.on("lote_id", (event, results) => {
+      nuevoLoteRaw = {
+        lote_cantidad: elemento.lote_cantidad,
+        lote_fecha_vencimiento: elemento.lote_fecha_vencimiento,
+        lote_id: results,
+        lote_presentacion: elemento.lote_presentacion,
+        lote_valor_unitario_compra: elemento.lote_valor_unitario_compra,
+        lote_valor_unitario_venta: parseFloat(
+          salidaValorUnitarioVenta.value
+        ).toFixed(2),
+        producto_descripcion: elemento.producto_descripcion,
+        producto_id: elemento.producto_id,
+        producto_nombre: elemento.producto_nombre,
+        proveedor_id: elemento.proveedor_id,
+        proveedor_nombre: elemento.proveedor_nombre,
+      };
+      // listaDeProductosRaw.push(nuevoLoteRaw);
+    });
+    // console.log(listaDeProductosRaw);
   }
-  if (BANDERA === true) {
-    contarStock += nuevaSalida;
-    console.log(contarStock);
-    if (contarStock > stockAntiguo) {
+  setTimeout(() => {
+    if (precioModificado === true) {
+      listaDeProductosRaw.push(nuevoLoteRaw);
+      salidaLoteFk.value = nuevoLoteRaw.lote_id;
+    }
+    cantidad_filas_ingresadas++;
+    let plantilla = "";
+    console.log(listaDeProductosRaw);
+    let elementoTabla = listaDeProductosRaw.find(
+      (element) => element.lote_id == salidaLoteFk.value
+    );
+    // console.log(elementoTabla);
+    let idProveedor = elementoTabla.proveedor_id;
+    let stockAntiguo = parseInt(salidaStockActual.value);
+    let valorUnitVenta = parseFloat(salidaValorUnitarioVenta.value).toFixed(2);
+    let nuevaSalida = parseInt(salidaCantidad.value);
+    let subtotal = parseFloat(nuevaSalida * valorUnitVenta).toFixed(2);
+    let filasElementos = document.getElementsByClassName("filasElementos");
+    let valorLote = loteId;
+    let sumaCantidades;
+    // let cantidadSalidaLista;
+    let BANDERA = false;
+    let CREAR = true;
+    let contarStock = 0;
+    let tipoPago = salidaTipoPago.value;
+    for (let index = 0; index < filasElementos.length; index++) {
+      // let VALOR_LOTE_LISTA = filasElementos[index].children[2].innerHTML;
+      let VALOR_LOTE_LISTA = filasElementos[index].id;
+      console.log(VALOR_LOTE_LISTA);
+      let VALOR_TIPO_PAGO = filasElementos[index].children[8].innerHTML;
+      let cantidadSalidaLista = parseInt(
+        filasElementos[index].children[6].innerHTML
+      );
+      if (valorLote === VALOR_LOTE_LISTA) {
+        BANDERA = true;
+        contarStock += cantidadSalidaLista;
+        console.log(contarStock);
+      }
+    }
+    if (BANDERA === true) {
+      contarStock += nuevaSalida;
+      console.log(contarStock);
+      if (contarStock > stockAntiguo) {
+        CREAR = false;
+        location.href = "#modal_advertencia";
+        if (precioModificado === true) {
+          limpiarTextos();
+        }
+      }
+    }
+    if (parseInt(salidaCantidad.value) > parseInt(salidaStockActual.value)) {
       CREAR = false;
       location.href = "#modal_advertencia";
+      if (precioModificado === true) {
+        limpiarTextos();
+      }
     }
-  }
-  if (parseInt(salidaCantidad.value) > parseInt(salidaStockActual.value)) {
-    CREAR = false;
-    location.href = "#modal_advertencia";
-  }
-  if (CREAR === true) {
-    plantilla += `
-    <tr id = "${idProveedor}" class = "filasElementos">
+
+    // // let clase;
+    // if (modificarPrecio === true) {
+    //   clase = nuevoLoteRaw.lote_id;
+    // } else {
+    //   clase = "";
+    // }
+
+    if (CREAR === true) {
+      plantilla += `
+    <tr id = "${loteId}" class = "filasElementos">
       <td style="min-width: 20px; max-width: 20px; width: 20px;">${cantidad_filas_ingresadas}</td>
       <td style="min-width: 80px; max-width: 80px; width: 80px">${
         elementoTabla.producto_id
@@ -407,8 +470,10 @@ const agregarSalidaLista = () => {
       <td style="min-width: 120px; max-width: 120px; width: 120px">${tipoPago}</td>
       <td style="min-width: 120px; max-width: 120px; width: 120px">${parseFloat(
         subtotal
-      ).toFixed(2)}</td>
-      <td style="min-width: 120px; max-width: 120px; width: 120px">
+      ).toFixed(2)}</td>`;
+      if (precioModificado === false) {
+        plantilla += `
+        <td style="min-width: 120px; max-width: 120px; width: 120px">
             <div>
               <button 
               tabindex="-1"
@@ -427,14 +492,35 @@ const agregarSalidaLista = () => {
                 <img id = ${cantidad_filas_ingresadas} src="icons/cancel.png" alt="" />
               </button>
             </div>
-      </td>
-    </tr>`;
-    tablaSalidas.innerHTML += plantilla;
-    limpiarTextos();
-    let filasElementos = document.getElementsByClassName("filasElementos");
-    agregarColorFilas(filasElementos);
-  }
-  // limpiarTextos();
+        </td>
+      </tr>`;
+      } else {
+        plantilla += `
+        <td style="min-width: 120px; max-width: 120px; width: 120px">
+            <div>
+              <button
+              tabindex="-1"  
+              id = ${cantidad_filas_ingresadas}
+                onclick="eliminarFila();event.preventDefault()"
+                class="btnEliminarFila accionesBoton colorRojo">
+                <img id = ${cantidad_filas_ingresadas} src="icons/cancel.png" alt="" />
+              </button>
+            </div>
+        </td>
+      </tr>`;
+      }
+      tablaSalidas.innerHTML += plantilla;
+      limpiarTextos();
+      let filasElementos = document.getElementsByClassName("filasElementos");
+      agregarColorFilas(filasElementos);
+      // salidaValorUnitarioVenta.parentNode.style.backgroundColor = "#E0E0E0";
+      // salidaValorUnitarioVenta.precioModificado = false;
+      // salidaValorUnitarioVenta.readOnly = true;
+      // precioModificado = false;
+    }
+    // limpiarTextos();
+  }, "100");
+  quitarColorError();
 };
 
 const agregarColorFilas = (filas) => {
@@ -578,6 +664,9 @@ const limpiarTextos = () => {
   salidaCantidad.value = "";
   salidaTipoPago.value = "-1";
   salidaFechaVencimiento.value = "";
+  salidaValorUnitarioVenta.parentNode.style.backgroundColor = "#E0E0E0";
+  salidaValorUnitarioVenta.readOnly = true;
+  precioModificado = false;
 };
 
 const nuevoCliente = async () => {
@@ -596,4 +685,15 @@ const nuevoCliente = async () => {
 
 const copiarNombreCliente = () => {
   clienteSalida.value = listaClientes.value;
+};
+
+let precioModificado = false;
+let lotesModificados = false;
+const modificarPrecio = async () => {
+  if (salidaValorUnitarioVenta.value != "") {
+    salidaValorUnitarioVenta.readOnly = false;
+    salidaValorUnitarioVenta.parentNode.style.backgroundColor = "#99C294";
+    salidaValorUnitarioVenta.focus();
+    precioModificado = true;
+  }
 };

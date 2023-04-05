@@ -14,6 +14,10 @@ let clienteApellidoModificar = document.getElementById(
 let clienteReferenciaModificar = document.getElementById(
   "cliente_referencia_modificar"
 );
+let fechaActual = document.getElementById("fechaActual");
+let detallesAportacion = document.getElementById("detalles_aportacion");
+let forma_pago = document.getElementById("forma_pago");
+let cantidadAporte = document.getElementById("cantidad_aportacion");
 document.addEventListener("DOMContentLoaded", function () {
   cargarDocumentos();
   obtenerClientes();
@@ -93,16 +97,18 @@ function soloNumeros(obj) {
 }
 
 const quitarColorError = () => {
-  clienteNombre.parentNode.style.boxShadow = "none";
-  clienteApellido.parentNode.style.boxShadow = "none";
-  clienteReferencia.parentNode.style.boxShadow = "none";
+  fechaActual.parentNode.style.boxShadow = "none";
+  detallesAportacion.parentNode.style.boxShadow = "none";
+  forma_pago.parentNode.style.boxShadow = "none";
+  cantidadAporte.parentNode.style.boxShadow = "none";
 };
 
 const limpiar = () => {
   quitarColorError();
-  clienteNombre.value = "";
-  clienteApellido.value = "";
-  clienteReferencia.value = "";
+  fechaActual.value = "";
+  detallesAportacion.value = "";
+  forma_pago.value = "-1";
+  cantidadAporte.value = "";
 };
 
 const validar = () => {
@@ -257,4 +263,70 @@ const agregarColorFilas = (filas, fila, cantidad) => {
   if (cantidad <= 10 && cantidad > 0) {
     fila.children[6].classList.add("filasColorPocasExistencias");
   }
+};
+
+const validarNuevaAportacion = () => {
+  if (
+    fechaActual.value != "" &&
+    detallesAportacion.value != "" &&
+    forma_pago.value != "-1" &&
+    cantidadAporte.value != ""
+  ) {
+    nuevaAportacion();
+    limpiar();
+    location.href = "#";
+  } else {
+    if (fechaActual.value == "") {
+      fechaActual.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      fechaActual.parentNode.style.boxShadow = "none";
+    }
+    if (detallesAportacion.value == "") {
+      detallesAportacion.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      detallesAportacion.parentNode.style.boxShadow = "none";
+    }
+    if (forma_pago.value == "-1") {
+      forma_pago.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      forma_pago.parentNode.style.boxShadow = "none";
+    }
+    if (cantidadAporte.value == "") {
+      cantidadAporte.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      cantidadAporte.parentNode.style.boxShadow = "none";
+    }
+  }
+};
+
+const nuevaAportacion = async () => {
+  let saldoAnterior = 0;
+  let saldoAporte = 0;
+
+  let saldoNuevo = saldoAnterior - saldoAporte;
+  let obj = {
+    historial_cliente_fk: 42,
+    historial_cliente_fecha: fechaActual.value,
+    historial_cliente_detalle: detallesAportacion.value,
+    historial_cliente_saldo_anterior: 0,
+    historial_cliente_aportacion:
+      parseFloat(cantidadAporte.value).toFixed(2) * -1,
+    historial_cliente_saldo_nuevo: 0,
+    historial_cliente_tipo_aportacion: forma_pago.value,
+  };
+  console.log(obj);
+  await ipcRenderer.invoke("insertarAportacionCliente", obj);
+  // let fechaInicial = "1999-01-01";
+  // let fechaFinal = "2050-01-01";
+  // await ipcRenderer.invoke(
+  //   "historial_clientes",
+  //   idCliente,
+  //   fechaInicial,
+  //   fechaFinal
+  // );
+  // window.location = "clientes_historial_documento.ejs";
 };

@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
   obtenerNombreProductos();
   obtenerProveedores();
   obtenerCategorias();
-  entradaFecha.value = obtenerFecha("YYYY/MM/DD");
+  // entradaFecha.value = obtenerFecha("YYYY/MM/DD");
   autocomplete(entradaProductoNombre, listaDeProductosNombre);
   autocomplete(entradaLoteProductoFk, listaDeProductosId);
   entradaProductoNombre.focus();
@@ -528,6 +528,7 @@ const validarArrastarNuevoLote = () => {
 
 const validarNuevoProducto = () => {
   if (
+    salidaFecha.value != "" &&
     productoNombre.value != "" &&
     productoDescripcion.value != "" &&
     productoProveedorFk.value != "0" &&
@@ -540,6 +541,12 @@ const validarNuevoProducto = () => {
   ) {
     nuevoProducto();
   } else {
+    if (salidaFecha.value == "") {
+      salidaFecha.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      salidaFecha.parentNode.style.boxShadow = "none";
+    }
     if (productoNombre.value == "") {
       productoNombre.parentNode.style.boxShadow =
         "rgba(255, 0, 0, 0.563) 3px 2px 5px";
@@ -599,6 +606,7 @@ const validarNuevoProducto = () => {
 
 const validar = () => {
   if (
+    entradaFecha.value != "" &&
     entradaLoteProductoFk.value != "" &&
     entradaProductoNombre.value != "" &&
     entradaStockActual.value > -1 &&
@@ -613,6 +621,12 @@ const validar = () => {
       agregarEntradaLista();
     }
   } else {
+    if (entradaFecha.value == "") {
+      entradaFecha.parentNode.style.boxShadow =
+        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    } else {
+      entradaFecha.parentNode.style.boxShadow = "none";
+    }
     if (entradaLoteProductoFk.value == "") {
       entradaLoteProductoFk.parentNode.style.boxShadow =
         "rgba(255, 0, 0, 0.563) 3px 2px 5px";
@@ -665,6 +679,7 @@ function soloNumeros(obj) {
 }
 
 const quitarColorError = () => {
+  entradaFecha.parentNode.style.boxShadow = "none";
   productoNombre.parentNode.style.boxShadow = "none";
   productoDescripcion.parentNode.style.boxShadow = "none";
   productoProveedorFk.parentNode.style.boxShadow = "none";

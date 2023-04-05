@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
   obtenerNombreProductos();
   autocomplete(productoNombre, listaDeProductosNombre);
   autocomplete(idProducto, listaDeProductosId);
+  productoNombre.focus();
 });
 //Funcion para obtener la fecha del sistema
 const obtenerFecha = (formato) => {
@@ -378,6 +379,7 @@ const nuevoLote = async () => {
         lote_presentacion: presentacionP,
         lote_ultima_actualizacion: fechaHoy,
         lote_fecha_vencimiento: fechaVencimientoP,
+        lote_estado: "Activo",
       };
       await ipcRenderer.invoke("nuevoLote", filasLote);
     }

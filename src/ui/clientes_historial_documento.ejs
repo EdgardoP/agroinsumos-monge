@@ -5,43 +5,36 @@
 <script type="text/javascript" src="scripts/unpkxlsx.full.min.js"></script>
 <script src="scripts/html2pdf.bundle.min.js"></script>
 <div class="contenedorDashboard" style="width: 95%">
-  <h3>Estado de Cuenta Clientes</h3>
+  <h3>Ventas al Credito</h3>
 </div>
 <div class="contenedorDashboard flexRow" style="width: 95%">
-  <div class="flexColumn" style="margin-right: 100px">
-    <!-- <h2>Estado de Cuenta</h2> -->
+  <!-- <div class="flexColumn" style="margin-right: 100px">
     <div
       class="flexRow"
       style="width: 600px; justify-content: space-between; margin: 10px 0px"
     >
       <div class="flexRow">
         <h4 style="margin-right: 5px">Nombre del Cliente:</h4>
-        <p id="nombreCliente">
-          <!-- <strong> Nombre del Proveedor: </strong> Distribuidora Fernandez -->
-        </p>
+        <p id="nombreCliente"></p>
       </div>
       <div class="flexRow">
-        <p id="ultimaActualizacion">
-          <!-- <strong> Ultima Actualizacion: </strong> 12/02/02 -->
-        </p>
+        <p id="ultimaActualizacion"></p>
       </div>
     </div>
     <div class="flexRow" style="width: 600px; justify-content: space-between">
       <div class="flexRow">
         <h4 style="margin-right: 5px">Referencia:</h4>
-        <p id="referenciaCliente">
-          <!-- <strong> Numero del Proveedor: </strong> 9876-7823 -->
-        </p>
+        <p id="referenciaCliente"></p>
       </div>
       <div class="flexRow">
         <h4 style="margin-right: 5px">Saldo Actual</h4>
         <p id="saldoActual"></p>
       </div>
     </div>
-  </div>
+  </div> -->
   <div
     class="flexRow"
-    style="justify-content: right; width: 500px; align-items: center"
+    style="justify-content: left; width: 500px; align-items: center"
   >
     <div class="flexRow">
       <div class="cajaInput">
@@ -74,14 +67,14 @@
         </div>
       </div>
     </div>
-    <button
+    <!-- <button
       onclick="location.href='#modal_nueva_aportacion'; event.preventDefault()"
       tabindex="-1"
       id="btnNuevoProducto"
       class="boton colorSecundario"
     >
       NUEVA APORTACION
-    </button>
+    </button> -->
   </div>
 </div>
 <div class="contenedorDashboard" style="height: 500px">
@@ -92,16 +85,10 @@
         <th style="max-width: 10vh; min-width: 10vh; width: 10vh">Fecha</th>
         <th style="max-width: 35vh; min-width: 35vh; width: 35vh">Detalle</th>
         <th style="max-width: 20vh; min-width: 20vh; width: 20vh">
-          Saldo Anterior
+          Total de Venta
         </th>
         <th style="max-width: 20vh; min-width: 20vh; width: 20vh">
-          Aportacion
-        </th>
-        <th style="max-width: 20vh; min-width: 20vh; width: 20vh">
-          Saldo Nuevo
-        </th>
-        <th style="max-width: 20vh; min-width: 20vh; width: 20vh">
-          Tipo de Aportacion
+          Tipo de Pago
         </th>
       </tr>
     </thead>

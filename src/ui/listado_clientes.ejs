@@ -1,44 +1,23 @@
 <%- include('./partials/header.ejs') %>
 <link rel="stylesheet" href="style/style.css" />
 <div class="contenedorDashboard">
-  <h3>Clientes / Listado Clientes</h3>
+  <h3>Ventas al Credito / Recuperaciones</h3>
 </div>
 <div
   class="contenedorDashboard flexRow"
   style="justify-content: space-between; align-items: center"
 >
   <div class="flexRow">
-    <div class="flexRow" style="align-items: center">
-      <div class="cajaInput">
-        <label for="buscarCliente">Buscar Cliente</label>
-        <div class="autocomplete imagenInput">
-          <img src="icons/pencil.png" alt="" />
-          <input
-            style="width: 40vh"
-            type="text"
-            name="buscarCliente"
-            id="buscarCliente"
-            class="estiloInputLogin"
-            tabindex="2"
-          />
-        </div>
-      </div>
-      <button
-        onclick="buscarListaCliente()"
-        class="accionesBoton colorSecundario"
-      >
-        <img src="icons/lupa.png" alt="" />
-      </button>
-    </div>
+    <div class="flexRow" style="align-items: center"></div>
   </div>
   <div>
     <button
       id="${element.cliente_id}"
-      onclick="location.href='#modal_nuevo_cliente'; event.preventDefault()"
+      onclick="location.href='#modal_nueva_aportacion'; event.preventDefault()"
       class="boton colorSecundario"
       style="margin-right: 20px"
     >
-      NUEVO CLIENTE
+      NUEVA RECUPERACION
     </button>
   </div>
 </div>
@@ -64,6 +43,6 @@
     <tbody id="tablaEntradas" style="max-height: 70vh; height: 70vh"></tbody>
   </table>
 </div>
-<%- include('./partials/modal_nuevo_cliente.ejs') %>
+<%- include('./partials/modal_nueva_aportacion.ejs') %>
 <script src="scripts/listado_clientes.js"></script>
 <%-include('./partials/footer.ejs') %>

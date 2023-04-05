@@ -162,8 +162,17 @@
               id="salida_valor_unitario_venta"
               class="estiloInputLogin"
               tabindex="-1"
+              onkeyup="soloNumeros(this)"
               readonly
             />
+            <button
+              style="width: 22px; height: 22px"
+              tabindex="-1"
+              onclick="modificarPrecio();event.preventDefault()"
+              class="accionesBoton colorSecundario"
+            >
+              <img src="icons/edit-button.png" alt="" />
+            </button>
           </div>
         </div>
         <div class="cajaInput">
@@ -238,6 +247,14 @@
           </button>
         </div>
         <div class="flexColumn">
+          <!-- <button
+            tabindex="-1"
+            id="btnNuevoPrecio"
+            class="boton colorSecundario"
+            onclick="quitarColorError();modificarPrecio(); event.preventDefault()"
+          >
+            MODIFICAR PRECIO
+          </button> -->
           <button
             tabindex="-1"
             id="btnAsociarCliente"

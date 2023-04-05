@@ -159,8 +159,8 @@ ipcRenderer.on("recuperaciones_clientes", (event, results, fecha) => {
       plantilla += `
         <tr>
           <td style="width: 150px; max-width: 150px"></td>
-          <td style="width: 300px; max-width: 300px">${nombreCompleto.toUpperCase()}</td>
-          <td style="width: 400px; max-width: 400px">${descripcion.toUpperCase()}</td>
+          <td style="width: 300px; max-width: 300px">${descripcion.toUpperCase()}</td>
+          <td style="width: 400px; max-width: 400px"></td>
           <td style="width: 120px; max-width: 120px"></td>
           <td style="width: 120px; max-width: 120px">L. ${aportacion}</td>
           <td style="width: 120px; max-width: 120px"></td>
@@ -172,8 +172,8 @@ ipcRenderer.on("recuperaciones_clientes", (event, results, fecha) => {
       plantilla += `
         <tr>
           <td style="width: 150px; max-width: 150px"></td>
-          <td style="width: 300px; max-width: 300px">${nombreCompleto.toUpperCase()}</td>
-          <td style="width: 400px; max-width: 400px">${descripcion.toUpperCase()}</td>
+          <td style="width: 300px; max-width: 300px">${descripcion.toUpperCase()}</td>
+          <td style="width: 400px; max-width: 400px"></td>
           <td style="width: 120px; max-width: 120px"></td>
           <td style="width: 120px; max-width: 120px"></td>
           <td style="width: 120px; max-width: 120px">L. ${aportacion}</td>
