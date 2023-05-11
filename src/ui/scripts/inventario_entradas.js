@@ -378,7 +378,7 @@ const nuevoProducto = async () => {
     lote_presentacion: productoPresentacion.value,
     lote_valor_unitario_compra: producto_valor_unitario_compra.value,
     lote_valor_unitario_venta: producto_valor_unitario_venta.value,
-    lote_ultima_actualizacion: entradaFecha.value,
+    lote_ultima_actualizacion: obtenerFecha("YYYY/MM/DD"),
     lote_fecha_vencimiento: productoFechaVencimiento.value,
     lote_estado: "Activo",
   };
@@ -528,7 +528,7 @@ const validarArrastarNuevoLote = () => {
 
 const validarNuevoProducto = () => {
   if (
-    salidaFecha.value != "" &&
+    // salidaFecha.value != "" &&
     productoNombre.value != "" &&
     productoDescripcion.value != "" &&
     productoProveedorFk.value != "0" &&
@@ -541,12 +541,12 @@ const validarNuevoProducto = () => {
   ) {
     nuevoProducto();
   } else {
-    if (salidaFecha.value == "") {
-      salidaFecha.parentNode.style.boxShadow =
-        "rgba(255, 0, 0, 0.563) 3px 2px 5px";
-    } else {
-      salidaFecha.parentNode.style.boxShadow = "none";
-    }
+    // if (salidaFecha.value == "") {
+    //   salidaFecha.parentNode.style.boxShadow =
+    //     "rgba(255, 0, 0, 0.563) 3px 2px 5px";
+    // } else {
+    //   salidaFecha.parentNode.style.boxShadow = "none";
+    // }
     if (productoNombre.value == "") {
       productoNombre.parentNode.style.boxShadow =
         "rgba(255, 0, 0, 0.563) 3px 2px 5px";

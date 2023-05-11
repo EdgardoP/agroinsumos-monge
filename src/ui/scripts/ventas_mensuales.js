@@ -470,8 +470,8 @@ ipcRenderer.on("salariosDelMes", (event, results, anio, mes) => {
 ipcRenderer.on("gastosDelMes", (event, results, anio, mes) => {
   // let salarios = results[0];
   console.log(results);
-  totalGastos = parseFloat(results[0][0].total_salarios).toFixed(2);
-  console.log(results[0][0].total_salarios);
+  totalGastos = parseFloat(results[0][0].total_gastos).toFixed(2);
+  console.log(results[0][0].total_gastos);
   if (isNaN(totalGastos) === true) {
     totalGastos = 0;
     console.log("No es numero");
